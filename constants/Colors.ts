@@ -24,3 +24,11 @@ export const Colors = {
     tabIconSelected: tintColorDark,
   },
 };
+
+export const colors = {
+  defaultButton: '#0A332D',
+  white: '#fff',
+  defaultBorder: '#D8DADC',
+  placeholder: 'rgba(0, 0, 0, 0.5)',
+  buttonBorder: '#747474'
+}
