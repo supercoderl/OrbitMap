@@ -23,7 +23,7 @@ export default function LoginScreen() {
                         phone: '',
                         password: ''
                     }}
-                    onSubmit={() => { }}
+                    onSubmit={() => router.replace('/(home)')}
                 >
                     {({
                         values,

@@ -12,6 +12,7 @@ const AuthStack: React.FC = () => {
             <Stack.Screen name="success" options={{ headerShown: false }} />
             <Stack.Screen name="phonebook" options={{ headerShown: false }} />
             <Stack.Screen name="friend" options={{ headerShown: false }} />
+            <Stack.Screen name="profile-image" options={{ headerShown: false }} />
         </Stack>
     );
 };
