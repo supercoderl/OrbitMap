@@ -1,15 +1,20 @@
 import screen from "@/utils/screen";
 import { ReactNode, useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View, ViewStyle } from "react-native";
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 interface OrbitModalProps {
     isOpen: boolean;
     children: ReactNode;
+    style?: ViewStyle;
+    innerStyle?: ViewStyle;
+    showOverlay?: boolean;
+    onClose?: () => void;
+    overlayBackground?: string;
 }
 
 const OrbitModal: React.FC<OrbitModalProps> = ({ ...props }) => {
-    const { isOpen, children } = props;
+    const { isOpen, children, style, innerStyle, showOverlay, onClose, overlayBackground } = props;
     const translateY = useSharedValue(screen.height);
     const [visible, setVisible] = useState(isOpen);
 
@@ -33,8 +38,13 @@ const OrbitModal: React.FC<OrbitModalProps> = ({ ...props }) => {
 
     return (
         <View
-            style={styles.container}
+            style={[styles.container, style]}
         >
+            {showOverlay &&
+                <Pressable
+                    style={[StyleSheet.absoluteFill, { backgroundColor: overlayBackground ?? 'rgba(0, 0, 0, 0.6)' }]}
+                    onPress={onClose}
+                />}
             <Animated.View
                 style={[
                     {
@@ -45,6 +55,7 @@ const OrbitModal: React.FC<OrbitModalProps> = ({ ...props }) => {
                         borderTopRightRadius: 15,
                     },
                     animatedStyle,
+                    innerStyle
                 ]}
             >
                 {children}

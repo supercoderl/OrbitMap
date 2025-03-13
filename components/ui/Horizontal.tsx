@@ -3,7 +3,7 @@ import { View, ViewStyle } from "react-native"
 
 interface HorizontalProps {
     color: string;
-    height: number;
+    height: number | "100%";
     styles?: ViewStyle;
     width?: number;
 }

@@ -71,8 +71,7 @@ const styles = StyleSheet.create({
     },
 
     loginText: {
-        fontWeight: 'bold',
-        fontFamily: 'Lexend',
+        fontFamily: 'LexendBold',
         fontSize: 30,
         color: 'black',
         marginBottom: 5,
@@ -100,8 +99,7 @@ const styles = StyleSheet.create({
     },
 
     name: {
-        fontFamily: 'Lexend',
-        fontWeight: '500',
+        fontFamily: 'LexendMedium',
         fontSize: 16,
     },
 

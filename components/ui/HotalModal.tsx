@@ -162,13 +162,12 @@ const styles = StyleSheet.create({
     },
 
     name: {
-        fontFamily: 'Lexend',
+        fontFamily: 'LexendMedium',
         fontSize: 14,
-        fontWeight: 'medium'
     },
 
     type: {
-        fontFamily: 'Lexend',
+        fontFamily: 'LexendRegular',
         fontSize: 8,
         color: '#7A7A7A'
     },

@@ -111,8 +111,7 @@ const styles = StyleSheet.create({
     },
 
     loginText: {
-        fontWeight: 'bold',
-        fontFamily: 'Lexend',
+        fontFamily: 'LexendBold',
         alignSelf: 'flex-start',
         fontSize: 30,
         color: 'black',

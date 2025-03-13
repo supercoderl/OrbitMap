@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     },
 
     favoriteText: {
-        fontFamily: 'Lexend',
+        fontFamily: 'LexendRegular',
         fontSize: 8
     }
 })

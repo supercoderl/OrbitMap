@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
 
     input: {
         fontSize: 16,
-        fontFamily: 'Lexend',
-        fontStyle: 'normal'
+        fontFamily: 'LexendRegular',
     }
 })

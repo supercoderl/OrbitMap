@@ -90,10 +90,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingTop: 160
     },
-
+    
     loginText: {
-        fontWeight: 'bold',
-        fontFamily: 'Lexend',
+        fontFamily: 'LexendBold',
         alignSelf: 'flex-start',
         fontSize: 30,
         color: 'black',

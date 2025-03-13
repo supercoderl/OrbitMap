@@ -11,12 +11,14 @@ import { LinearGradient } from 'expo-linear-gradient';
 import OrbitModal from "@/components/Modals/default";
 import RestaurantModal from "@/components/ui/RestaurantModal";
 import HotelModal from "@/components/ui/HotalModal";
+import { router } from "expo-router";
+import CameraModal from "@/components/ui/CameraModal";
 
 export default () => {
     const [showModal, setShowModal] = useState(false);
-    const [modalType, setModalType] = useState<"food" | "hotel" | null>(null);
+    const [modalType, setModalType] = useState<"food" | "hotel" | "camera" | null>(null);
 
-    const onShowModal = (type: "food" | "hotel" | null) => {
+    const onShowModal = (type: "food" | "hotel" | "camera" | null) => {
         setModalType(type);
         setShowModal(true);
     }
@@ -45,6 +47,7 @@ export default () => {
                         <CircleButton
                             icon={assets.icon.setting}
                             size={20}
+                            onPress={() => router.push("/(settings)")}
                         />
                         <Image
                             source={assets.avatar.maithy}
@@ -95,11 +98,13 @@ export default () => {
                     <CircleButton
                         icon={assets.icon.filter_paywall}
                         size={36}
+                        onPress={() => router.push('/(general)/personalize-map')}
                     />
                     <Horizontal height={2} color="rgba(169, 170, 171, 1)" />
                     <CircleButton
                         icon={assets.icon.image_picker}
                         size={41.73}
+                        onPress={() => router.push('/(general)/post')}
                     />
                 </View>
             </View>
@@ -109,12 +114,26 @@ export default () => {
                     icon={assets.icon.add}
                     size={34}
                     style={styles.addButton}
+                    onPress={() => onShowModal("camera")}
                 />
             </View>
 
-            <OrbitModal isOpen={showModal}>
+            <OrbitModal
+                isOpen={showModal}
+                style={modalType === "camera" ? {
+                    top: 0
+                } : {}}
+                innerStyle={modalType === "camera" ? {
+                    paddingBlock: 0,
+                    backgroundColor: "black"
+                } : {}}
+            >
                 {
-                    modalType === "food" ? <RestaurantModal onClose={onCloseModal} /> : <HotelModal onClose={onCloseModal} />
+                    modalType === "food" ?
+                        <RestaurantModal onClose={onCloseModal} /> :
+                        modalType === "hotel" ?
+                            <HotelModal onClose={onCloseModal} /> :
+                            <CameraModal onClose={onCloseModal} />
                 }
             </OrbitModal>
         </View>
@@ -136,8 +155,7 @@ const styles = StyleSheet.create({
     },
 
     locationText: {
-        fontFamily: 'Lexend',
-        fontWeight: '700',
+        fontFamily: 'LexendBold',
         fontSize: 20,
         textAlign: 'center'
     },
@@ -190,19 +208,18 @@ const styles = StyleSheet.create({
     },
 
     name: {
-        fontFamily: 'Lexend',
+        fontFamily: 'LexendMedium',
         fontSize: 14,
-        fontWeight: 'medium'
     },
 
     type: {
-        fontFamily: 'Lexend',
+        fontFamily: 'LexendRegular',
         fontSize: 8,
         color: '#7A7A7A'
     },
 
     status: {
-        fontFamily: 'Lexend',
+        fontFamily: 'LexendRegular',
         fontSize: 8
     },
 })

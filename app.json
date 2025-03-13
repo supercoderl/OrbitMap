@@ -32,6 +32,14 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Cho phép $(PRODUCT_NAME) truy cập vào máy ảnh của bạn",
+          "microphonePermission": "Cho phép $(PRODUCT_NAME) truy cập vào micro của bạn",
+          "recordAudioAndroid": true
+        }
       ]
     ],
     "experiments": {
