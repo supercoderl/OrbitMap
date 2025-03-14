@@ -1,6 +1,7 @@
 import screen from "@/utils/screen";
 import { ReactNode, useEffect, useState } from "react";
 import { Pressable, StyleSheet, View, ViewStyle } from "react-native";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 interface OrbitModalProps {
@@ -9,7 +10,7 @@ interface OrbitModalProps {
     style?: ViewStyle;
     innerStyle?: ViewStyle;
     showOverlay?: boolean;
-    onClose?: () => void;
+    onClose: () => void;
     overlayBackground?: string;
 }
 
@@ -22,6 +23,20 @@ const OrbitModal: React.FC<OrbitModalProps> = ({ ...props }) => {
     const animatedStyle = useAnimatedStyle(() => ({
         transform: [{ translateY: translateY.value }],
     }));
+
+    const panGesture = Gesture.Pan()
+        .onUpdate((event) => {
+            if (event.translationY > 0) {
+                translateY.value = event.translationY;
+            }
+        })
+        .onEnd((event) => {
+            if (event.translationY > 100) {
+                runOnJS(onClose)(); // Nếu kéo xuống quá 100px, đóng modal
+            } else {
+                translateY.value = withTiming(0, { duration: 200 }); // Nếu không, bật lại modal
+            }
+        });
 
     useEffect(() => {
         if (isOpen) {
@@ -45,21 +60,23 @@ const OrbitModal: React.FC<OrbitModalProps> = ({ ...props }) => {
                     style={[StyleSheet.absoluteFill, { backgroundColor: overlayBackground ?? 'rgba(0, 0, 0, 0.6)' }]}
                     onPress={onClose}
                 />}
-            <Animated.View
-                style={[
-                    {
-                        flex: 1,
-                        backgroundColor: "white",
-                        paddingBlock: 20,
-                        borderTopLeftRadius: 15,
-                        borderTopRightRadius: 15,
-                    },
-                    animatedStyle,
-                    innerStyle
-                ]}
-            >
-                {children}
-            </Animated.View>
+            <GestureDetector gesture={panGesture}>
+                <Animated.View
+                    style={[
+                        {
+                            flex: 1,
+                            backgroundColor: "white",
+                            paddingBlock: 20,
+                            borderTopLeftRadius: 15,
+                            borderTopRightRadius: 15,
+                        },
+                        animatedStyle,
+                        innerStyle
+                    ]}
+                >
+                    {children}
+                </Animated.View>
+            </GestureDetector>
         </View>
     )
 }

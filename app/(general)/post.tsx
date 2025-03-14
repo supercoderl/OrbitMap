@@ -1,8 +1,11 @@
 import assets from "@/assets";
 import CircleButton from "@/components/Buttons/circle-button";
 import ImagePost from "@/components/Cards/image-post";
+import SharingModal from "@/components/Modals/sharing";
 import NavBar from "@/components/ui/NavBar";
 import screen from "@/utils/screen";
+import { router } from "expo-router";
+import { useState } from "react";
 import { View, Image, Text, StyleSheet, FlatList, TextInput, TouchableOpacity } from "react-native";
 
 const POSTS = [
@@ -25,11 +28,15 @@ const POSTS = [
 ]
 
 export default function Post() {
+    const [showModal, setShowModal] = useState(false);
+
     return (
         <View style={styles.container}>
             <NavBar
                 leftNode={
-                    <Image source={assets.avatar.maithy} style={styles.avatar} />
+                    <TouchableOpacity onPress={() => router.push("/(profile)")}>
+                        <Image source={assets.avatar.maithy} style={styles.avatar} />
+                    </TouchableOpacity>
                 }
                 rightNode={
                     <View style={{ position: 'relative' }}>
@@ -100,17 +107,46 @@ export default function Post() {
                 </View>
 
                 <View style={styles.operationContainer}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => router.push('/(general)/time-travel')}>
                         <Image source={assets.icon.travel_time_vip} style={styles.operation} />
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => router.push({ pathname: '/(home)', params: { openModal: "true" } })}>
                         <Image source={assets.icon.screenshot} style={styles.screenshot} />
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => setShowModal(true)}>
                         <Image source={assets.icon.export_file} style={styles.operation} />
                     </TouchableOpacity>
                 </View>
             </View>
+
+            <SharingModal
+                isOpen={showModal}
+                onClose={() => setShowModal(false)}
+                height={screen.height * 0.4}
+            >
+                <View style={{ gap: 10, paddingHorizontal: 15 }}>
+                    <View style={[styles.row, { width: '100%' }]}>
+                        <TouchableOpacity style={styles.button}>
+                            <Image source={assets.icon.import_white} style={styles.icon} />
+                            <Text style={styles.buttonText}>Lưu</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.button}>
+                            <Image source={assets.icon.trash_white} style={styles.icon} />
+                            <Text style={styles.buttonText}>Xóa</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={[styles.row, { width: '100%' }]}>
+                        <TouchableOpacity style={styles.button}>
+                            <Image source={assets.icon.flag_white} style={styles.icon} />
+                            <Text style={styles.buttonText}>Báo cáo</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.button}>
+                            <Image source={assets.icon.slash_white} style={styles.icon} />
+                            <Text style={styles.buttonText}>Chặn</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </SharingModal>
         </View>
     );
 }
@@ -124,7 +160,7 @@ const styles = StyleSheet.create({
     row: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 5
+        gap: 10
     },
 
     avatar: {
@@ -188,5 +224,27 @@ const styles = StyleSheet.create({
     screenshot: {
         width: 80,
         height: 80
+    },
+
+    icon: {
+        width: 32,
+        height: 32
+    },
+
+    button: {
+        flex: 1,
+        borderRadius: 40,
+        paddingBlock: 6,
+        flexDirection: 'row',
+        gap: 5,
+        backgroundColor: 'rgba(240, 84, 28, 0.78)',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+
+    buttonText: {
+        fontFamily: 'LexendSemiBold',
+        fontSize: 16,
+        color: 'white'
     }
 });

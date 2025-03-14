@@ -3,6 +3,7 @@ import PostCard from "@/components/Cards/post"
 import Search from "@/components/Inputs/search"
 import NavBar from "@/components/ui/NavBar"
 import screen from "@/utils/screen"
+import { router } from "expo-router"
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 
 const POSTS = [
@@ -41,12 +42,12 @@ export default function ForumScreen() {
         <View style={{ flex: 1, backgroundColor: 'white', paddingTop: 32 }}>
             <NavBar
                 leftNode={
-                    <View style={styles.avatarContainer}>
+                    <TouchableOpacity style={styles.avatarContainer} onPress={() => router.push('/(profile)')}>
                         <Image source={assets.avatar.maithy} style={styles.avatar} />
-                        <TouchableOpacity style={styles.addBtn}>
+                        <View style={styles.addBtn}>
                             <Image source={assets.icon.add_black} style={styles.add} />
-                        </TouchableOpacity>
-                    </View>
+                        </View>
+                    </TouchableOpacity>
                 }
                 rightNode={
                     <TouchableOpacity>

@@ -4,17 +4,19 @@ import CircleButton from "@/components/Buttons/circle-button";
 import Horizontal from "@/components/ui/Horizontal";
 import NavBar from "@/components/ui/NavBar";
 import screen from "@/utils/screen";
-import React, { useState } from "react";
-import { Image, StyleSheet, Text, View } from "react-native"
+import React, { useCallback, useEffect, useState } from "react";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import MapView from "react-native-maps";
 import { LinearGradient } from 'expo-linear-gradient';
 import OrbitModal from "@/components/Modals/default";
 import RestaurantModal from "@/components/ui/RestaurantModal";
 import HotelModal from "@/components/ui/HotalModal";
-import { router } from "expo-router";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import CameraModal from "@/components/ui/CameraModal";
 
 export default () => {
+    const { openModal } = useLocalSearchParams(); // Lấy query param
+
     const [showModal, setShowModal] = useState(false);
     const [modalType, setModalType] = useState<"food" | "hotel" | "camera" | null>(null);
 
@@ -28,6 +30,20 @@ export default () => {
         setShowModal(false);
     }
 
+    useEffect(() => {
+        if (openModal && openModal === "true") {
+            setTimeout(() => onShowModal("camera"), 500);
+        }
+    }, []);
+
+    useFocusEffect(
+        useCallback(() => {
+            return () => {
+                setShowModal(false); // Reset modal khi rời khỏi màn hình
+            };
+        }, [])
+    );
+
     return (
         <View style={styles.container}>
             <NavBar
@@ -35,6 +51,7 @@ export default () => {
                     <CircleButton
                         icon={assets.icon.search}
                         size={15.39}
+                        onPress={() => router.push('/(search)')}
                     />
                 }
                 children={
@@ -49,10 +66,12 @@ export default () => {
                             size={20}
                             onPress={() => router.push("/(settings)")}
                         />
-                        <Image
-                            source={assets.avatar.maithy}
-                            style={styles.avatar}
-                        />
+                        <TouchableOpacity onPress={() => router.push('/(profile)')}>
+                            <Image
+                                source={assets.avatar.maithy}
+                                style={styles.avatar}
+                            />
+                        </TouchableOpacity>
                     </View>
                 }
             />
@@ -67,6 +86,12 @@ export default () => {
                         latitudeDelta: 0.1,
                         longitudeDelta: 0.1,
                     }}
+                    customMapStyle={[
+                        {
+                            "featureType": "landscape",
+                            "stylers": [{ "hue": "#00ffff" }, { "saturation": -50 }]
+                        }
+                    ]}
                 />
 
                 {/* Lớp phủ tối ở 1/3 trên */}
@@ -127,6 +152,7 @@ export default () => {
                     paddingBlock: 0,
                     backgroundColor: "black"
                 } : {}}
+                onClose={() => setShowModal(false)}
             >
                 {
                     modalType === "food" ?

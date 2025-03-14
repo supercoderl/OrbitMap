@@ -2,6 +2,7 @@ import assets from "@/assets"
 import CircleButton from "@/components/Buttons/circle-button"
 import NavBar from "@/components/ui/NavBar"
 import screen from "@/utils/screen"
+import { router } from "expo-router"
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 
 const FRIENDS = [
@@ -72,6 +73,7 @@ export default function MessageScreen() {
                             icon={assets.icon.search}
                             size={15.39}
                             style={{ backgroundColor: '#E6EAEE' }}
+                            onPress={() => router.push("/(search)")}
                         />
                     </View>
                 }

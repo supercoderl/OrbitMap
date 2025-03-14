@@ -1,12 +1,19 @@
 import assets from "@/assets"
-import { Image, StyleSheet, TextInput, TextInputProps, View } from "react-native"
+import { Image, StyleSheet, TextInput, TextInputProps, View, ViewStyle } from "react-native"
 
-interface SearchProps extends TextInputProps { }
+interface SearchProps extends Omit<TextInputProps, 'style'> 
+{ 
+    style?: ViewStyle
+    icon?: any
+}
+
 
 const Search: React.FC<SearchProps> = ({ ...props }) => {
+    const { style, icon } = props;
+
     return (
-        <View style={styles.container}>
-            <Image source={assets.icon.search} style={styles.icon} />
+        <View style={[styles.container, style]}>
+            <Image source={icon ?? assets.icon.search} style={styles.icon} />
             <TextInput
                 {...props}
                 style={styles.input}

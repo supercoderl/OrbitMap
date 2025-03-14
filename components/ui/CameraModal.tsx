@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { View, StyleSheet, Text, Image, TouchableOpacity, FlatList } from 'react-native';
 import { CameraView } from 'expo-camera';
 import screen from '@/utils/screen';
@@ -9,7 +9,7 @@ import CameraOverlay from '../Overlays/camera';
 import OrbitModal from '../Modals/default';
 import { OPERATIONS } from '@/data';
 import { TextInput } from 'react-native-gesture-handler';
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 
 const FRIENDS_TO_SEND = [
     {
@@ -103,16 +103,27 @@ const CameraModal: React.FC<CameraModalProps> = ({ ...props }) => {
         }
     };
 
+    useFocusEffect(
+        useCallback(() => {
+            return () => {
+                setShowModal(false); // Reset modal khi rời khỏi màn hình
+            };
+        }, [])
+    );
+
     return (
         <View style={styles.container}>
             <NavBar
                 leftNode={
                     <View style={styles.row}>
-                        <Image source={assets.avatar.maithy} style={styles.avatar} />
+                        <TouchableOpacity onPress={() => router.push("/(profile)")}>
+                            <Image source={assets.avatar.maithy} style={styles.avatar} />
+                        </TouchableOpacity>
                         <CircleButton
                             icon={assets.icon.search_white}
                             size={15.39}
                             style={{ backgroundColor: 'transparent' }}
+                            onPress={() => router.push("/(search)")}
                         />
                     </View>
                 }

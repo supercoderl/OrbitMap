@@ -45,19 +45,25 @@ const PostCard: React.FC<PostCardProps> = ({ ...props }) => {
             <Horizontal height={1} color="#D8DADC" />
 
             <View style={styles.operationContainer}>
-                <TouchableOpacity style={styles.operationBtnContainer}>
-                    <Image source={assets.icon.like} style={styles.operationIcon} />
+                <View style={styles.operationBtnContainer}>
+                    <TouchableOpacity>
+                        <Image source={assets.icon.like} style={styles.operationIcon} />
+                    </TouchableOpacity>
                     <Text>Hữu ích</Text>
-                </TouchableOpacity>
+                </View>
                 <Horizontal width={1} height={'100%'} color="#D8DADC" />
-                <TouchableOpacity style={styles.operationBtnContainer}>
-                    <Image source={assets.icon.dislike} style={styles.operationIcon} />
+                <View style={styles.operationBtnContainer}>
+                    <TouchableOpacity>
+                        <Image source={assets.icon.dislike} style={styles.operationIcon} />
+                    </TouchableOpacity>
                     <Text>Không hữu ích</Text>
-                </TouchableOpacity>
+                </View>
                 <Horizontal width={1} height={'100%'} color="#D8DADC" />
-                <TouchableOpacity style={{ flex: 0.5, alignItems: 'center' }}>
-                    <Image source={assets.icon.markbook} style={styles.operationIcon} />
-                </TouchableOpacity>
+                <View style={{ flex: 0.5, alignItems: 'center' }}>
+                    <TouchableOpacity>
+                        <Image source={assets.icon.markbook} style={styles.operationIcon} />
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
     )
@@ -150,7 +156,7 @@ const styles = StyleSheet.create({
 
     operationBtnContainer: {
         paddingBlock: 12,
-        gap: 12,
+        gap: 6,
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'center',

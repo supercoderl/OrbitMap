@@ -9,8 +9,8 @@ import History from "@/components/ui/settings/History"
 import Security from "@/components/ui/settings/Security"
 import { colors } from "@/constants/Colors"
 import screen from "@/utils/screen"
-import { router } from "expo-router"
-import React, { useState } from "react"
+import { router, useFocusEffect } from "expo-router"
+import React, { useCallback, useState } from "react"
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native"
 
 const OPTIONS: { id: number, name: string, type: "account" | "security" | "history" | "ad" | "help", icon: any }[] = [
@@ -75,6 +75,14 @@ export default () => {
         }
     }
 
+    useFocusEffect(
+        useCallback(() => {
+            return () => {
+                setShowModal(false); // Reset modal khi rời khỏi màn hình
+            };
+        }, [])
+    );
+
     return (
         <>
             <View style={{ flex: 1, backgroundColor: 'white', paddingTop: 32 }}>
@@ -84,7 +92,7 @@ export default () => {
                         buttonStyle={{ width: 30, height: 30, justifyContent: 'center', alignItems: 'center' }}
                     />
                     <Text style={styles.title}>Cài đặt</Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => router.back()}>
                         <Text style={{ fontFamily: 'LexendSemiBold', fontSize: 16, color: '#FEA74E' }}>Xong</Text>
                     </TouchableOpacity>
                 </View>
@@ -152,6 +160,7 @@ export default () => {
                 isOpen={showModal}
                 showOverlay
                 style={{ top: 0, paddingTop: 32 }}
+                onClose={() => setShowModal(false)}
             >
                 <View style={styles.headerContainer}>
                     <BackButton

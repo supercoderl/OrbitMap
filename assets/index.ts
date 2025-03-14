@@ -78,6 +78,24 @@ import search_status from './images/icons/search-status.png';
 import ad from './images/icons/ad.png';
 import question from './images/icons/question.png';
 import logout from './images/icons/logout.png';
+import scan_barcode from './images/icons/scan-barcode.png';
+import cake from './images/icons/cake.png';
+import award from './images/icons/award.png';
+import personal_card from './images/icons/personal-card.png';
+import people from './images/icons/people.png';
+import two_user from './images/icons/2user.png';
+import gift from './images/icons/gift.png';
+import award_2 from './images/icons/award-2.png';
+import tick_circle from './images/icons/tick-circle.png';
+import untick_circle from './images/icons/untick-circle.png';
+import edit_white from './images/icons/edit-white.png';
+import import_white from './images/icons/import-white.png';
+import export_white from './images/icons/export-white.png';
+import calendar from './images/icons/calendar.png';
+import bubble_white from './images/icons/bubble-white.png';
+import trash_white from './images/icons/trash-white.png';
+import flag_white from './images/icons/flag-white.png';
+import slash_white from './images/icons/slash-white.png';
 
 import fourp from './images/restaurants/4p.png';
 import bamos from './images/restaurants/bamos.png';
@@ -115,6 +133,25 @@ import sacthu from './images/personalize-maps/sacthu.png';
 import sanhorucro from './images/personalize-maps/sanhorucro.png';
 import songxanh from './images/personalize-maps/songxanh.png';
 import tuyetlo from './images/personalize-maps/tuyetlo.png';
+
+import my_qr from './images/qrs/my-qr.png';
+
+import orbit_point from './images/backgrounds/orbit-point.png';
+
+import my_passport from './images/passports/my-passport.png';
+
+import facebook from './images/socials/facebook.png';
+import instagram from './images/socials/instagram.png';
+import message from './images/socials/message.png';
+import snapchat from './images/socials/snapchat.png';
+import threads from './images/socials/threads.png';
+
+import dalat from './images/locations/dalat.png';
+import danang from './images/locations/danang.png';
+import hoian from './images/locations/hoian.png';
+import phanthiet from './images/locations/phanthiet.png';
+import sapa from './images/locations/sapa.png';
+import vungtau from './images/locations/vungtau.png';
 
 export default {
     image: {
@@ -200,6 +237,24 @@ export default {
         logout,
         ad,
         question,
+        scan_barcode,
+        cake,
+        award,
+        personal_card,
+        people,
+        two_user,
+        gift,
+        award_2,
+        tick_circle,
+        untick_circle,
+        edit_white,
+        import_white,
+        export_white,
+        calendar,
+        bubble_white,
+        trash_white,
+        flag_white,
+        slash_white
     },
 
     restaurant: {
@@ -247,5 +302,34 @@ export default {
         sanhorucro,
         songxanh,
         tuyetlo
+    },
+
+    qr: {
+        my_qr
+    },
+
+    background: {
+        orbit_point
+    },
+
+    passport: {
+        my_passport
+    },
+
+    social: {
+        facebook,
+        instagram,
+        message,
+        snapchat,
+        threads
+    },
+
+    location: {
+        dalat,
+        danang,
+        hoian,
+        phanthiet,
+        sapa,
+        vungtau
     }
 }
