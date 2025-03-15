@@ -68,7 +68,9 @@ export default function MessageScreen() {
             <NavBar
                 leftNode={
                     <View style={styles.row}>
-                        <Image source={assets.avatar.maithy} style={styles.avatar} />
+                        <TouchableOpacity onPress={() => router.push("/(profile)")}>
+                            <Image source={assets.avatar.maithy} style={styles.avatar} />
+                        </TouchableOpacity>
                         <CircleButton
                             icon={assets.icon.search}
                             size={15.39}

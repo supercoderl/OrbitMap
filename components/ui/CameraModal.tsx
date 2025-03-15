@@ -225,7 +225,7 @@ const CameraModal: React.FC<CameraModalProps> = ({ ...props }) => {
                             <Image source={assets.icon.save} style={styles.save} />
                         </TouchableOpacity>
                         :
-                        <View />
+                        <View style={styles.close} />
                 }
             </View>
 
