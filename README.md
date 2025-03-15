@@ -6,7 +6,7 @@
   Orbit Map
 </h3>
 
-<p align="center">Short slogan</p>
+<p align="center">Future</p>
 
 <p align="center">
   <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/EliasGcf/readme-template">
@@ -36,59 +36,53 @@
   <a href="#-license">License</a>
 </p>
 
-## 👨🏻‍💻 About the project
+## 😽 About the project
 
 - <p style="color: red;">Brief explanation about the project</p>
 
-To see the **api**, click here: [PROJECT_NAME Rest API](https://github/eliasgcf/readme-template)</br>
-To see the **web client**, click here: [PROJECT_NAME Web](https://github/eliasgcf/readme-template)
+Orbit Map Project is a mobile application that combines GPS-based location sharing with social networking features. The app displays a real-time interactive map, similar to traditional GPS apps, where users can see their friends’ locations along with their battery percentages. Orbit Map also integrates social features like instant messaging, similar to Messenger, and a photo-sharing experience inspired by Locket, allowing users to send live snapshots to their close contacts. With seamless connectivity, real-time updates, and a user-friendly interface, Orbit Map creates a dynamic way for friends to stay connected, share moments, and navigate the world together.
 
-## 🚀 Technologies
+## 🖥 Technologies
 
-Technologies that I used to develop this mobile client
+Technologies that I used to develop this mobile client:
 
-- [ReactJS](https://reactjs.org/)
+- [React_Native_Expo](https://expo.dev)
 - [TypeScript](https://www.typescriptlang.org/)
-- [React Native](https://reactnative.dev/)
-- [React Navigation](https://reactnavigation.org/)
-- [React Native Vector Icons](https://github.com/oblador/react-native-vector-icons)
-- [UnForm](https://unform.dev/) [💜](https://rocketseat.com.br/)
-- [Yup](https://github.com/jquense/yup)
 - [Styled Components](https://styled-components.com/)
-- [Axios](https://github.com/axios/axios)
-- [Husky](https://github.com/typicode/husky)
-- [Commitlint](https://github.com/conventional-changelog/commitlint)
-- [Commitizen](https://github.com/commitizen/cz-cli)
 - [Eslint](https://eslint.org/)
 - [Prettier](https://prettier.io/)
 - [EditorConfig](https://editorconfig.org/)
+- [React_Native_Map](https://github.com/react-native-maps/react-native-maps)
 
-## 💻 Getting started
+## 👾 Getting started
 
 ### Requirements
-
-- Have this application's [API](https://github/eliasgcf/readme-template) running
 
 **Clone the project and access the folder**
 
 ```bash
-$ git clone https://github.com/EliasGcf/gobarber-mobile.git && cd gobarber-mobile
+$ git clone https://github.com/supercoderl/OrbitMap.git && cd OrbitMap
 ```
 
 **Follow the steps below**
 
 ```bash
 # Install the dependencies
-$ yarn
+$ yarn install or npm install
 
 # Be sure the file 'src/services/api.ts' have the IP to your API
 
+# If you are going to use expo go, run this command
+$ expo start
+# Then use your device and scan the qr code
+
 # If you are going to emulate with android, run this command
 # Be sure to have the emulator open
-$ yarn android
+$ expo start --android
 
 # If you are going to emulate with ios, run this command
-$ yarn ios
+# Be sure to have the emulator open
+$ expo start --ios
 ```
 
 ## 🤔 How to contribute
@@ -99,14 +93,14 @@ $ yarn ios
 # Fork using GitHub official command line
 # If you don't have the GitHub CLI, use the web site to do that.
 
-$ gh repo fork EliasGcf/NOME_DO_REPO
+$ gh repo fork https://github.com/supercoderl/OrbitMap.git
 ```
 
 **Follow the steps below**
 
 ```bash
 # Clone your fork
-$ git clone your-fork-url && cd NOME_DO_REPO
+$ git clone https://github.com/supercoderl/OrbitMap.git && cd OrbitMap
 
 # Create a branch with your feature
 $ git checkout -b my-feature
@@ -126,4 +120,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-Made with 💜 &nbsp;by Elias Gabriel 👋 &nbsp;[See my linkedin](https://www.linkedin.com/in/eliasgcf/)
+Made with 💜 &nbsp;by Supercoderle 👋 &nbsp;[See my linkedin](https://www.linkedin.com/in/supercoderle)
