@@ -1,50 +1,130 @@
-# Welcome to your Expo app 👋
+<h1 align="center">
+	<img alt="Logo" src="./assets/images/favicon.png" width="200px" />
+  Application Logo
+</h1>
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+<h3 align="center">
+  Orbit Map
+</h3>
 
-## Get started
+<p align="center">Short slogan</p>
 
-1. Install dependencies
+<p align="center">
+  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/EliasGcf/readme-template">
 
-   ```bash
-   npm install
-   ```
+  <a href="https://www.linkedin.com/in/eliasgcf/">
+    <img alt="Made by" src="https://img.shields.io/badge/made%20by-Elias%20Gabriel-gree">
+  </a>
+  
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/EliasGcf/readme-template">
+  
+  <a href="https://github.com/EliasGcf/readme-template/commits/master">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/EliasGcf/readme-template">
+  </a>
+  
+  <a href="https://github.com/EliasGcf/readme-template/issues">
+    <img alt="Repository issues" src="https://img.shields.io/github/issues/EliasGcf/readme-template">
+  </a>
+  
+  <img alt="GitHub" src="https://img.shields.io/github/license/EliasGcf/readme-template">
+</p>
 
-2. Start the app
+<p align="center">
+  <a href="#-about-the-project">About the project</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-getting-started">Getting started</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-how-to-contribute">How to contribute</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-license">License</a>
+</p>
 
-   ```bash
-    npx expo start
-   ```
+## 👨🏻‍💻 About the project
 
-In the output, you'll find options to open the app in a
+- <p style="color: red;">Brief explanation about the project</p>
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+To see the **api**, click here: [PROJECT_NAME Rest API](https://github/eliasgcf/readme-template)</br>
+To see the **web client**, click here: [PROJECT_NAME Web](https://github/eliasgcf/readme-template)
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## 🚀 Technologies
 
-## Get a fresh project
+Technologies that I used to develop this mobile client
 
-When you're ready, run:
+- [ReactJS](https://reactjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [React Native](https://reactnative.dev/)
+- [React Navigation](https://reactnavigation.org/)
+- [React Native Vector Icons](https://github.com/oblador/react-native-vector-icons)
+- [UnForm](https://unform.dev/) [💜](https://rocketseat.com.br/)
+- [Yup](https://github.com/jquense/yup)
+- [Styled Components](https://styled-components.com/)
+- [Axios](https://github.com/axios/axios)
+- [Husky](https://github.com/typicode/husky)
+- [Commitlint](https://github.com/conventional-changelog/commitlint)
+- [Commitizen](https://github.com/commitizen/cz-cli)
+- [Eslint](https://eslint.org/)
+- [Prettier](https://prettier.io/)
+- [EditorConfig](https://editorconfig.org/)
+
+## 💻 Getting started
+
+### Requirements
+
+- Have this application's [API](https://github/eliasgcf/readme-template) running
+
+**Clone the project and access the folder**
 
 ```bash
-npm run reset-project
+$ git clone https://github.com/EliasGcf/gobarber-mobile.git && cd gobarber-mobile
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+**Follow the steps below**
 
-## Learn more
+```bash
+# Install the dependencies
+$ yarn
 
-To learn more about developing your project with Expo, look at the following resources:
+# Be sure the file 'src/services/api.ts' have the IP to your API
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+# If you are going to emulate with android, run this command
+# Be sure to have the emulator open
+$ yarn android
 
-## Join the community
+# If you are going to emulate with ios, run this command
+$ yarn ios
+```
 
-Join our community of developers creating universal apps.
+## 🤔 How to contribute
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+**Make a fork of this repository**
+
+```bash
+# Fork using GitHub official command line
+# If you don't have the GitHub CLI, use the web site to do that.
+
+$ gh repo fork EliasGcf/NOME_DO_REPO
+```
+
+**Follow the steps below**
+
+```bash
+# Clone your fork
+$ git clone your-fork-url && cd NOME_DO_REPO
+
+# Create a branch with your feature
+$ git checkout -b my-feature
+
+# Make the commit with your changes
+$ git commit -m 'feat: My new feature'
+
+# Send the code to your remote branch
+$ git push origin my-feature
+```
+
+After your pull request is merged, you can delete your branch
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+Made with 💜 &nbsp;by Elias Gabriel 👋 &nbsp;[See my linkedin](https://www.linkedin.com/in/eliasgcf/)
