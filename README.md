@@ -46,13 +46,13 @@ Orbit Map Project is a mobile application that combines GPS-based location shari
 
 Technologies that I used to develop this mobile client:
 
-- [React_Native_Expo](https://expo.dev)
+- [React Native Expo](https://expo.dev)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Styled Components](https://styled-components.com/)
 - [Eslint](https://eslint.org/)
 - [Prettier](https://prettier.io/)
 - [EditorConfig](https://editorconfig.org/)
-- [React_Native_Map](https://github.com/react-native-maps/react-native-maps)
+- [React Native Maps](https://github.com/react-native-maps/react-native-maps)
 
 ## 👾 Getting started
 
