@@ -117,7 +117,7 @@ After your pull request is merged, you can delete your branch
 ## Screenshots
 
 <p>
-<img src="./assets/images/screenshots/screen1.png" alt="Splash View" width="200">
+<img src="./assets/images/screenshots/screen1.png" alt="Splash View" width="200" style="border: 1px solid black">
 <img src="./assets/images/screenshots/screen2.png" alt="Splash View" width="200">
 <img src="./assets/images/screenshots/screen3.png" alt="Splash View" width="200">
 <img src="./assets/images/screenshots/screen4.png" alt="Splash View" width="200">
