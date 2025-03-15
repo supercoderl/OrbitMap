@@ -118,14 +118,14 @@ After your pull request is merged, you can delete your branch
 
 <p>
 <kbd><img src="./assets/images/screenshots/screen2.png" alt="Splash View" width="200"></kbd>
-<img src="./assets/images/screenshots/screen2.png" alt="Splash View" width="200">
-<img src="./assets/images/screenshots/screen3.png" alt="Splash View" width="200">
-<img src="./assets/images/screenshots/screen4.png" alt="Splash View" width="200">
-<img src="./assets/images/screenshots/screen5.png" alt="Splash View" width="200">
-<img src="./assets/images/screenshots/screen6.png" alt="Splash View" width="200">
-<img src="./assets/images/screenshots/screen7.png" alt="Splash View" width="200">
-<img src="./assets/images/screenshots/screen8.png" alt="Splash View" width="200">
-</p>
+<kbd><img src="./assets/images/screenshots/screen2.png" alt="Splash View" width="200"></kbd>
+<kbd><img src="./assets/images/screenshots/screen3.png" alt="Splash View" width="200"></kbd>
+<kbd><img src="./assets/images/screenshots/screen4.png" alt="Splash View" width="200"></kbd>
+<kbd><img src="./assets/images/screenshots/screen5.png" alt="Splash View" width="200"></kbd>
+<kbd><img src="./assets/images/screenshots/screen6.png" alt="Splash View" width="200"></kbd>
+<kbd><img src="./assets/images/screenshots/screen7.png" alt="Splash View" width="200"></kbd>
+<kbd><img src="./assets/images/screenshots/screen8.png" alt="Splash View" width="200"></kbd>
+<kbd></p>
 
 ## 📝 License
 
