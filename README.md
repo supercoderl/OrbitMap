@@ -113,7 +113,7 @@ $ git push origin my-feature
 
 After your pull request is merged, you can delete your branch
 
-## Screenshots
+## 🖼️ Screenshots
 
 <p>
 <kbd><img src="./assets/images/screenshots/screen2.png" alt="Splash View" width="200"></kbd>
