@@ -1,49 +1,51 @@
+import { getPostList } from "@/api/modules/post"
 import assets from "@/assets"
 import PostCard from "@/components/Cards/post"
 import Search from "@/components/Inputs/search"
 import NavBar from "@/components/ui/NavBar"
+import { colors } from "@/constants/Colors"
+import { ActionStatus } from "@/enums"
+import { store } from "@/redux"
+import { Post } from "@/types"
 import screen from "@/utils/screen"
 import { router } from "expo-router"
-import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
-
-const POSTS = [
-    {
-        id: 1,
-        avatar: assets.post.thaibinh,
-        name: "Báo Thái Bình",
-        location: "Thái Bình",
-        title: "TỪ 1/11 BẢO TÀNG LỊCH SỬ QUÂN SỰ VIỆT NAM MIỄN PHÍ VÉ",
-        content: "Bảo tàng tại Nam Từ Liêm, Hà Nội, mở cửa vào 1/11 và miễn phí vé trong tháng đầu. Dự án 2.500 tỷ đồng trải rộng trên 74ha, với điểm nhấn là Tháp Chiến thắng cao 45m – tượng trưng cho năm 1945. Ngoài trưng bày lịch sử chiến tranh, bảo tàng còn mang đến trải nghiệm về cuộc đấu tranh của Quân đội Nhân dân Việt Nam.",
-        images: [
-            assets.post.thaibinh_1,
-            assets.post.thaibinh_2,
-            assets.post.thaibinh_3,
-            assets.post.thaibinh_4
-        ]
-    },
-    {
-        id: 2,
-        avatar: assets.post.viettrekking,
-        name: "Viettrekking",
-        location: "Hà Nội",
-        title: "Tour leo núi Fansipan 2N1Đ (Xuất phát từ Sa Pa)",
-        content: "Bảo tàng tại Nam Từ Liêm, Hà Nội, mở cửa vào 1/11 và miễn phí vé trong tháng đầu. Dự án 2.500 tỷ đồng trải rộng trên 74ha, với điểm nhấn là Tháp Chiến thắng cao 45m – tượng trưng cho năm 1945. Ngoài trưng bày lịch sử chiến tranh, bảo tàng còn mang đến trải nghiệm về cuộc đấu tranh của Quân đội Nhân dân Việt Nam.",
-        images: [
-            assets.post.viettrekking_1,
-            assets.post.viettrekking_2,
-            assets.post.viettrekking_3,
-            assets.post.viettrekking_4
-        ]
-    }
-]
+import { useEffect, useState } from "react"
+import { FlatList, Image, RefreshControl, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 
 export default function ForumScreen() {
+    const [loading, setLoading] = useState<boolean>(false);
+    const [posts, setPosts] = useState<Post[]>([]);
+    const { userInfo } = store.getState().user;
+
+    const onLoad = async () => {
+        try {
+            setLoading(true);
+            const { data } = await getPostList({
+                query: { pageSize: 10, pageIndex: 1 },
+                searchTerm: "",
+                status: ActionStatus.All
+            });
+
+            setPosts(data?.items ?? []);
+        }
+        finally {
+            setLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        onLoad();
+    }, []);
+
     return (
         <View style={{ flex: 1, backgroundColor: 'white', paddingTop: 32 }}>
             <NavBar
                 leftNode={
                     <TouchableOpacity style={styles.avatarContainer} onPress={() => router.push('/(profile)')}>
-                        <Image source={assets.avatar.maithy} style={styles.avatar} />
+                        <Image
+                            source={userInfo ? { uri: userInfo.avatarUrl } : assets.avatar.maithy}
+                            style={styles.avatar}
+                        />
                         <View style={styles.addBtn}>
                             <Image source={assets.icon.add_black} style={styles.add} />
                         </View>
@@ -68,7 +70,7 @@ export default function ForumScreen() {
             />
 
             <FlatList
-                data={POSTS}
+                data={posts}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) => (
                     <PostCard
@@ -77,6 +79,9 @@ export default function ForumScreen() {
                 )}
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ paddingBlock: 9, paddingHorizontal: 18, gap: 15 }}
+                refreshControl={
+                    <RefreshControl refreshing={loading} onRefresh={onLoad} />
+                }
             />
         </View>
     )
@@ -90,7 +95,10 @@ const styles = StyleSheet.create({
     avatar: {
         width: 39,
         height: 39,
-        borderRadius: screen.width
+        borderRadius: screen.width,
+        borderWidth: 1,
+        borderColor: colors.white,
+        backgroundColor: colors.white
     },
 
     addBtn: {
@@ -103,7 +111,7 @@ const styles = StyleSheet.create({
         bottom: 0,
         right: 0,
         zIndex: 2,
-        backgroundColor: '#FEA74E'
+        backgroundColor: colors.primary
     },
 
     add: {

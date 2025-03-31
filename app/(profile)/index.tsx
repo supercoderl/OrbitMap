@@ -8,6 +8,8 @@ import Help from "@/components/ui/settings/Help"
 import History from "@/components/ui/settings/History"
 import Security from "@/components/ui/settings/Security"
 import { colors } from "@/constants/Colors"
+import { store } from "@/redux"
+import { formatDate, getZodiacSign } from "@/utils"
 import screen from "@/utils/screen"
 import { router, useFocusEffect } from "expo-router"
 import React, { useCallback, useState } from "react"
@@ -49,6 +51,7 @@ const OPTIONS: { id: number, name: string, type: "account" | "security" | "histo
 export default () => {
     const [showModal, setShowModal] = useState(false);
     const [modalType, setModalType] = useState<"account" | "ad" | "help" | "security" | "history" | null>(null);
+    const { userInfo } = store.getState().user;
 
     const openModal = (type: "account" | "ad" | "help" | "security" | "history") => {
         setModalType(type);
@@ -63,7 +66,7 @@ export default () => {
     const render = () => {
         switch (modalType) {
             case "account":
-                return <EditAccount />
+                return <EditAccount userInfo={userInfo} />
             case "ad":
                 return <AdOptional />
             case "help":
@@ -92,7 +95,7 @@ export default () => {
                         buttonStyle={{ width: 30, height: 30, justifyContent: 'center', alignItems: 'center' }}
                     />
                     <Text style={styles.title}>Tôi</Text>
-                    <View />
+                    <View style={{ width: 30 }} />
                 </View>
 
                 <Horizontal height={1} color="#D8DADC" />
@@ -108,10 +111,17 @@ export default () => {
                     }}>
                         <View style={{ flex: 1, gap: 12 }}>
                             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-                                <Image source={assets.avatar.maithy} style={styles.avatar} />
+                                <Image
+                                    source={userInfo ? { uri: userInfo.avatarUrl } : assets.avatar.maithy}
+                                    style={styles.avatar}
+                                />
                                 <View style={{ flex: 1 }}>
-                                    <Text style={{ fontFamily: 'LexendBold', fontSize: 20, color: '#292D32' }}>Nomads</Text>
-                                    <Text style={{ fontFamily: 'LexendRegular', color: '#A9AAAB' }}>nomadsdabezt</Text>
+                                    <Text style={{ fontFamily: 'LexendBold', fontSize: 20, color: colors.primary }}>
+                                        {userInfo?.fullname ?? "Nomads"}
+                                    </Text>
+                                    <Text style={{ fontFamily: 'LexendRegular', color: '#A9AAAB' }}>
+                                        {userInfo?.email ?? 'nomadsdabezt@gmail.com'}
+                                    </Text>
                                 </View>
                                 <Image source={assets.icon.scan_barcode} style={{ width: 32, height: 32 }} />
                             </View>
@@ -127,7 +137,9 @@ export default () => {
                                     gap: 10
                                 }}>
                                     <Image source={assets.icon.cake} style={{ width: 24, height: 24 }} />
-                                    <Text style={{ fontFamily: 'LexendRegular', color: '#F0541C' }}>24 tháng 2</Text>
+                                    <Text style={{ fontFamily: 'LexendRegular', color: '#F0541C' }}>
+                                        {formatDate(new Date(userInfo?.birthdate ?? "1997-02-24T00:00:00"), "dd MM")}
+                                    </Text>
                                 </View>
                                 <View style={{
                                     paddingBlock: 5,
@@ -138,11 +150,39 @@ export default () => {
                                     justifyContent: 'center',
                                     flex: 1
                                 }}>
-                                    <Text style={{ fontFamily: 'LexendRegular', color: '#0A332D' }}>Song Ngư</Text>
+                                    <Text style={{ fontFamily: 'LexendRegular', color: '#0A332D' }}>
+                                        {getZodiacSign(new Date(userInfo?.birthdate ?? "1997-02-24T00:00:00"))}
+                                    </Text>
                                 </View>
                             </View>
                         </View>
-                        <Image source={assets.qr.my_qr} style={{ width: 89, height: 89 }} />
+                        {
+                            userInfo && userInfo.qrUrl && userInfo.qrUrl !== "" ?
+                                <Image source={{ uri: userInfo.qrUrl }} style={{ width: 89, height: 89 }} />
+                                :
+                                <>
+                                    <View style={{
+                                        width: 89,
+                                        height: 89,
+                                        borderWidth: 1,
+                                        borderColor: colors.defaultBorder,
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        borderRadius: 10,
+                                    }}>
+                                        <TouchableOpacity
+                                            style={{
+                                                gap: 5,
+                                                flexDirection: 'row',
+                                                alignItems: 'center'
+                                            }}
+                                        >
+                                            <Image source={assets.icon.reload} style={{ width: 12, height: 12 }} />
+                                            <Text>Reload</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </>
+                        }
                     </View>
 
                     <View style={{ paddingHorizontal: 15, marginTop: 40, zIndex: 1, gap: 20 }}>
@@ -150,7 +190,7 @@ export default () => {
                             <View style={styles.buttonContainer}>
                                 <Image source={assets.icon.award} style={{ width: 32, height: 32 }} />
                                 <Text style={styles.buttonText}>Hạng Tài khoản</Text>
-                                <Text style={{ fontFamily: 'LexendRegular', color: '#FEA74E' }}>Bạc</Text>
+                                <Text style={{ fontFamily: 'LexendRegular', color: colors.primary }}>Bạc</Text>
                             </View>
                         </TouchableOpacity>
 
@@ -203,7 +243,7 @@ export default () => {
                     />
                     <Text style={styles.title}>{OPTIONS.find(x => x.type === modalType)?.name}</Text>
                     <TouchableOpacity onPress={closeModal}>
-                        <Text style={{ fontFamily: 'LexendSemiBold', fontSize: 16, color: '#FEA74E' }}>Xong</Text>
+                        <Text style={{ fontFamily: 'LexendSemiBold', fontSize: 16, color: colors.primary }}>Xong</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -224,7 +264,7 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        color: "#292D32",
+        color: colors.primary,
         fontFamily: "LexendBold",
         fontSize: 20,
         flex: 1,
@@ -248,7 +288,10 @@ const styles = StyleSheet.create({
     avatar: {
         width: 43,
         height: 43,
-        borderRadius: screen.width
+        borderRadius: screen.width,
+        borderWidth: 1,
+        borderColor: colors.white,
+        backgroundColor: colors.white
     },
 
     buttonContainer: {
@@ -277,7 +320,8 @@ const styles = StyleSheet.create({
     buttonText: {
         fontFamily: 'LexendMedium',
         fontSize: 16,
-        flex: 1
+        flex: 1,
+        color: colors.primary
     },
 
     secondText: {

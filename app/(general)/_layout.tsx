@@ -9,6 +9,7 @@ export default function GeneralStack() {
             <Stack.Screen name="personalize-map" />
             <Stack.Screen name="post" />
             <Stack.Screen name="time-travel" />
+            <Stack.Screen name="message" />
         </Stack>
     );
 }

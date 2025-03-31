@@ -1,11 +1,24 @@
 import OrbitButton from "@/components/Buttons/default"
+import { colors } from "@/constants/Colors"
+import screen from "@/utils/screen"
 import { router } from "expo-router"
+import LottieView from "lottie-react-native"
 import React from "react"
 import { StyleSheet, View, Text } from "react-native"
 
 export default function SuccessScreen() {
     return (
         <View style={styles.container}>
+            <LottieView
+                autoPlay
+                loop
+                style={{
+                    width: screen.width / 2,
+                    height: screen.width / 2,
+                    marginBottom: 24
+                }}
+                source={require('../../assets/animations/success.json')}
+            />
             <Text style={styles.loginText}>Đã thay đổi mật khẩu</Text>
             <Text style={styles.text}>Mật khẩu của bạn đã được thay đổi thành công!</Text>
 
@@ -30,7 +43,7 @@ const styles = StyleSheet.create({
     loginText: {
         fontFamily: 'LexendBold',
         fontSize: 30,
-        color: 'black',
+        color: colors.primary,
         marginBottom: 5,
     },
 

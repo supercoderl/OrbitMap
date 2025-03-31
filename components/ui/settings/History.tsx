@@ -4,6 +4,7 @@ import Horizontal from "../Horizontal";
 import OrbitButton from "@/components/Buttons/default";
 import OrbitModal from "@/components/Modals/default";
 import { useState } from "react";
+import { colors } from "@/constants/Colors";
 
 const History = () => {
     const [showModal, setShowModal] = useState(false);
@@ -17,7 +18,7 @@ const History = () => {
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                         <Text style={{ fontFamily: 'LexendMedium', fontSize: 16 }}>Mới nhất đến cũ nhất</Text>
                         <TouchableOpacity>
-                            <Text style={{ fontFamily: 'LexendMedium', fontSize: 16, color: '#FEA74E' }}>Sắp xếp</Text>
+                            <Text style={{ fontFamily: 'LexendMedium', fontSize: 16, color: colors.primary }}>Sắp xếp</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

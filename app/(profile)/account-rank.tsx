@@ -2,6 +2,7 @@ import assets from "@/assets";
 import BackButton from "@/components/Buttons/back";
 import OrbitButton from "@/components/Buttons/default";
 import Horizontal from "@/components/ui/Horizontal";
+import { colors } from "@/constants/Colors";
 import screen from "@/utils/screen";
 import { router } from "expo-router";
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView } from "react-native";
@@ -15,7 +16,7 @@ export default function AccountRankScreen() {
                     buttonStyle={{ width: 30, height: 30, justifyContent: 'center', alignItems: 'center' }}
                 />
                 <Text style={styles.title}>Hạng tài khoản</Text>
-                <View style={{ width: 24 }} />
+                <View style={{ width: 30 }} />
             </View>
 
             <Horizontal height={1} color="#D8DADC" />
@@ -73,7 +74,7 @@ export default function AccountRankScreen() {
                         <View style={styles.optionContainer}>
                             <View style={styles.buttonContainer}>
                                 <Text style={styles.buttonText}>Story được gửi hoặc xem</Text>
-                                <Text style={{ fontFamily: 'LexendRegular', color: '#FEA74E', marginRight: 15 }}>38</Text>
+                                <Text style={{ fontFamily: 'LexendRegular', color: colors.primary, marginRight: 15 }}>38</Text>
                             </View>
                         </View>
                         <Horizontal height={1} color="#D8DADC" />
@@ -81,7 +82,7 @@ export default function AccountRankScreen() {
                         <View style={styles.optionContainer}>
                             <View style={styles.buttonContainer}>
                                 <Text style={styles.buttonText}>Story bạn nhận được</Text>
-                                <Text style={{ fontFamily: 'LexendRegular', color: '#FEA74E', marginRight: 15 }}>22</Text>
+                                <Text style={{ fontFamily: 'LexendRegular', color: colors.primary, marginRight: 15 }}>22</Text>
                             </View>
                         </View>
                         <Horizontal height={1} color="#D8DADC" />
@@ -89,7 +90,7 @@ export default function AccountRankScreen() {
                         <View style={styles.optionContainer}>
                             <View style={styles.buttonContainer}>
                                 <Text style={styles.buttonText}>Lượt đăng story</Text>
-                                <Text style={{ fontFamily: 'LexendRegular', color: '#FEA74E', marginRight: 15 }}>38</Text>
+                                <Text style={{ fontFamily: 'LexendRegular', color: colors.primary, marginRight: 15 }}>38</Text>
                             </View>
                         </View>
                     </View>
@@ -128,8 +129,8 @@ export default function AccountRankScreen() {
 
                         <View style={styles.optionContainer}>
                             <View style={styles.buttonContainer}>
-                                <Text style={[styles.buttonText, { color: '#FEA74E' }]}>Bạc</Text>
-                                <Text style={{ fontFamily: 'LexendRegular', color: '#FEA74E', marginRight: 15 }}>90</Text>
+                                <Text style={[styles.buttonText, { color: colors.primary }]}>Bạc</Text>
+                                <Text style={{ fontFamily: 'LexendRegular', color: colors.primary, marginRight: 15 }}>90</Text>
                             </View>
                         </View>
                         <Horizontal height={1} color="#D8DADC" />
@@ -145,7 +146,7 @@ export default function AccountRankScreen() {
                     <OrbitButton
                         text="Nâng cấp Orbit Gold"
                         onPress={() => { }}
-                        buttonStyle={{ backgroundColor: '#F0541C', marginTop: 10 }}
+                        buttonStyle={{ marginTop: 10 }}
                     />
                 </View>
             </ScrollView>
@@ -164,7 +165,7 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        color: "#292D32",
+        color: colors.primary,
         fontFamily: "LexendBold",
         fontSize: 20,
         flex: 1,

@@ -1,74 +1,39 @@
+import { getMapThemeList } from "@/api/modules/map-theme";
 import assets from "@/assets";
 import BackButton from "@/components/Buttons/back";
 import PersonalizeMapCard from "@/components/Cards/personalize-map";
 import Horizontal from "@/components/ui/Horizontal";
+import { colors } from "@/constants/Colors";
+import { ActionStatus } from "@/enums";
+import { MapTheme } from "@/types/map-theme";
 import { router } from "expo-router";
-import { View, Text, Image, StyleSheet, FlatList } from "react-native";
-
-const PERSONALIZE_MAPS = [
-    {
-        id: 1,
-        title: "Biển Ngọc",
-        map: assets.map.bienngoc,
-        background: "#FEA74E"
-    },
-    {
-        id: 2,
-        title: "Sóng Xanh",
-        map: assets.map.songxanh,
-        background: "#FEA74E"
-    },
-    {
-        id: 3,
-        title: "Cát Mơ",
-        map: assets.map.catmo,
-        background: "#FEA74E"
-    },
-    {
-        id: 4,
-        title: "Rực Rỡ",
-        map: assets.map.rucro,
-        background: "#FEA74E"
-    },
-    {
-        id: 5,
-        title: "San Hô Rực Rỡ",
-        map: assets.map.sanhorucro,
-        background: "#FEA74E"
-    },
-    {
-        id: 6,
-        title: "Sắc Thu",
-        map: assets.map.sacthu,
-        background: "#FEA74E"
-    },
-    {
-        id: 7,
-        title: "Tuyết lở",
-        map: assets.map.tuyetlo,
-        background: "#FEA74E"
-    },
-    {
-        id: 8,
-        title: "Ran na",
-        map: assets.map.ranna,
-        background: "#FEA74E"
-    },
-    {
-        id: 9,
-        title: "Tuyết lở",
-        map: assets.map.tuyetlo,
-        background: "#FEA74E"
-    },
-    {
-        id: 10,
-        title: "Ran na",
-        map: assets.map.ranna,
-        background: "#FEA74E"
-    }
-]
+import { useEffect, useState } from "react";
+import { View, Text, Image, StyleSheet, FlatList, RefreshControl } from "react-native";
 
 export default function PersonalizeMap() {
+    const [loading, setLoading] = useState<boolean>(false);
+    const [mapThemes, setMapThems] = useState<MapTheme[]>([]);
+
+    const onLoad = async () => {
+        try {
+            setLoading(true);
+            const { data } = await getMapThemeList({
+                query: { pageSize: 10, pageIndex: 1 },
+                searchTerm: "",
+                status: ActionStatus.All
+            });
+
+            setMapThems(data?.items ?? []);
+        }
+        finally {
+            setLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        onLoad();
+    }, []);
+
     return (
         <View style={{ flex: 1, backgroundColor: 'white', paddingTop: 32 }}>
             <View style={styles.headerContainer}>
@@ -83,8 +48,8 @@ export default function PersonalizeMap() {
             <Horizontal height={1} color="#D8DADC" />
 
             <FlatList
-                data={PERSONALIZE_MAPS}
-                keyExtractor={(item) => item.id.toString()}
+                data={mapThemes}
+                keyExtractor={(item) => item.mapThemeId}
                 renderItem={({ item }) => (
                     <PersonalizeMapCard
                         item={item}
@@ -94,6 +59,9 @@ export default function PersonalizeMap() {
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ gap: 15, alignItems: 'center', paddingBlock: 30 }}
                 style={{ width: '100%' }}
+                refreshControl={
+                    <RefreshControl refreshing={loading} onRefresh={onLoad} />
+                }
             />
         </View>
     )
@@ -110,7 +78,7 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        color: "#292D32",
+        color: colors.primary,
         fontFamily: "LexendBold",
         fontSize: 20,
         flex: 1,

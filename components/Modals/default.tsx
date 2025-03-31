@@ -91,6 +91,6 @@ const styles = StyleSheet.create({
         right: 0,
         bottom: 0,
         zIndex: 10,
-        backgroundColor: "transparent"
+        backgroundColor: "transparent",
     }
 })

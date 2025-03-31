@@ -1,5 +1,5 @@
-import logo from './images/logo.png';
-import logo2 from './images/logo2.png';
+import logo from './images/zeaflo-logo-with-text.png';
+import logo2 from './images/supercodele-logo.png';
 import closeEye from './images/eye.png';
 import chevron_left from './images/chevron-left.png';
 import chevron_right from './images/chevron-right.png';
@@ -65,7 +65,9 @@ import clock_orange from './images/icons/clock-orange.png';
 import discover_orange from './images/icons/discover-orange.png';
 import cloud_orange from './images/icons/cloud-orange.png';
 import message_black from './images/icons/message-black.png';
-import emoji from './images/icons/emoji.png';
+import emoji from './images/icons/emoji-2.png';
+import picture from './images/icons/picture.png';
+import camera from './images/icons/camera.png';
 import reactmotion from './images/icons/reactmotion.png';
 import pointmotion from './images/icons/pointmotion.png';
 import upload_file from './images/icons/upload-file.png';
@@ -96,6 +98,10 @@ import bubble_white from './images/icons/bubble-white.png';
 import trash_white from './images/icons/trash-white.png';
 import flag_white from './images/icons/flag-white.png';
 import slash_white from './images/icons/slash-white.png';
+import reload from './images/icons/reload.png';
+import contact from './images/icons/contact.png';
+import back_square from './images/icons/back-square.png';
+import send_message from './images/icons/send-message.png';
 
 import fourp from './images/restaurants/4p.png';
 import bamos from './images/restaurants/bamos.png';
@@ -152,6 +158,9 @@ import hoian from './images/locations/hoian.png';
 import phanthiet from './images/locations/phanthiet.png';
 import sapa from './images/locations/sapa.png';
 import vungtau from './images/locations/vungtau.png';
+
+import empty from './animations/empty.json';
+import loading from './animations/loading.json';
 
 export default {
     image: {
@@ -254,7 +263,13 @@ export default {
         bubble_white,
         trash_white,
         flag_white,
-        slash_white
+        slash_white,
+        reload,
+        contact,
+        back_square,
+        picture,
+        camera,
+        send_message
     },
 
     restaurant: {
@@ -331,5 +346,10 @@ export default {
         phanthiet,
         sapa,
         vungtau
+    },
+
+    animation: {
+        empty,
+        loading
     }
 }

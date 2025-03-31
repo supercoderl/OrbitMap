@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
     buttonText: {
         fontFamily: 'LexendMedium',
         fontSize: 16,
-        flex: 1
+        flex: 1,
+        color: colors.primary
     },
 })

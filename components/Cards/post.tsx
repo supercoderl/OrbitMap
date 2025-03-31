@@ -2,9 +2,10 @@ import assets from "@/assets";
 import screen from "@/utils/screen";
 import { Image, View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import Horizontal from "../ui/Horizontal";
+import { Post } from "@/types";
 
 interface PostCardProps {
-    item: any;
+    item: Post;
 }
 
 const PostCard: React.FC<PostCardProps> = ({ ...props }) => {
@@ -13,10 +14,10 @@ const PostCard: React.FC<PostCardProps> = ({ ...props }) => {
     return (
         <View style={styles.container}>
             <View style={styles.infoContainer}>
-                <Image source={item.avatar} style={styles.avatar} />
+                <Image source={item.author.avatarUrl === "" ? assets.post.thaibinh : { uri: item.author.avatarUrl ?? "" }} style={styles.avatar} />
                 <View style={{ flex: 1 }}>
-                    <Text style={styles.name}>{item.name}</Text>
-                    <Text style={styles.location}>{item.location}</Text>
+                    <Text style={styles.name}>{item.author.fullname}</Text>
+                    <Text style={styles.location}>{item.author.location}</Text>
                 </View>
                 <TouchableOpacity>
                     <Image source={assets.icon.more_square} style={styles.more} />
@@ -31,7 +32,12 @@ const PostCard: React.FC<PostCardProps> = ({ ...props }) => {
                     <Text style={styles.content}>{item.content}</Text>
                 </View>
                 <View style={[{ flex: 1 }, styles.imageContainer]}>
-                    {item.images.map((src: any, index: number) => (
+                    {[
+                        assets.post.thaibinh_1,
+                        assets.post.thaibinh_2,
+                        assets.post.thaibinh_3,
+                        assets.post.thaibinh_4
+                    ].map((src: any, index: number) => (
                         <Image
                             key={index}
                             source={src}

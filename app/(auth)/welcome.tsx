@@ -40,15 +40,13 @@ const styles = StyleSheet.create({
     },
 
     logo: {
-        width: screen.width / 1.965,
-        height: screen.height / 5.71,
+        height: screen.height / 3.5,
         objectFit: 'contain',
-        marginBottom: 80
+        marginBottom: 40
     },
 
     logo2: {
-        width: screen.width / 6.23,
-        height: 65,
+        height: screen.height / 8,
         objectFit: 'contain',
         marginTop: 10
     }

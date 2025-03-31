@@ -26,9 +26,10 @@ export const Colors = {
 };
 
 export const colors = {
-  defaultButton: '#0A332D',
+  primary: '#D70040',
   white: '#fff',
   defaultBorder: '#D8DADC',
   placeholder: 'rgba(0, 0, 0, 0.5)',
-  buttonBorder: '#747474'
+  buttonBorder: '#D70040',
+  black: '#000'
 }

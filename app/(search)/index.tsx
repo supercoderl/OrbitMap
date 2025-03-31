@@ -1,6 +1,7 @@
 import assets from "@/assets"
 import Search from "@/components/Inputs/search"
 import Horizontal from "@/components/ui/Horizontal"
+import { colors } from "@/constants/Colors"
 import screen from "@/utils/screen"
 import { router } from "expo-router"
 import React from "react"
@@ -101,9 +102,9 @@ export default () => {
                                         <Image source={item.avatar} style={{ width: 43, height: 43, borderRadius: screen.width }} />
                                         <Text style={styles.buttonText}>{item.name}</Text>
                                         <View style={{ flexDirection: 'row', gap: 20, alignItems: 'center' }}>
-                                            <TouchableOpacity style={{ flexDirection: 'row', gap: 5, borderRadius: 50, backgroundColor: '#FEA74E', paddingBlock: 3, paddingHorizontal: 10 }}>
-                                                <Image source={assets.icon.user_add_2} style={{ width: 12.07, height: 17.14 }} />
-                                                <Text style={{ fontFamily: 'LexendMedium', fontSize: 12 }}>Thêm</Text>
+                                            <TouchableOpacity style={{ flexDirection: 'row', gap: 5, borderRadius: 50, backgroundColor: colors.primary, paddingBlock: 3, paddingHorizontal: 10 }}>
+                                                <Image source={assets.icon.user_add_white} style={{ width: 16, height: 16 }} />
+                                                <Text style={{ fontFamily: 'LexendMedium', fontSize: 12, color: colors.white }}>Thêm</Text>
                                             </TouchableOpacity>
                                             <TouchableOpacity>
                                                 <Image source={assets.icon.close_2} style={{ width: 12, height: 12 }} />

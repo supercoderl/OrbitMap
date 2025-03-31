@@ -16,14 +16,21 @@ interface OrbitButtonProps {
 const OrbitButton: React.FC<OrbitButtonProps> = ({ backgroundColor, text, buttonStyle, color, textStyle, loading, viewStyle, onPress }) => {
     return (
         <TouchableOpacity
-            style={[styles.button, { backgroundColor: loading ? '#EBEBE4' : backgroundColor ?? colors.defaultButton }, buttonStyle]}
+            style={[
+                styles.button, 
+                { 
+                    backgroundColor: loading ? '#EBEBE4' : backgroundColor ?? colors.primary,
+                    borderColor: loading ? '#EBEBE4' : colors.buttonBorder
+                }, 
+                buttonStyle
+            ]}
             disabled={loading}
             onPress={onPress}
         >
             <View
                 style={[{ alignItems: 'center', flexDirection: 'row', justifyContent: 'center', gap: 4 }, viewStyle]}>
                 {loading && <ActivityIndicator color="white" />}
-                <Text style={[styles.text, { color: color ?? colors.white }, textStyle]}>{text}</Text>
+                <Text style={[styles.text, { color: color ?? backgroundColor ? colors.primary : colors.white }, textStyle]}>{text}</Text>
             </View>
         </TouchableOpacity>
     )
@@ -39,12 +46,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 10,
         borderWidth: 1,
-        borderColor: colors.buttonBorder
     },
 
     text: {
-        fontWeight: 'semibold',
-        fontFamily: 'Inter',
+        fontFamily: 'LexendSemiBold',
         fontSize: 16
     }
 })

@@ -5,6 +5,7 @@ import React, { useState } from "react"
 import { StyleSheet, View, Text, Image, Alert, TouchableOpacity } from "react-native"
 import * as ImagePicker from 'expo-image-picker';
 import { router } from "expo-router"
+import { colors } from "@/constants/Colors"
 
 export default function ProfileImageScreen() {
     const [avatar, setAvatar] = useState(assets.image.pick_avatar);
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
     loginText: {
         fontFamily: 'LexendBold',
         fontSize: 30,
-        color: 'black',
+        color: colors.primary,
         marginTop: 15,
         marginBottom: 30
     },

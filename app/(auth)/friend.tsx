@@ -1,5 +1,6 @@
 import assets from "@/assets"
 import OrbitButton from "@/components/Buttons/default"
+import { colors } from "@/constants/Colors"
 import screen from "@/utils/screen"
 import { router } from "expo-router"
 import React from "react"
@@ -24,7 +25,7 @@ const FRIENDS_DATA = [
 export default function FriendScreen() {
     return (
         <View style={styles.container}>
-            <View style={[styles.row, { marginTop: screen.width / 5 }]}>
+            <View style={[styles.row]}>
                 <Text style={styles.loginText}>Thêm bạn bè</Text>
                 <TouchableOpacity onPress={() => router.push('/(auth)/profile-image')}>
                     <Text style={styles.skipText}>Bỏ qua</Text>
@@ -41,8 +42,21 @@ export default function FriendScreen() {
                     </View>
                 )}
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={{ padding: 10, backgroundColor: 'white', gap: 10 }}
-                style={{ width: '100%', maxHeight: screen.height / 1.5, borderRadius: 10, marginBlock: 20 }}
+                contentContainerStyle={{ paddingHorizontal: 10, paddingBlock: 15, backgroundColor: 'white', gap: 15 }}
+                style={{
+                    width: '100%',
+                    maxHeight: screen.height / 1.5,
+                    borderRadius: 10,
+                    marginBlock: 20,
+                    shadowColor: "#000",
+                    shadowOffset: {
+                        width: 0,
+                        height: 4,
+                    },
+                    shadowOpacity: 0.32,
+                    shadowRadius: 5.46,
+                    elevation: 9,
+                }}
             />
 
             <OrbitButton
@@ -56,7 +70,7 @@ export default function FriendScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#d6c9d6',
+        backgroundColor: 'white',
         flexDirection: 'column',
         paddingHorizontal: 20,
         justifyContent: 'center',
@@ -73,7 +87,7 @@ const styles = StyleSheet.create({
     loginText: {
         fontFamily: 'LexendBold',
         fontSize: 30,
-        color: 'black',
+        color: colors.primary,
         marginBottom: 5,
     },
 

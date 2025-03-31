@@ -2,6 +2,7 @@ import assets from "@/assets";
 import BackButton from "@/components/Buttons/back";
 import SharingModal from "@/components/Modals/sharing";
 import Horizontal from "@/components/ui/Horizontal";
+import { colors } from "@/constants/Colors";
 import screen from "@/utils/screen";
 import { router } from "expo-router";
 import { useState } from "react";
@@ -28,18 +29,18 @@ export default function PassportScreen() {
 
                 <View style={{ width: '100%', gap: 15 }}>
                     <View style={[styles.row, { gap: 15 }]}>
-                        <TouchableOpacity style={[styles.row, { backgroundColor: '#F0541C', flex: 1, paddingBlock: 8, justifyContent: 'center', borderRadius: 40 }]}>
+                        <TouchableOpacity style={[styles.row, { backgroundColor: colors.primary, flex: 1, paddingBlock: 8, justifyContent: 'center', borderRadius: 40 }]}>
                             <Image source={assets.icon.edit_white} style={{ width: 32, height: 32 }} />
                             <Text style={styles.text}>Chỉnh sửa</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={[styles.row, { backgroundColor: '#F0541C', flex: 1, paddingBlock: 8, justifyContent: 'center', borderRadius: 40 }]}>
+                        <TouchableOpacity style={[styles.row, { backgroundColor: colors.primary, flex: 1, paddingBlock: 8, justifyContent: 'center', borderRadius: 40 }]}>
                             <Image source={assets.icon.import_white} style={{ width: 32, height: 32 }} />
                             <Text style={styles.text}>Lưu</Text>
                         </TouchableOpacity>
                     </View>
 
                     <TouchableOpacity
-                        style={[styles.row, { backgroundColor: '#F0541C', paddingBlock: 8, justifyContent: 'center', borderRadius: 40 }]}
+                        style={[styles.row, { backgroundColor: colors.primary, paddingBlock: 8, justifyContent: 'center', borderRadius: 40 }]}
                         onPress={() => setShowModal(true)}
                     >
                         <Image source={assets.icon.export_white} style={{ width: 32, height: 32 }} />
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        color: "#292D32",
+        color: colors.primary,
         fontFamily: "LexendBold",
         fontSize: 20,
         flex: 1,

@@ -13,12 +13,18 @@ import RestaurantModal from "@/components/ui/RestaurantModal";
 import HotelModal from "@/components/ui/HotalModal";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import CameraModal from "@/components/ui/CameraModal";
+import { colors } from "@/constants/Colors";
+import { store } from "@/redux";
+import useLocation from "@/hooks/useLocation";
 
 export default () => {
     const { openModal } = useLocalSearchParams(); // Lấy query param
-
+    const themeConfig = store.getState().global?.themeConfig;
+    const [theme, setTheme] = useState<any>(null);
     const [showModal, setShowModal] = useState(false);
     const [modalType, setModalType] = useState<"food" | "hotel" | "camera" | null>(null);
+    const { district, loading } = useLocation();
+    const { userInfo } = store.getState().user;
 
     const onShowModal = (type: "food" | "hotel" | "camera" | null) => {
         setModalType(type);
@@ -44,6 +50,12 @@ export default () => {
         }, [])
     );
 
+    useFocusEffect(
+        React.useCallback(() => {
+            if(themeConfig && themeConfig.mapStyle) setTheme(JSON.parse(themeConfig.mapStyle));
+        }, [themeConfig])
+    );
+
     return (
         <View style={styles.container}>
             <NavBar
@@ -56,7 +68,12 @@ export default () => {
                 }
                 children={
                     <View style={styles.location}>
-                        <Text style={styles.locationText}>TP. Thủ Đức</Text>
+                        {
+                            loading ?
+                                <Text style={styles.locationText}>Loading...</Text>
+                                :
+                                <Text style={styles.locationText}>{district}</Text>
+                        }
                     </View>
                 }
                 rightNode={
@@ -68,7 +85,7 @@ export default () => {
                         />
                         <TouchableOpacity onPress={() => router.push('/(profile)')}>
                             <Image
-                                source={assets.avatar.maithy}
+                                source={userInfo ? { uri: userInfo.avatarUrl } : assets.avatar.maithy}
                                 style={styles.avatar}
                             />
                         </TouchableOpacity>
@@ -86,7 +103,7 @@ export default () => {
                         latitudeDelta: 0.1,
                         longitudeDelta: 0.1,
                     }}
-                    customMapStyle={[
+                    customMapStyle={theme ?? [
                         {
                             "featureType": "landscape",
                             "stylers": [{ "hue": "#00ffff" }, { "saturation": -50 }]
@@ -150,7 +167,7 @@ export default () => {
                 } : {}}
                 innerStyle={modalType === "camera" ? {
                     paddingBlock: 0,
-                    backgroundColor: "black"
+                    backgroundColor: "black",
                 } : {}}
                 onClose={() => setShowModal(false)}
             >
@@ -183,7 +200,8 @@ const styles = StyleSheet.create({
     locationText: {
         fontFamily: 'LexendBold',
         fontSize: 20,
-        textAlign: 'center'
+        textAlign: 'center',
+        color: colors.primary
     },
 
     row: {
@@ -195,7 +213,10 @@ const styles = StyleSheet.create({
     avatar: {
         width: 39,
         height: 39,
-        borderRadius: screen.width
+        borderRadius: screen.width,
+        borderWidth: 1,
+        borderColor: colors.white,
+        backgroundColor: colors.white
     },
 
     addContainer: {

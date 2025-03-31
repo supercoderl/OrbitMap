@@ -1,5 +1,6 @@
 import assets from "@/assets"
 import OrbitButton from "@/components/Buttons/default"
+import { colors } from "@/constants/Colors"
 import screen from "@/utils/screen"
 import { router } from "expo-router"
 import React from "react"
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
     loginText: {
         fontFamily: 'LexendBold',
         fontSize: 30,
-        color: 'black',
+        color: colors.primary,
         marginBottom: 5,
     },
 
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: 'rgba(0, 0, 0, 0.7)',
         textAlign: 'center',
-        maxWidth: '75%',
+        maxWidth: '80%',
         lineHeight: 20
     },
 

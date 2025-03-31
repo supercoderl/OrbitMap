@@ -1,6 +1,7 @@
 import BackButton from "@/components/Buttons/back"
 import OrbitButton from "@/components/Buttons/default"
 import OrbitInput from "@/components/Inputs/default"
+import { colors } from "@/constants/Colors"
 import { Link, router } from "expo-router"
 import { Formik } from "formik"
 
@@ -66,7 +67,7 @@ const InputForgot: React.FC<InputForgotProps> = ({ handleTabChange }) => {
                 <View style={styles.endWrapper}>
                     <Text style={styles.forgotPassText}>Nhớ mật khẩu?</Text>
                     <Link
-                        style={[styles.forgotPassText, { fontWeight: 'semibold', marginLeft: 5 }]}
+                        style={[styles.forgotPassText, { fontWeight: 'semibold', marginLeft: 5, color: colors.primary }]}
                         href="/(auth)/login"
                     >
                         Đăng nhập
@@ -100,7 +101,7 @@ const styles = StyleSheet.create({
         fontFamily: 'LexendBold',
         alignSelf: 'flex-start',
         fontSize: 30,
-        color: 'black',
+        color: colors.primary,
         marginBottom: 5
     },
 
@@ -112,9 +113,8 @@ const styles = StyleSheet.create({
 
     forgotPassText: {
         textAlign: 'right',
-        fontWeight: 'regular',
         fontSize: 14,
-        fontFamily: 'Inter',
+        fontFamily: 'LexendRegular',
     },
 
     endWrapper: {

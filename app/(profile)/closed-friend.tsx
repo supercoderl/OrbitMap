@@ -3,6 +3,7 @@ import BackButton from "@/components/Buttons/back";
 import OrbitButton from "@/components/Buttons/default";
 import Search from "@/components/Inputs/search";
 import Horizontal from "@/components/ui/Horizontal";
+import { colors } from "@/constants/Colors";
 import screen from "@/utils/screen";
 import { router } from "expo-router";
 import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from "react-native";
@@ -64,7 +65,7 @@ export default function ClosedFriendScreen() {
                     buttonStyle={{ width: 30, height: 30, justifyContent: 'center', alignItems: 'center' }}
                 />
                 <Text style={styles.title}>Bạn thân</Text>
-                <View style={{ width: 24 }} />
+                <View style={{ width: 30 }} />
             </View>
 
             <Horizontal height={1} color="#D8DADC" />
@@ -83,7 +84,7 @@ export default function ClosedFriendScreen() {
                     </View>
 
                     <TouchableOpacity>
-                        <Text style={{ fontFamily: 'LexendSemiBold', fontSize: 16, color: '#F05' }}>Xoá tất cả</Text>
+                        <Text style={{ fontFamily: 'LexendSemiBold', fontSize: 16, color: colors.primary }}>Xoá tất cả</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -91,13 +92,11 @@ export default function ClosedFriendScreen() {
                     data={FRIENDS}
                     keyExtractor={(item) => item.id.toString()}
                     renderItem={({ item }) => (
-                        <View style={[styles.row, { gap: 10 }]}>
+                        <TouchableOpacity style={[styles.row, { gap: 10 }]}>
                             <Image source={item.avatar} style={{ width: 43, height: 43, borderRadius: screen.width }} />
                             <Text style={{ fontFamily: 'LexendMedium', fontSize: 16, flex: 1 }}>{item.name}</Text>
-                            <TouchableOpacity>
-                                <Image source={assets.icon.tick_circle} style={{ width: 24, height: 24 }} />
-                            </TouchableOpacity>
-                        </View>
+                            <Image source={assets.icon.tick_circle} style={{ width: 24, height: 24 }} />
+                        </TouchableOpacity>
                     )}
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={{ paddingBlock: 15, gap: 15 }}
@@ -107,7 +106,7 @@ export default function ClosedFriendScreen() {
             <View style={{ position: 'absolute', bottom: 40, width: '92%', alignSelf: 'center' }}>
                 <OrbitButton
                     text="Xong"
-                    buttonStyle={{ backgroundColor: "#F0541C", borderWidth: 0 }}
+                    buttonStyle={{ borderWidth: 0 }}
                     onPress={() => { }}
                     textStyle={{ fontSize: 20, fontFamily: 'LexendSemiBold' }}
                 />
@@ -127,7 +126,7 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        color: "#292D32",
+        color: colors.primary,
         fontFamily: "LexendBold",
         fontSize: 20,
         flex: 1,

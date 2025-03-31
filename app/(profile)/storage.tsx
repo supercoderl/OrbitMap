@@ -1,5 +1,6 @@
 import BackButton from "@/components/Buttons/back";
 import Horizontal from "@/components/ui/Horizontal";
+import { colors } from "@/constants/Colors";
 import { router } from "expo-router";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 
@@ -12,7 +13,7 @@ export default function StorageScreen() {
                     buttonStyle={{ width: 30, height: 30, justifyContent: 'center', alignItems: 'center' }}
                 />
                 <Text style={styles.title}>Lưu trữ</Text>
-                <View style={{ width: 24 }} />
+                <View style={{ width: 30 }} />
             </View>
 
             <Horizontal height={1} color="#D8DADC" />
@@ -161,7 +162,7 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        color: "#292D32",
+        color: colors.primary,
         fontFamily: "LexendBold",
         fontSize: 20,
         flex: 1,
@@ -169,7 +170,7 @@ const styles = StyleSheet.create({
     },
 
     dateContainer: {
-        backgroundColor: 'rgba(254, 167, 70, 0.7)',
+        backgroundColor: colors.primary,
         paddingBlock: 10,
         alignItems: 'center'
     },
@@ -177,7 +178,7 @@ const styles = StyleSheet.create({
     date: {
         fontFamily: 'LexendSemiBold',
         fontSize: 20,
-        color: '#F0541C'
+        color: colors.white
     },
 
     storageContainer: {

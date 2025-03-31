@@ -3,6 +3,8 @@ import CircleButton from "@/components/Buttons/circle-button";
 import ImagePost from "@/components/Cards/image-post";
 import SharingModal from "@/components/Modals/sharing";
 import NavBar from "@/components/ui/NavBar";
+import { colors } from "@/constants/Colors";
+import { store } from "@/redux";
 import screen from "@/utils/screen";
 import { router } from "expo-router";
 import { useState } from "react";
@@ -29,13 +31,14 @@ const POSTS = [
 
 export default function Post() {
     const [showModal, setShowModal] = useState(false);
+    const { userInfo } = store.getState().user;
 
     return (
         <View style={styles.container}>
             <NavBar
                 leftNode={
                     <TouchableOpacity onPress={() => router.push("/(profile)")}>
-                        <Image source={assets.avatar.maithy} style={styles.avatar} />
+                        <Image source={userInfo ? { uri: userInfo.avatarUrl } : assets.avatar.maithy} style={styles.avatar} />
                     </TouchableOpacity>
                 }
                 rightNode={
@@ -166,7 +169,10 @@ const styles = StyleSheet.create({
     avatar: {
         width: 39,
         height: 39,
-        borderRadius: screen.width
+        borderRadius: screen.width,
+        borderWidth: 1,
+        borderColor: colors.white,
+        backgroundColor: colors.white
     },
 
     text: {
@@ -237,7 +243,7 @@ const styles = StyleSheet.create({
         paddingBlock: 6,
         flexDirection: 'row',
         gap: 5,
-        backgroundColor: 'rgba(240, 84, 28, 0.78)',
+        backgroundColor: colors.primary,
         justifyContent: 'center',
         alignItems: 'center'
     },

@@ -105,7 +105,7 @@ const RestaurantModal: React.FC<RestaurantModalProps> = ({ ...props }) => {
     const { onClose } = props;
 
     return (
-        <>
+        <View style={{ flex: 1 }}>
             <View style={[styles.row, { width: '100%', gap: 10, paddingHorizontal: 20, paddingBottom: 17 }]}>
                 <Search
                     placeholder="Tìm kiếm địa điểm"
@@ -142,9 +142,11 @@ const RestaurantModal: React.FC<RestaurantModalProps> = ({ ...props }) => {
                     </ModularCard>
                 )}
                 showsVerticalScrollIndicator={false}
+                keyboardShouldPersistTaps="handled"
                 contentContainerStyle={{ gap: 12, paddingHorizontal: 20, paddingBlock: 17 }}
+                style={{ flex: 1 }}
             />
-        </>
+        </View>
     )
 }
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { colors } from "@/constants/Colors";
 
 const StarRating = ({ rate }: { rate: number }) => {
     const fullStars = Math.floor(rate); // Số sao đầy đủ
@@ -13,17 +14,17 @@ const StarRating = ({ rate }: { rate: number }) => {
             {Array(fullStars)
                 .fill(0)
                 .map((_, index) => (
-                    <FontAwesome key={index} name="star" size={6.55} color="#FEA74E" />
+                    <FontAwesome key={index} name="star" size={6.55} color={colors.primary} />
                 ))}
 
             {/* Hiển thị sao nửa */}
-            {hasHalfStar && <FontAwesome name="star-half" size={6.55} color="#FEA74E" />}
+            {hasHalfStar && <FontAwesome name="star-half" size={6.55} color={colors.primary} />}
 
             {/* Hiển thị sao rỗng */}
             {Array(emptyStars)
                 .fill(0)
                 .map((_, index) => (
-                    <FontAwesome key={index} name="star-o" size={6.55} color="#FEA74E" />
+                    <FontAwesome key={index} name="star-o" size={6.55} color={colors.primary} />
                 ))}
         </View>
     );

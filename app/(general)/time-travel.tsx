@@ -1,6 +1,7 @@
 import assets from "@/assets"
 import BackButton from "@/components/Buttons/back"
 import Horizontal from "@/components/ui/Horizontal"
+import { colors } from "@/constants/Colors"
 import { router } from "expo-router"
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native"
 
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        color: "#292D32",
+        color: colors.primary,
         fontFamily: "LexendBold",
         fontSize: 20,
         flex: 1,
@@ -74,6 +75,6 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         gap: 10,
-        backgroundColor: "rgba(240, 84, 28, 0.78)"
+        backgroundColor: colors.primary
     },
 })
