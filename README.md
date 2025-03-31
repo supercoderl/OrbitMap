@@ -9,23 +9,21 @@
 <p align="center">Future</p>
 
 <p align="center">
-  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/EliasGcf/readme-template">
+  <img alt="access" src="https://img.shields.io/badge/access-open_source-red?style=flat">
 
-  <a href="https://www.linkedin.com/in/eliasgcf/">
-    <img alt="Made by" src="https://img.shields.io/badge/made%20by-Elias%20Gabriel-gree">
+  <a href="https://www.linkedin.com/in/supercoderle/">
+    <img alt="Made by" src="https://img.shields.io/badge/made_by-supercoderle-blue?style=flat">
   </a>
   
-  <img alt="Repository size" src="https://img.shields.io/github/repo-size/EliasGcf/readme-template">
-  
-  <a href="https://github.com/EliasGcf/readme-template/commits/master">
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/EliasGcf/readme-template">
+  <a href="https://github.com/supercoderl/OrbitMap/commits">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/supercoderl/OrbitMap">
   </a>
   
-  <a href="https://github.com/EliasGcf/readme-template/issues">
-    <img alt="Repository issues" src="https://img.shields.io/github/issues/EliasGcf/readme-template">
+  <a href="https://www.linkedin.com/in/supercoderle/">
+    <img alt="Languages" src="https://img.shields.io/github/languages/count/supercoderl/OrbitMap">
   </a>
   
-  <img alt="GitHub" src="https://img.shields.io/github/license/EliasGcf/readme-template">
+  <img alt="GitHub" src="https://img.shields.io/github/followers/supercoderl">
 </p>
 
 <p align="center">
@@ -33,6 +31,7 @@
   <a href="#-technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-getting-started">Getting started</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-how-to-contribute">How to contribute</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#%EF%B8%8F-screenshots">Screenshots</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-license">License</a>
 </p>
 
@@ -114,7 +113,7 @@ $ git push origin my-feature
 
 After your pull request is merged, you can delete your branch
 
-## Screenshots
+## 🖼️ Screenshots
 
 <p>
 <kbd><img src="./assets/images/screenshots/screen2.png" alt="Splash View" width="200"></kbd>
