@@ -16,7 +16,7 @@ const reducer = combineReducers({
 const persistConfig = {
 	key: "redux-state",
 	storage: AsyncStorage,
-	whitelist: ['global']
+	whitelist: ['global'],
 };
 const persistReducerConfig = persistReducer(persistConfig, reducer);
 

@@ -34,7 +34,7 @@ export default () => {
                 chatService.connectSocket(token, data.userId);
             }
             else {
-                toast.info("Something went wrong", "User data null, please re-authorize!");
+                toast.error("Something went wrong", "User data null, please re-authorize!");
                 router.replace('/(auth)/login');
             }
         }

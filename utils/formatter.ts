@@ -1,3 +1,5 @@
+import { DaiLyItinerary } from "@/types";
+
 export const formatDate = (date: Date, format: string = "dd/mm/yyyy"): string => {
     if (!date || !(date instanceof Date) || isNaN(date.getTime())) {
         return "Invalid Date";
@@ -13,6 +15,21 @@ export const formatDate = (date: Date, format: string = "dd/mm/yyyy"): string =>
         .replace("mm", monthText)
         .replace("MM", `tháng ${monthText}`) // Add type "tháng 2"
         .replace("yyyy", String(year));
+};
+
+export const formatTime = (date: Date, format: string = "HH:mm"): string => {
+    if (!date || !(date instanceof Date) || isNaN(date.getTime())) {
+        return "Invalid Time";
+    }
+
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = String(date.getSeconds()).padStart(2, "0");
+
+    return format
+        .replace("HH", hours)
+        .replace("mm", minutes)
+        .replace("ss", seconds);
 };
 
 export const getZodiacSign = (date: Date): string => {
@@ -36,3 +53,79 @@ export const getZodiacSign = (date: Date): string => {
 
     return "unknown";
 };
+
+export function formatDailyItineraries(dailyItineraries: DaiLyItinerary[]) {
+    if (!Array.isArray(dailyItineraries)) return [];
+
+    return dailyItineraries.map((dayItem, index) => {
+        const isLastDay = index === dailyItineraries.length - 1;
+        const isFirstDay = index === 0;
+        const isMiddleDay = index > 0 && index < dailyItineraries.length - 1;
+
+        // Clone scheduledPlaces to void change the original data
+        const scheduledPlaces = [...dayItem.scheduledPlaces];
+
+        if (isLastDay) {
+            const lastEndTimeString = scheduledPlaces[scheduledPlaces.length - 1].endTime;
+            const [hours, minutes, seconds] = lastEndTimeString.split(':').map(Number);
+            const lastEndTime = new Date();
+            lastEndTime.setHours(hours, minutes, seconds);
+            lastEndTime.setHours(lastEndTime.getHours() + 1);
+            const newEndTimeString = lastEndTime.toTimeString().slice(0, 8);
+
+            scheduledPlaces.push({
+                place: {
+                    name: "Đi về",
+                    address: "",
+                    imageUrl: "https://res.cloudinary.com/do02vtlo0/image/upload/v1743922670/places/xpbzxa2iwkdxrieqbvkw.webp",
+                },
+                startTime: newEndTimeString,
+                endTime: newEndTimeString,
+                formattedTimeSlot: "",
+            });
+        }
+        else if (isMiddleDay) {
+            const lastEndTimeString = scheduledPlaces[scheduledPlaces.length - 1].endTime;
+            const [hours, minutes, seconds] = lastEndTimeString.split(':').map(Number);
+            const lastEndTime = new Date();
+            lastEndTime.setHours(hours, minutes, seconds);
+            lastEndTime.setHours(lastEndTime.getHours() + 1);
+            const newEndTimeString = lastEndTime.toTimeString().slice(0, 8);
+
+            scheduledPlaces.push({
+                place: {
+                    name: "Nghỉ ngơi",
+                    address: "Nghỉ ngơi tại khách sạn",
+                    imageUrl: "https://res.cloudinary.com/do02vtlo0/image/upload/v1743922671/places/ojdzjbuzwelyvoojbxsu.jpg",
+                },
+                startTime: newEndTimeString,
+                endTime: newEndTimeString,
+                formattedTimeSlot: "",
+            });
+        }
+        else if (isFirstDay && dailyItineraries.length === 1) {
+            const lastEndTimeString = scheduledPlaces[scheduledPlaces.length - 1].endTime;
+            const [hours, minutes, seconds] = lastEndTimeString.split(':').map(Number);
+            const lastEndTime = new Date();
+            lastEndTime.setHours(hours, minutes, seconds);
+            lastEndTime.setHours(lastEndTime.getHours() + 1);
+            const newEndTimeString = lastEndTime.toTimeString().slice(0, 8);
+
+            scheduledPlaces.push({
+                place: {
+                    name: "Đi về",
+                    address: "",
+                    imageUrl: "https://res.cloudinary.com/do02vtlo0/image/upload/v1743922670/places/xpbzxa2iwkdxrieqbvkw.webp",
+                },
+                startTime: newEndTimeString,
+                endTime: newEndTimeString,
+                formattedTimeSlot: "",
+            });
+        }
+
+        return {
+            ...dayItem,
+            scheduledPlaces,
+        };
+    });
+}

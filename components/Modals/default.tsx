@@ -60,23 +60,21 @@ const OrbitModal: React.FC<OrbitModalProps> = ({ ...props }) => {
                     style={[StyleSheet.absoluteFill, { backgroundColor: overlayBackground ?? 'rgba(0, 0, 0, 0.6)' }]}
                     onPress={onClose}
                 />}
-            <GestureDetector gesture={panGesture}>
-                <Animated.View
-                    style={[
-                        {
-                            flex: 1,
-                            backgroundColor: "white",
-                            paddingBlock: 20,
-                            borderTopLeftRadius: 15,
-                            borderTopRightRadius: 15,
-                        },
-                        animatedStyle,
-                        innerStyle
-                    ]}
-                >
-                    {children}
-                </Animated.View>
-            </GestureDetector>
+            <Animated.View
+                style={[
+                    {
+                        flex: 1,
+                        backgroundColor: "white",
+                        paddingBlock: 20,
+                        borderTopLeftRadius: 15,
+                        borderTopRightRadius: 15,
+                    },
+                    animatedStyle,
+                    innerStyle
+                ]}
+            >
+                {children}
+            </Animated.View>
         </View>
     )
 }

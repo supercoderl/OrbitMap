@@ -33,6 +33,10 @@ const chat = (state: ChatState = chatState, action: AnyAction) =>
                     draftState.friendMessages = [...draftState.friendMessages, action.friendMessage]; // Add new message
                 }
                 break;
+            case types.SET_FRIEND_MESSAGES:
+                    draftState.friendMessages = action.friendMessages;
+                    break;
+                break;
             case types.SET_FRIEND_GATHER:
                 draftState.friends = action.friends;
                 break;
@@ -45,9 +49,8 @@ const chat = (state: ChatState = chatState, action: AnyAction) =>
             case types.UPDATE_UNREAD_MESSAGES:
                 const unreadMessages = draftState.friendMessages.filter(x => x.senderId === action.payload.senderId && x.receiverId === action.payload.receiverId);
 
-                if(unreadMessages.length > 0)
-                {
-                    draftState.friendMessages = draftState.friendMessages.map(item => 
+                if (unreadMessages.length > 0) {
+                    draftState.friendMessages = draftState.friendMessages.map(item =>
                         unreadMessages.some(msg => msg.messageId === item.messageId)
                             ? { ...item, isRead: true }
                             : item

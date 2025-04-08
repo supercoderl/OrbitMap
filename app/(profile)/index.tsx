@@ -119,11 +119,17 @@ export default () => {
                                     <Text style={{ fontFamily: 'LexendBold', fontSize: 20, color: colors.primary }}>
                                         {userInfo?.fullname ?? "Nomads"}
                                     </Text>
-                                    <Text style={{ fontFamily: 'LexendRegular', color: '#A9AAAB' }}>
+                                    <Text
+                                        style={{ fontFamily: 'LexendRegular', color: '#A9AAAB' }}
+                                        numberOfLines={1}
+                                        ellipsizeMode="tail"
+                                    >
                                         {userInfo?.email ?? 'nomadsdabezt@gmail.com'}
                                     </Text>
                                 </View>
-                                <Image source={assets.icon.scan_barcode} style={{ width: 32, height: 32 }} />
+                                <TouchableOpacity>
+                                    <Image source={assets.icon.scan_barcode} style={{ width: 32, height: 32 }} />
+                                </TouchableOpacity>
                             </View>
                             <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
                                 <View style={{
@@ -134,7 +140,7 @@ export default () => {
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     flex: 1,
-                                    gap: 10
+                                    gap: 5
                                 }}>
                                     <Image source={assets.icon.cake} style={{ width: 24, height: 24 }} />
                                     <Text style={{ fontFamily: 'LexendRegular', color: '#F0541C' }}>
@@ -158,7 +164,7 @@ export default () => {
                         </View>
                         {
                             userInfo && userInfo.qrUrl && userInfo.qrUrl !== "" ?
-                                <Image source={{ uri: userInfo.qrUrl }} style={{ width: 89, height: 89 }} />
+                                <Image source={{ uri: userInfo.qrUrl }} style={{ width: 89, height: 89, borderRadius: 5 }} />
                                 :
                                 <>
                                     <View style={{
@@ -206,7 +212,7 @@ export default () => {
                             <View style={styles.buttonContainer}>
                                 <Image source={assets.icon.people} style={{ width: 32, height: 32 }} />
                                 <Text style={styles.buttonText}>Bạn bè</Text>
-                                <Text style={{ fontFamily: 'LexendRegular', color: '#A9AAAB' }}>48</Text>
+                                <Text style={{ fontFamily: 'LexendRegular', color: '#A9AAAB' }}>{userInfo?.friendsCount ?? 0}</Text>
                             </View>
                         </TouchableOpacity>
 

@@ -1,4 +1,5 @@
 import assets from "@/assets";
+import screen from "@/utils/screen";
 import React, { ReactNode } from "react"
 import { Image, View, Text, StyleSheet, ImageStyle } from "react-native"
 
@@ -57,6 +58,7 @@ const styles = StyleSheet.create({
     image: {
         width: 42,
         height: 42,
+        borderRadius: screen.width
     },
 
     favoriteContainer: {

@@ -75,13 +75,15 @@ export default () => {
             <View style={styles.headerContainer}>
                 <Search
                     placeholder="Tìm kiếm"
+                    items={[]}
+                    onSelectItem={() => { }}
                 />
                 <TouchableOpacity onPress={() => router.back()}>
                     <Text style={{ fontFamily: 'LexendSemiBold', fontSize: 16, color: '#F0541C' }}>Hủy</Text>
                 </TouchableOpacity>
             </View>
 
-            <View style={{ flex: 1, paddingHorizontal: 15 }}>
+            <View style={{ flex: 1, paddingHorizontal: 15, zIndex: 0 }}>
                 <TouchableOpacity style={styles.button} onPress={() => router.push('/(search)/travel-hint')}>
                     <Image source={assets.icon.calendar} style={{ width: 42, height: 42 }} />
                     <View style={{ flex: 1, gap: 5 }}>
@@ -169,7 +171,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         gap: 15,
         width: '100%',
-        paddingBottom: 10
+        paddingBottom: 10,
+        zIndex: 4
     },
 
     title: {

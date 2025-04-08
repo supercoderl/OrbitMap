@@ -3,13 +3,47 @@ import screen from "@/utils/screen";
 import { Image, View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import Horizontal from "../ui/Horizontal";
 import { Post } from "@/types";
+import { reactPost, savePost } from "@/api/modules/post";
+import { ReactionType } from "@/enums";
 
 interface PostCardProps {
     item: Post;
+    userId?: string | null;
+    refresh: () => void;
 }
 
 const PostCard: React.FC<PostCardProps> = ({ ...props }) => {
-    const { item } = props;
+    const { item, userId, refresh } = props;
+
+    const getReactionActive = () => {
+        if (userId && item && item.userReactions.length > 0) {
+            return item.userReactions.find(x => x.userId === userId);
+        }
+        return null;
+    }
+
+    const onReact = async (type: ReactionType) => {
+        if (!item || !userId) return;
+
+        await reactPost({
+            postId: item.postId,
+            userId,
+            reactionType: type
+        });
+
+        await refresh();
+    }
+
+    const onSave = async () => {
+        if (!item || !userId) return;
+
+        await savePost({
+            postId: item.postId,
+            userId,
+        });
+
+        await refresh();
+    }
 
     return (
         <View style={styles.container}>
@@ -52,21 +86,27 @@ const PostCard: React.FC<PostCardProps> = ({ ...props }) => {
 
             <View style={styles.operationContainer}>
                 <View style={styles.operationBtnContainer}>
-                    <TouchableOpacity>
-                        <Image source={assets.icon.like} style={styles.operationIcon} />
+                    <TouchableOpacity onPress={() => onReact(ReactionType.Like)}>
+                        <Image
+                            source={getReactionActive()?.reactionType === ReactionType.Like ? assets.icon.like_active : assets.icon.like}
+                            style={styles.operationIcon}
+                        />
                     </TouchableOpacity>
                     <Text>Hữu ích</Text>
                 </View>
                 <Horizontal width={1} height={'100%'} color="#D8DADC" />
                 <View style={styles.operationBtnContainer}>
-                    <TouchableOpacity>
-                        <Image source={assets.icon.dislike} style={styles.operationIcon} />
+                    <TouchableOpacity onPress={() => onReact(ReactionType.Dislike)}>
+                        <Image
+                            source={getReactionActive()?.reactionType === ReactionType.Dislike ? assets.icon.dislike_active : assets.icon.dislike}
+                            style={styles.operationIcon}
+                        />
                     </TouchableOpacity>
                     <Text>Không hữu ích</Text>
                 </View>
                 <Horizontal width={1} height={'100%'} color="#D8DADC" />
                 <View style={{ flex: 0.5, alignItems: 'center' }}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={onSave}>
                         <Image source={assets.icon.markbook} style={styles.operationIcon} />
                     </TouchableOpacity>
                 </View>

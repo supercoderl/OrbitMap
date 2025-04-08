@@ -1,4 +1,5 @@
 import assets from "@/assets";
+import BackButton from "@/components/Buttons/back";
 import CircleButton from "@/components/Buttons/circle-button";
 import ImagePost from "@/components/Cards/image-post";
 import SharingModal from "@/components/Modals/sharing";
@@ -37,9 +38,14 @@ export default function Post() {
         <View style={styles.container}>
             <NavBar
                 leftNode={
-                    <TouchableOpacity onPress={() => router.push("/(profile)")}>
-                        <Image source={userInfo ? { uri: userInfo.avatarUrl } : assets.avatar.maithy} style={styles.avatar} />
-                    </TouchableOpacity>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                        <BackButton
+                            onPress={() => router.back()}
+                        />
+                        <TouchableOpacity onPress={() => router.push("/(profile)")}>
+                            <Image source={userInfo ? { uri: userInfo.avatarUrl } : assets.avatar.maithy} style={styles.avatar} />
+                        </TouchableOpacity>
+                    </View>
                 }
                 rightNode={
                     <View style={{ position: 'relative' }}>
@@ -47,6 +53,7 @@ export default function Post() {
                             icon={assets.icon.message_black}
                             size={21.5}
                             style={{ backgroundColor: '#D8DADC' }}
+                            onPress={() => router.push("/(home)/message")}
                         />
                         <View style={{
                             position: 'absolute',

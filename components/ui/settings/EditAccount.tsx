@@ -1,7 +1,7 @@
 import OrbitButton from "@/components/Buttons/default"
 import { colors } from "@/constants/Colors";
 import { formatDate, toast } from "@/utils";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Text, TextInput, Pressable } from "react-native"
 import RNDateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { User } from "@/types";
@@ -20,8 +20,6 @@ interface EditAccountProps {
 const EditAccount: React.FC<EditAccountProps> = ({ ...props }) => {
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [isChoosingDate, setIsChoosingDate] = useState<boolean>(false);
-    const [name, setName] = useState<string>("");
-    const [id, setId] = useState<string>("");
     const [birthdate, setBirthdate] = useState<Date>(new Date(1997, 5, 12));
     const { control, handleSubmit, formState: { errors }, reset } = useForm({
         resolver: yupResolver(updateUserSchema),
@@ -43,7 +41,7 @@ const EditAccount: React.FC<EditAccountProps> = ({ ...props }) => {
 
     const onFinish = async (updateForm: { fullname: string, email: string, birthdate: Date }) => {
         if (!userInfo) {
-            toast.info("Authentication warning", "Please re-authenticate to continue!", 2000);
+            toast.error("Authentication warning", "Please re-authenticate to continue!", 2000);
             router.push("/(auth)/login");
             return;
         }
@@ -80,6 +78,18 @@ const EditAccount: React.FC<EditAccountProps> = ({ ...props }) => {
             setLoading(false);
         }
     }
+
+    useEffect(() => {
+        if (errors.fullname) {
+            toast.error(errors.fullname.message as string);
+        }
+        if (errors.email) {
+            toast.error(errors.email.message as string);
+        }
+        if (errors.birthdate) {
+            toast.error(errors.birthdate.message as string);
+        }
+    }, [errors]);
 
     return (
         <View style={{ paddingHorizontal: 15, marginTop: 20, borderRadius: 10, zIndex: 1, gap: 20 }}>
@@ -163,7 +173,7 @@ const EditAccount: React.FC<EditAccountProps> = ({ ...props }) => {
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' }}>
                     <Text style={styles.buttonText}>Bạn bè</Text>
-                    <Text style={styles.secondText}>48</Text>
+                    <Text style={styles.secondText}>{userInfo?.friendsCount ?? 0}</Text>
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' }}>
                     <Text style={styles.buttonText}>Người dùng bị chặn</Text>
@@ -177,6 +187,15 @@ const EditAccount: React.FC<EditAccountProps> = ({ ...props }) => {
                 loading={loading}
                 onPress={isEditing ? handleSubmit(onFinish) : () => setIsEditing(true)}
             />
+            {
+                isEditing &&
+                <OrbitButton
+                    text="Cancel"
+                    textStyle={{ fontSize: 20 }}
+                    backgroundColor={colors.white}
+                    onPress={() => setIsEditing(false)}
+                />
+            }
         </View>
     )
 }

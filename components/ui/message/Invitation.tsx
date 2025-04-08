@@ -89,7 +89,7 @@ const Invitation: React.FC<InvitationProps> = ({ ...props }) => {
 
     const onLoad = async () => {
         if (!userId) {
-            toast.info("Something went wrong", "Please check again your authentication.", 2000);
+            toast.error("Something went wrong", "Please check again your authentication.", 2000);
             return;
         }
         try {

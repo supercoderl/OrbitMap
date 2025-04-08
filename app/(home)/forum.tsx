@@ -17,13 +17,14 @@ export default function ForumScreen() {
     const [posts, setPosts] = useState<Post[]>([]);
     const { userInfo } = store.getState().user;
 
-    const onLoad = async () => {
+    const onLoad = async (loading: boolean = false) => {
         try {
-            setLoading(true);
+            if(loading) setLoading(true);
             const { data } = await getPostList({
                 query: { pageSize: 10, pageIndex: 1 },
                 searchTerm: "",
-                status: ActionStatus.All
+                status: ActionStatus.All,
+                scope: "others"
             });
 
             setPosts(data?.items ?? []);
@@ -34,7 +35,7 @@ export default function ForumScreen() {
     }
 
     useEffect(() => {
-        onLoad();
+        onLoad(true);
     }, []);
 
     return (
@@ -47,19 +48,21 @@ export default function ForumScreen() {
                             style={styles.avatar}
                         />
                         <View style={styles.addBtn}>
-                            <Image source={assets.icon.add_black} style={styles.add} />
+                            <Image source={assets.icon.add_white} style={styles.add} />
                         </View>
                     </TouchableOpacity>
                 }
                 rightNode={
                     <TouchableOpacity>
-                        <Image source={assets.icon.gallery_orange} style={styles.gallery} />
+                        <Image source={assets.icon.gallery_primary} style={styles.gallery} />
                     </TouchableOpacity>
                 }
                 style={{ gap: 20, paddingHorizontal: 20, position: 'relative', top: 0 }}
             >
                 <Search
-                    placeholder="Tìm kiếm"
+                    placeholder="Tìm kiếm" 
+                    items={[]} value={""} 
+                    onChangeText={() => {}}                
                 />
             </NavBar>
 
@@ -75,12 +78,14 @@ export default function ForumScreen() {
                 renderItem={({ item }) => (
                     <PostCard
                         item={item}
+                        userId={userInfo?.userId}
+                        refresh={onLoad}
                     />
                 )}
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ paddingBlock: 9, paddingHorizontal: 18, gap: 15 }}
                 refreshControl={
-                    <RefreshControl refreshing={loading} onRefresh={onLoad} />
+                    <RefreshControl refreshing={loading} onRefresh={() => onLoad(true)} />
                 }
             />
         </View>
@@ -115,8 +120,8 @@ const styles = StyleSheet.create({
     },
 
     add: {
-        width: 15,
-        height: 15,
+        width: 10,
+        height: 10,
         zIndex: 3
     },
 

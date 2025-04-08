@@ -10,7 +10,7 @@ import Security from "@/components/ui/settings/Security"
 import { colors } from "@/constants/Colors"
 import { store } from "@/redux"
 import { setRefreshToken, setToken } from "@/redux/modules/global/action"
-import { toast } from "@/utils"
+import { onAfterLogout, toast } from "@/utils"
 import screen from "@/utils/screen"
 import { router, useFocusEffect } from "expo-router"
 import React, { useCallback, useState } from "react"
@@ -111,8 +111,7 @@ export default () => {
     );
 
     const logout = () => {
-        store.dispatch(setToken(""));
-        store.dispatch(setRefreshToken(""));
+        onAfterLogout();
         toast.success("Logout successful!");
         router.replace("/(auth)");
     }

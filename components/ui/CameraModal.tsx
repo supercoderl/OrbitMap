@@ -10,6 +10,12 @@ import OrbitModal from '../Modals/default';
 import { OPERATIONS } from '@/data';
 import { TextInput } from 'react-native-gesture-handler';
 import { router, useFocusEffect } from 'expo-router';
+import { CameraType } from 'expo-image-picker';
+import { store } from '@/redux';
+import { colors } from '@/constants/Colors';
+import { createPhotoPost } from '@/api/modules/photoPost';
+import { toast } from '@/utils';
+import { AnnotationType } from '@/enums';
 
 const FRIENDS_TO_SEND = [
     {
@@ -82,11 +88,19 @@ interface CameraModalProps {
 
 const CameraModal: React.FC<CameraModalProps> = ({ ...props }) => {
     const { onClose } = props;
+    const [loading, setLoading] = useState(false);
     const [image, setImage] = useState<string | null>(null);
+    const [type, setType] = useState(CameraType.back); // Default is back
     const cameraRef = useRef<CameraView | null>(null);
     const [selectedUser, setSelectedUser] = useState<number>(FRIENDS_TO_SEND[0].id);
     const [showModal, setShowModal] = useState(false);
     const [selectedOperation, setSelectedOperation] = useState<string | null>(null);
+    const [annotationValue, setAnnotationValue] = useState<string | null>(null);
+    const { userInfo } = store.getState().user;
+
+    const flipCamera = () => {
+        setType((current) => (current === CameraType.back ? CameraType.front : CameraType.back));
+    };
 
     const takePicture = async () => {
         if (cameraRef.current) {
@@ -103,6 +117,29 @@ const CameraModal: React.FC<CameraModalProps> = ({ ...props }) => {
         }
     };
 
+    const createPost = async () => {
+        if(!image) {
+            toast.error("Please take a picture first!");
+            return;
+        }
+        try {
+            setLoading(true);
+            const { data } = await createPhotoPost({
+                userId: userInfo?.userId,
+                image,
+                annotationType: selectedOperation,
+                annotationValue
+            });
+
+            if(data && data !== "")
+            {
+                router.push('/(general)/post');
+            }
+        } finally {
+            setLoading(false);
+        }
+    }
+
     useFocusEffect(
         useCallback(() => {
             return () => {
@@ -117,7 +154,10 @@ const CameraModal: React.FC<CameraModalProps> = ({ ...props }) => {
                 leftNode={
                     <View style={styles.row}>
                         <TouchableOpacity onPress={() => router.push("/(profile)")}>
-                            <Image source={assets.avatar.maithy} style={styles.avatar} />
+                            <Image
+                                source={userInfo && userInfo.avatarUrl ? { uri: userInfo.avatarUrl } : assets.avatar.maithy}
+                                style={styles.avatar}
+                            />
                         </TouchableOpacity>
                         <CircleButton
                             icon={assets.icon.search_white}
@@ -193,7 +233,7 @@ const CameraModal: React.FC<CameraModalProps> = ({ ...props }) => {
                 radius={40}
                 borderWidth={5}
             >
-                {selectedOperation === 'text' ?
+                {selectedOperation === AnnotationType[AnnotationType.Text] ?
                     <TextInput
                         style={{
                             paddingBlock: 5,
@@ -203,6 +243,8 @@ const CameraModal: React.FC<CameraModalProps> = ({ ...props }) => {
                             fontSize: 18,
                             fontFamily: "LexendSemiBold",
                         }}
+                        value={annotationValue || ''}
+                        onChangeText={setAnnotationValue}
                     />
                     :
                     null}
@@ -214,7 +256,7 @@ const CameraModal: React.FC<CameraModalProps> = ({ ...props }) => {
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={() => {
-                    image ? router.push('/(general)/post') : takePicture();
+                    image ? createPost() : takePicture();
                 }}>
                     <Image source={image ? assets.icon.send : assets.icon.screenshot} style={styles.screenshot} />
                 </TouchableOpacity>
@@ -315,7 +357,10 @@ const styles = StyleSheet.create({
     avatar: {
         width: 39,
         height: 39,
-        borderRadius: screen.width
+        borderRadius: screen.width,
+        borderWidth: 1,
+        borderColor: colors.white,
+        backgroundColor: colors.white
     },
 
     text: {

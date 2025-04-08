@@ -2,6 +2,8 @@ import Toast from 'react-native-toast-message';
 
 const duration = 5000;
 
+
+
 export const toast = {
     success: (title?: string, msg?: string, timeout = duration) =>
         Toast.show({
@@ -20,6 +22,14 @@ export const toast = {
     info: (title?: string, msg?: string, timeout = duration) =>
         Toast.show({
             type: 'info',
+            text1: title,
+            text2: msg,
+            visibilityTime: timeout,
+        }),
+
+    notify: (title?: string, msg?: string, timeout = duration) =>
+        Toast.show({
+            type: "customNotification",
             text1: title,
             text2: msg,
             visibilityTime: timeout,

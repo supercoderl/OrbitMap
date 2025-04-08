@@ -8,23 +8,27 @@ import screen from "@/utils/screen";
 import { useEffect, useState } from "react";
 import { FlatList, View, Text, Image, TouchableOpacity, StyleSheet, RefreshControl, ActivityIndicator } from "react-native";
 import Empty from "../Empty";
+import { ServerRes } from "@/redux/interface";
 
-const ContactItem = ({ item, userId, refresh }: { item: ContactInfo, userId?: string | null, refresh: () => void }) => {
+const ContactItem = (
+    { item, userId, refresh, signal }: {
+        item: ContactInfo,
+        userId?: string | null,
+        refresh: () => void,
+        signal?: signalR.HubConnection | null;
+    }) => {
     const [loading, setLoading] = useState<boolean>(false);
 
     const onAdd = async () => {
         if (!userId) {
-            toast.info("Something went wrong", "Please check again your authentication.", 2000);
+            toast.error("Something went wrong", "Please check again your authentication.", 2000);
             return;
         }
         try {
             setLoading(true);
-            await addFriend({
-                userId,
-                friendId: item.friendId
+            await signal?.invoke('AddFriend', item.friendId).then(async (res) => {
+                await refresh();
             });
-
-            await refresh();
         }
         finally {
             setLoading(false);
@@ -33,7 +37,7 @@ const ContactItem = ({ item, userId, refresh }: { item: ContactInfo, userId?: st
 
     const onCancel = async () => {
         if (!userId) {
-            toast.info("Something went wrong", "Please check again your authentication.", 2000);
+            toast.error("Something went wrong", "Please check again your authentication.", 2000);
             return;
         }
 
@@ -91,16 +95,17 @@ const ContactItem = ({ item, userId, refresh }: { item: ContactInfo, userId?: st
 
 interface ContactProps {
     userId?: string | null;
+    signal?: signalR.HubConnection | null;
 }
 
 const Contact: React.FC<ContactProps> = ({ ...props }) => {
-    const { userId } = props;
+    const { userId, signal } = props;
     const [loading, setLoading] = useState<boolean>(false);
     const [contacts, setContacts] = useState<ContactInfo[]>([]);
 
     const onLoad = async () => {
         if (!userId) {
-            toast.info("Something went wrong", "Please check again your authentication.", 2000);
+            toast.error("Something went wrong", "Please check again your authentication.", 2000);
             return;
         }
         try {
@@ -124,6 +129,12 @@ const Contact: React.FC<ContactProps> = ({ ...props }) => {
 
     useEffect(() => {
         onLoad();
+
+        signal?.on('addFriend', onLoad);
+
+        return () => {
+            signal?.off('addFriend', onLoad);
+        };
     }, []);
 
     return (
@@ -133,7 +144,7 @@ const Contact: React.FC<ContactProps> = ({ ...props }) => {
             <FlatList
                 data={contacts}
                 keyExtractor={(item, index) => index.toString()}
-                renderItem={({ item }) => <ContactItem item={item} userId={userId} refresh={onLoad} />}
+                renderItem={({ item }) => <ContactItem item={item} userId={userId} refresh={onLoad} signal={signal} />}
                 showsVerticalScrollIndicator={false}
                 style={{ marginTop: 15 }}
                 ListEmptyComponent={<Empty />}

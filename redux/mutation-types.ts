@@ -54,7 +54,8 @@ export const UPDATE_UNREAD_MESSAGES = 'UPDATE_UNREAD_MESSAGES';
 // Setting addFriendMessage
 export const ADD_FRIEND_MESSAGE = 'ADD_FRIEND_MESSAGE';
 
-// export const SET_FRIEND_MESSAGES = 'set_friend_messages';
+// Setting setFriendMessages
+export const SET_FRIEND_MESSAGES = 'SET_FRIEND_MESSAGES';
 // export const DEL_GROUP = 'del_group';
 // export const DEL_FRIEND = 'del_friend';
 // export const ADD_UNREAD_GATHER = 'set_unread_gather';

@@ -1,4 +1,4 @@
-import { ActionStatus, FriendShipStatus, Gender } from "@/enums";
+import { ActionStatus, AnnotationType, FriendShipStatus, Gender, PlaceType } from "@/enums";
 
 // * Request response parameters (excluding data)
 export interface Result {
@@ -33,6 +33,15 @@ export interface ReqListParams {
 	sortQuery?: any;
 }
 
+// * List request parameters (including filter, user id, scope, search, status, pagination)
+export interface ReqPostListParams {
+	query: ReqPage;
+	searchTerm: string;
+	status: ActionStatus;
+	scope: string;
+	userId?: string | null;
+}
+
 // * List request parameters (including filter, user id, search, status, pagination)
 export interface ReqFriendListParams {
 	query: ReqPage;
@@ -40,6 +49,15 @@ export interface ReqFriendListParams {
 	actionType: string;
 	status: ActionStatus;
 	userId?: string | null;
+}
+
+// * List request parameters (including filter, types, search, status, pagination)
+export interface ReqPlaceListParams {
+	query: ReqPage;
+	searchTerm: string;
+	sortQuery?: any;
+	status: ActionStatus;
+	types: PlaceType[];
 }
 
 // * Log in
@@ -99,5 +117,15 @@ export namespace FriendShip {
 
 	export interface AcceptForm {
 		friendShipId: string;
+	}
+}
+
+// * Photo Post
+export namespace PhotoPost {
+	export interface ReqCreatePhotoPostForm {
+		userId: string;
+		image: string;
+		annotationType?: string | null;
+		annotationValue?: string | null;
 	}
 }

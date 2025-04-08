@@ -10,7 +10,7 @@ import MapView from "react-native-maps";
 import { LinearGradient } from 'expo-linear-gradient';
 import OrbitModal from "@/components/Modals/default";
 import RestaurantModal from "@/components/ui/RestaurantModal";
-import HotelModal from "@/components/ui/HotalModal";
+import HotelModal from "@/components/ui/HotelModal";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import CameraModal from "@/components/ui/CameraModal";
 import { colors } from "@/constants/Colors";
@@ -22,11 +22,12 @@ export default () => {
     const themeConfig = store.getState().global?.themeConfig;
     const [theme, setTheme] = useState<any>(null);
     const [showModal, setShowModal] = useState(false);
-    const [modalType, setModalType] = useState<"food" | "hotel" | "camera" | null>(null);
-    const { district, loading } = useLocation();
+    const [showCameraModal, setShowCameraModal] = useState(false);
+    const [modalType, setModalType] = useState<"food" | "hotel" | null>(null);
+    const { district, loading, latitude, longitude, reloadLocation } = useLocation();
     const { userInfo } = store.getState().user;
 
-    const onShowModal = (type: "food" | "hotel" | "camera" | null) => {
+    const onShowModal = (type: "food" | "hotel" | null) => {
         setModalType(type);
         setShowModal(true);
     }
@@ -38,21 +39,22 @@ export default () => {
 
     useEffect(() => {
         if (openModal && openModal === "true") {
-            setTimeout(() => onShowModal("camera"), 500);
+            setTimeout(() => setShowCameraModal(true), 500);
         }
     }, []);
 
     useFocusEffect(
         useCallback(() => {
             return () => {
-                setShowModal(false); // Reset modal khi rời khỏi màn hình
+                setShowModal(false); // Reset modal when out of screen
+                setShowCameraModal(false);
             };
         }, [])
     );
 
     useFocusEffect(
         React.useCallback(() => {
-            if(themeConfig && themeConfig.mapStyle) setTheme(JSON.parse(themeConfig.mapStyle));
+            if (themeConfig && themeConfig.mapStyle) setTheme(JSON.parse(themeConfig.mapStyle));
         }, [themeConfig])
     );
 
@@ -72,7 +74,11 @@ export default () => {
                             loading ?
                                 <Text style={styles.locationText}>Loading...</Text>
                                 :
-                                <Text style={styles.locationText}>{district}</Text>
+                                <TouchableOpacity onPress={reloadLocation}>
+                                    <Text style={styles.locationText}>
+                                        {!district || district === "" ? "Reload" : district}
+                                    </Text>
+                                </TouchableOpacity>
                         }
                     </View>
                 }
@@ -156,28 +162,36 @@ export default () => {
                     icon={assets.icon.add}
                     size={34}
                     style={styles.addButton}
-                    onPress={() => onShowModal("camera")}
+                    onPress={() => setShowCameraModal(true)}
                 />
             </View>
 
             <OrbitModal
                 isOpen={showModal}
-                style={modalType === "camera" ? {
-                    top: 0
-                } : {}}
-                innerStyle={modalType === "camera" ? {
-                    paddingBlock: 0,
-                    backgroundColor: "black",
-                } : {}}
                 onClose={() => setShowModal(false)}
             >
                 {
                     modalType === "food" ?
-                        <RestaurantModal onClose={onCloseModal} /> :
-                        modalType === "hotel" ?
-                            <HotelModal onClose={onCloseModal} /> :
-                            <CameraModal onClose={onCloseModal} />
+                        <RestaurantModal
+                            onClose={onCloseModal}
+                            latitude={latitude}
+                            longitude={longitude}
+                        />
+                        :
+                        <HotelModal onClose={onCloseModal} />
                 }
+            </OrbitModal>
+
+            <OrbitModal
+                isOpen={showCameraModal}
+                style={{ top: 0 }}
+                innerStyle={{
+                    paddingBlock: 0,
+                    backgroundColor: "black",
+                }}
+                onClose={() => setShowCameraModal(false)}
+            >
+                <CameraModal onClose={() => setShowCameraModal(false)} />
             </OrbitModal>
         </View>
     )

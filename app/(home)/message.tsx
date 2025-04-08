@@ -15,7 +15,7 @@ import { useSelector } from "react-redux"
 
 export default function MessageScreen() {
     const { userInfo } = store.getState()?.user;
-    const { friendMessages, friends } = useSelector((state: RootState) => state.chat);;
+    const { friendMessages, friends, signal } = useSelector((state: RootState) => state.chat);;
     const [showModal, setShowModal] = useState(false);
 
     return (
@@ -67,9 +67,13 @@ export default function MessageScreen() {
                     userId={userInfo?.userId} 
                     messages={friendMessages} 
                     friends={friends}
+                    signal={signal}
                 />
 
-                <Contact userId={userInfo?.userId} />
+                <Contact 
+                    userId={userInfo?.userId} 
+                    signal={signal}
+                />
             </View>
 
             <OrbitModal

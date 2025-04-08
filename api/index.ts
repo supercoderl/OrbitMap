@@ -6,6 +6,7 @@ import { store } from "@/redux";
 import { toast } from "@/utils";
 import { ResultEnum } from "@/enums";
 import { setRefreshToken, setToken, setUserId } from "@/redux/modules/global/action";
+import qs from "qs";
 
 const axiosCanceler = new AxiosCanceler();
 
@@ -101,9 +102,9 @@ class RequestHttp {
                     }
                     catch (refreshError) {
                         console.error("Refresh token failed", refreshError);
-                        store.dispatch(setToken(""));
-                        store.dispatch(setRefreshToken(""));
-                        store.dispatch(setUserId(""));
+                        // store.dispatch(setToken(""));
+                        // store.dispatch(setRefreshToken(""));
+                        // store.dispatch(setUserId(""));
                         window.location.hash = "/login"; // Navigate to login
                         return Promise.reject(refreshError);
                     }
@@ -125,7 +126,14 @@ class RequestHttp {
 
     // * Common request method encapsulation
     get<T>(url: string, params?: object, _object = {}): Promise<ResultData<T>> {
-        return this.service.get(url, { params, ..._object });
+        return this.service.get(
+            url, 
+            { 
+                params, 
+                paramsSerializer: (params) => qs.stringify(params, { arrayFormat: "repeat" }),
+                ..._object 
+            }
+        );
     }
     post<T>(url: string, params?: object, _object = {}): Promise<ResultData<T>> {
         return this.service.post(url, params, _object);

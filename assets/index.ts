@@ -43,10 +43,13 @@ import coffee_gray from './images/icons/coffee-gray.png';
 import utensils_gray from './images/icons/utensils-gray.png';
 import point_gray from './images/icons/point-gray.png';
 import add_black from './images/icons/add-black.png';
-import gallery_orange from './images/icons/gallery-orange.png';
+import add_white from './images/icons/add-white.png';
+import gallery_primary from './images/icons/gallery-primary.png';
 import more_square from './images/icons/more-square.png';
 import like from './images/icons/like.png';
 import dislike from './images/icons/dislike.png';
+import like_active from './images/icons/like-active.png';
+import dislike_active from './images/icons/dislike-active.png';
 import markbook from './images/icons/markbook.png';
 import edit from './images/icons/edit.png';
 import user_add from './images/icons/user-add.png';
@@ -213,10 +216,13 @@ export default {
         utensils_gray,
         point_gray,
         add_black,
-        gallery_orange,
+        add_white,
+        gallery_primary,
         more_square,
         like,
         dislike,
+        like_active,
+        dislike_active,
         markbook,
         edit,
         user_add,

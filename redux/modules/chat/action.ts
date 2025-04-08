@@ -1,19 +1,20 @@
 import * as types from "@/redux/mutation-types";
-import { ServerRes, ThemeConfigProp } from "@/redux/interface/index";
+import { ServerRes } from "@/redux/interface/index";
 import { Socket } from "socket.io-client";
 import * as signalR from "@microsoft/signalr";
 import { socketUrl } from "@/api/config";
 import { store } from "@/redux";
 import { FriendShip, Message } from "@/types";
+import { toast } from "@/utils";
 
 // * setSocket
-export const setSocket = (socket: Socket) => ({
+export const setSocket = (socket: Socket | null) => ({
     type: types.SET_SOCKET,
     socket
 });
 
 // * setSignal
-export const setSignal = (signal: signalR.HubConnection) => ({
+export const setSignal = (signal: signalR.HubConnection | null) => ({
     type: types.SET_SIGNAL,
     signal
 });
@@ -40,6 +41,12 @@ export const setFriendGather = (friends: FriendShip[]) => ({
 export const setFriendChat = (friend?: FriendShip | null) => ({
     type: types.SET_FRIEND_CHAT,
     friend
+})
+
+// * setFriendMessage
+export const setFriendMessage = (friendMessages: Message[]) => ({
+    type: types.SET_FRIEND_MESSAGES,
+    friendMessages
 })
 
 // * setActiveRoom
@@ -189,13 +196,10 @@ export class ChatAction {
         // });
 
         signal.on('addFriend', (res: ServerRes) => {
-            console.log('on addFriend', res);
-            if (!res.code) {
-                store.dispatch(setFriendGather(res.data));
-                // commit(SET_USER_GATHER, res.data);
-                // signal.invoke('joinFriendSocket', userId, res.data.userId);
+            if (!res.code && res.data?.friendId === userId) {
+                toast.notify(res.msg);
             } else {
-                // Vue.prototype.$message.error(res.msg);
+                toast.error(res.msg)
             }
         });
 

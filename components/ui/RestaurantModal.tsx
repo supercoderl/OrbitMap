@@ -1,114 +1,60 @@
-import { FlatList, StyleSheet, View, Text, Image } from "react-native"
+import { FlatList, StyleSheet, View, Text, Image, RefreshControl } from "react-native"
 import Search from "../Inputs/search";
 import CircleButton from "../Buttons/circle-button";
 import assets from "@/assets";
 import ModularCard from "@/components/Cards/modular";
-
-const RESTAURANTS = [
-    {
-        id: 1,
-        name: "Nhà hàng Baoz Dimsum",
-        type: "Nhà hàng",
-        status: 1,
-        distance: 20,
-        favorite_count: 70,
-        image: assets.restaurant.baoz
-    },
-    {
-        id: 2,
-        name: "Pizza 4P’s Xuan Thuy",
-        type: "Nhà hàng",
-        status: 1,
-        distance: 12,
-        favorite_count: 40,
-        image: assets.restaurant.fourp
-    },
-    {
-        id: 3,
-        name: "Haidilao",
-        type: "Nhà hàng Lẩu",
-        status: 1,
-        distance: 13,
-        favorite_count: 60,
-        image: assets.restaurant.hailidao
-    },
-    {
-        id: 4,
-        name: "Work’s Pied",
-        type: "Cà phê",
-        status: 1,
-        distance: 18,
-        favorite_count: 34,
-        image: assets.restaurant.pied
-    },
-    {
-        id: 5,
-        name: "KANA Coffee",
-        type: "Cà phê",
-        status: 1,
-        distance: 34,
-        favorite_count: 68,
-        image: assets.restaurant.kana
-    },
-    {
-        id: 6,
-        name: "Tiệm Cơm Cô Út",
-        type: "Nhà hàng",
-        status: 0,
-        distance: 0.2,
-        favorite_count: 39,
-        image: assets.restaurant.cout
-    },
-    {
-        id: 7,
-        name: "Cơm Nêu Sài Gòn",
-        type: "Nhà hàng",
-        status: 1,
-        distance: 4,
-        favorite_count: 55,
-        image: assets.restaurant.comnieu
-    },
-    {
-        id: 8,
-        name: "Bamos Coffee",
-        type: "Cà phê",
-        status: 1,
-        distance: 5,
-        favorite_count: 24,
-        image: assets.restaurant.bamos
-    },
-    {
-        id: 9,
-        name: "Chicken Plus",
-        type: "Nhà hàng",
-        status: 0,
-        distance: 1.1,
-        favorite_count: 78,
-        image: assets.restaurant.plus
-    },
-    {
-        id: 10,
-        name: "Gà Rán Popeyes",
-        type: "Nhà hàng",
-        status: 0,
-        distance: 23,
-        favorite_count: 29,
-        image: assets.restaurant.popeyes
-    }
-]
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { getPlaceList } from "@/api/modules/place";
+import { Place } from "@/types/place";
+import BackgroundLoading from "../Loading/background-loading";
+import { PlaceType } from "@/enums";
+import { debounce, formatDistance } from "@/utils";
 
 interface RestaurantModalProps {
     onClose: () => void;
+    latitude: number;
+    longitude: number;
 }
 
 const RestaurantModal: React.FC<RestaurantModalProps> = ({ ...props }) => {
-    const { onClose } = props;
+    const { onClose, latitude, longitude } = props;
+    const [loading, setLoading] = useState<boolean>(false);
+    const [restaurants, setRestaurants] = useState<Place[]>([]);
+
+    const onLoad = async (text: string = "") => {
+        try {
+            setLoading(true);
+            const { data } = await getPlaceList({
+                query: { pageIndex: 1, pageSize: 10 },
+                searchTerm: text,
+                status: 0,
+                types: [0, 1]
+            });
+
+            if (data?.items && data.items.length > 0)
+                setRestaurants(data.items);
+        }
+        finally {
+            setTimeout(() => setLoading(false), 1000);
+        }
+    }
+
+    const debouncedOnLoad = useMemo(() => debounce(onLoad, 500), []);
+
+    const onSearch = (text: string) => {
+        debouncedOnLoad(text);
+    }
+
+    useEffect(() => {
+        onLoad()
+    }, []);
 
     return (
         <View style={{ flex: 1 }}>
             <View style={[styles.row, { width: '100%', gap: 10, paddingHorizontal: 20, paddingBottom: 17 }]}>
                 <Search
                     placeholder="Tìm kiếm địa điểm"
+                    onChangeText={onSearch}
                 />
                 <CircleButton
                     icon={assets.icon.close}
@@ -122,30 +68,36 @@ const RestaurantModal: React.FC<RestaurantModalProps> = ({ ...props }) => {
                     style={{ width: 39, height: 39, backgroundColor: '#E6EAEE' }}
                 />
             </View>
-            <FlatList
-                data={RESTAURANTS}
-                keyExtractor={(item) => item.id.toString()}
-                renderItem={({ item }) => (
-                    <ModularCard
-                        src={item.image}
-                        icon={assets.icon.utensils_gray}
-                        iconStyle={{ width: 18, height: 21 }}
-                        favorite_count={item.favorite_count}
-                    >
-                        <Text style={styles.name}>{item.name}</Text>
-                        <Text style={styles.type}>{item.type}</Text>
-                        <View style={styles.row}>
-                            <Text style={[styles.status, { color: item.status === 1 ? '#F0541C' : '##0A332D' }]}>{item.status === 1 ? 'Đang mở cửa' : 'Đã đóng cửa'}</Text>
-                            <Image source={assets.icon.point_gray} style={{ width: 1.5, height: 1.5 }} />
-                            <Text style={styles.type}>{item.distance < 1 ? `${item.distance * 1000} m` : `${item.distance} km`}</Text>
-                        </View>
-                    </ModularCard>
-                )}
-                showsVerticalScrollIndicator={false}
-                keyboardShouldPersistTaps="handled"
-                contentContainerStyle={{ gap: 12, paddingHorizontal: 20, paddingBlock: 17 }}
-                style={{ flex: 1 }}
-            />
+            <View style={{ flex: 1 }}>
+                <FlatList
+                    data={restaurants}
+                    keyExtractor={(item) => item.placeId}
+                    renderItem={({ item }) => (
+                        <ModularCard
+                            src={item.imageUrl ? { uri: item.imageUrl } : assets.restaurant.popeyes}
+                            icon={item.type === PlaceType.Restaurant ? assets.icon.utensils_gray : assets.icon.coffee_gray}
+                            iconStyle={{ width: 18, height: 21 }}
+                            favorite_count={item.favoriteCount}
+                        >
+                            <Text style={styles.name}>{item.name}</Text>
+                            <Text style={styles.type}>{PlaceType[item.type]}</Text>
+                            <View style={styles.row}>
+                                <Text style={[styles.status, { color: item.isOpen ? '#F0541C' : '##0A332D' }]}>{item.isOpen ? 'Đang mở cửa' : 'Đã đóng cửa'}</Text>
+                                <Image source={assets.icon.point_gray} style={{ width: 1.5, height: 1.5 }} />
+                                <Text style={styles.type}>{formatDistance(latitude, longitude, item.latitude, item.longitude)}</Text>
+                            </View>
+                        </ModularCard>
+                    )}
+                    showsVerticalScrollIndicator={false}
+                    contentContainerStyle={{ gap: 12, paddingHorizontal: 20, paddingBlock: 17 }}
+                    style={{ flex: 1 }}
+                    refreshControl={
+                        <RefreshControl refreshing={loading} onRefresh={onLoad} />
+                    }
+                />
+
+                {loading && <BackgroundLoading />}
+            </View>
         </View>
     )
 }

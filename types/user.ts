@@ -1,4 +1,4 @@
-import { Gender } from "@/enums";
+import { Gender, LevelType, ReactionType } from "@/enums";
 
 export interface User {
     userId: string;
@@ -16,4 +16,8 @@ export interface User {
     gender: Gender;
     createdAt: Date;
     updatedAt?: Date | null;
+    friendsCount: number;
+    postReactions: { postId: string, reactionType: ReactionType }[];
+    savePosts: { postId: string }[];
+    userLevel?: { levelType: LevelType, zeafloPoint: number };
 }
