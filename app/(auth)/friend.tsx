@@ -26,9 +26,9 @@ export default function FriendScreen() {
     return (
         <View style={styles.container}>
             <View style={[styles.row]}>
-                <Text style={styles.loginText}>Thêm bạn bè</Text>
+                <Text style={styles.loginText}>Add friend</Text>
                 <TouchableOpacity onPress={() => router.push('/(auth)/profile-image')}>
-                    <Text style={styles.skipText}>Bỏ qua</Text>
+                    <Text style={styles.skipText}>Skip</Text>
                 </TouchableOpacity>
             </View>
 
@@ -60,7 +60,7 @@ export default function FriendScreen() {
             />
 
             <OrbitButton
-                text="Quay lại trang đăng nhập"
+                text="Back to login"
                 onPress={() => router.push('/(auth)/login')}
             />
         </View>

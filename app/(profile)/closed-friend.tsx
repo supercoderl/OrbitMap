@@ -64,7 +64,7 @@ export default function ClosedFriendScreen() {
                     onPress={() => router.back()}
                     buttonStyle={{ width: 30, height: 30, justifyContent: 'center', alignItems: 'center' }}
                 />
-                <Text style={styles.title}>Bạn thân</Text>
+                <Text style={styles.title}>Closed Friends</Text>
                 <View style={{ width: 30 }} />
             </View>
 
@@ -72,19 +72,22 @@ export default function ClosedFriendScreen() {
 
             <View style={{ width: '100%', paddingHorizontal: 15, paddingBlock: 12 }}>
                 <Search
-                    placeholder="Tìm kiếm"
+                    placeholder="Search"
                     placeholderTextColor="#7A7A7A"
-                    style={{ width: '100%', flex: 0 }}
+                    style={{ width: '100%', flex: 0 }} 
+                    items={[]} 
+                    value={""} 
+                    onChangeText={() => {}}                
                 />
 
                 <View style={[styles.row, { justifyContent: 'space-between' }]}>
                     <View style={[styles.row, { marginTop: 20 }]}>
                         <Image source={assets.icon.two_user} style={{ width: 32, height: 32 }} />
-                        <Text style={{ fontFamily: 'LexendSemiBold', fontSize: 16, color: '#292D32' }}>9 người</Text>
+                        <Text style={{ fontFamily: 'LexendSemiBold', fontSize: 16, color: '#292D32' }}>9 people</Text>
                     </View>
 
                     <TouchableOpacity>
-                        <Text style={{ fontFamily: 'LexendSemiBold', fontSize: 16, color: colors.primary }}>Xoá tất cả</Text>
+                        <Text style={{ fontFamily: 'LexendSemiBold', fontSize: 16, color: colors.primary }}>Clear all</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -105,7 +108,7 @@ export default function ClosedFriendScreen() {
 
             <View style={{ position: 'absolute', bottom: 40, width: '92%', alignSelf: 'center' }}>
                 <OrbitButton
-                    text="Xong"
+                    text="Done"
                     buttonStyle={{ borderWidth: 0 }}
                     onPress={() => { }}
                     textStyle={{ fontSize: 20, fontFamily: 'LexendSemiBold' }}

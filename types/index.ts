@@ -8,4 +8,6 @@ export * from './city';
 export * from './trip';
 export * from './place';
 export * from './schedule';
-export * from './trip-duration';
+export * from './tripDuration';
+export * from './photoPost';
+export * from './weather';

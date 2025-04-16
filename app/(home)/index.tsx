@@ -62,11 +62,14 @@ export default () => {
         <View style={styles.container}>
             <NavBar
                 leftNode={
-                    <CircleButton
-                        icon={assets.icon.search}
-                        size={15.39}
-                        onPress={() => router.push('/(search)')}
-                    />
+                    <View style={styles.row}>
+                        <CircleButton
+                            icon={assets.icon.search}
+                            size={15.39}
+                            onPress={() => router.push('/(search)')}
+                        />
+                        <View style={{ width: 20 }} />
+                    </View>
                 }
                 children={
                     <View style={styles.location}>
@@ -146,7 +149,7 @@ export default () => {
                     <CircleButton
                         icon={assets.icon.filter_paywall}
                         size={36}
-                        onPress={() => router.push('/(general)/personalize-map')}
+                        onPress={() => router.push(userInfo?.userSubscription ? '/(general)/personalize-map' : '/(general)/premium')}
                     />
                     <Horizontal height={2} color="rgba(169, 170, 171, 1)" />
                     <CircleButton

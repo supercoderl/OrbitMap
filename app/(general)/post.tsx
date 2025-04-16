@@ -1,15 +1,23 @@
+import { getPhotoPostList } from "@/api/modules/photoPost";
 import assets from "@/assets";
 import BackButton from "@/components/Buttons/back";
 import CircleButton from "@/components/Buttons/circle-button";
 import ImagePost from "@/components/Cards/image-post";
+import BackgroundLoading from "@/components/Loading/background-loading";
+import ImagePostLoading from "@/components/Loading/image-post";
+import FriendModal from "@/components/Modals/friend";
 import SharingModal from "@/components/Modals/sharing";
 import NavBar from "@/components/ui/NavBar";
 import { colors } from "@/constants/Colors";
-import { store } from "@/redux";
+import { ActionStatus } from "@/enums";
+import { RootState, store } from "@/redux";
+import { PhotoPost } from "@/types";
 import screen from "@/utils/screen";
 import { router } from "expo-router";
-import { useState } from "react";
-import { View, Image, Text, StyleSheet, FlatList, TextInput, TouchableOpacity } from "react-native";
+import { useEffect, useState } from "react";
+import { set } from "react-hook-form";
+import { View, Image, Text, StyleSheet, FlatList, TextInput, TouchableOpacity, RefreshControl } from "react-native";
+import { useSelector } from "react-redux";
 
 const POSTS = [
     {
@@ -32,7 +40,43 @@ const POSTS = [
 
 export default function Post() {
     const [showModal, setShowModal] = useState(false);
-    const { userInfo } = store.getState().user;
+    const [showFriendModal, setShowFriendModal] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [photoPosts, setPhotoPosts] = useState<PhotoPost[]>([]);
+    const { friends } = useSelector((state: RootState) => state.chat);
+    const { userInfo } = useSelector((state: RootState) => state.user);
+    const [selectedFriend, setSelectedFriend] = useState<string | null>(null);
+
+    const onLoad = async (scope: string = "mine", userId?: string) => {
+        try {
+            setLoading(true);
+            const { data } = await getPhotoPostList({
+                query: { pageIndex: 1, pageSize: 10 },
+                searchTerm: "",
+                status: ActionStatus.All,
+                scope,
+                userId
+            });
+
+            if (data && data.items) {
+                setPhotoPosts(data.items);
+            }
+        } finally {
+            setTimeout(() => setLoading(false), 1000);
+        }
+    }
+
+    const onSelectFriend = async (friendId: string) => {
+        setSelectedFriend(friendId);
+        setShowFriendModal(false);
+        if(friendId === "all") await onLoad("others");
+        else if(userInfo && friendId === userInfo.userId) await onLoad("mine");
+        else await onLoad("user", friendId);
+    }
+
+    useEffect(() => {
+        onLoad();
+    }, []);
 
     return (
         <View style={styles.container}>
@@ -42,9 +86,6 @@ export default function Post() {
                         <BackButton
                             onPress={() => router.back()}
                         />
-                        <TouchableOpacity onPress={() => router.push("/(profile)")}>
-                            <Image source={userInfo ? { uri: userInfo.avatarUrl } : assets.avatar.maithy} style={styles.avatar} />
-                        </TouchableOpacity>
                     </View>
                 }
                 rightNode={
@@ -72,25 +113,35 @@ export default function Post() {
                 }
                 style={{ top: 32 }}
             >
-                <View style={{ backgroundColor: '#D8DADC', borderRadius: 50, paddingHorizontal: 40, paddingBlock: 5 }}>
+                <TouchableOpacity
+                    style={{ backgroundColor: '#D8DADC', borderRadius: 50, paddingHorizontal: 40, paddingBlock: 5 }}
+                    onPress={() => setShowFriendModal(true)}
+                >
                     <Text style={styles.text}>
-                        Bạn bè
+                        Friends
                     </Text>
-                </View>
+                </TouchableOpacity>
             </NavBar>
 
-            <FlatList
-                data={POSTS}
-                keyExtractor={(item) => item.id.toString()}
-                renderItem={({ item }) => (
-                    <ImagePost
-                        item={item}
-                    />
-                )}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{ gap: 15, paddingHorizontal: screen.width / 6.5 }}
-            />
+            <View style={{ flex: 1 }}>
+                <FlatList
+                    data={photoPosts}
+                    keyExtractor={(item) => item.photoPostId}
+                    renderItem={({ item }) => (
+                        <ImagePost
+                            item={item}
+                        />
+                    )}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={{ gap: 15, paddingHorizontal: screen.width / 6.5 }}
+                    refreshControl={
+                        <RefreshControl refreshing={loading} onRefresh={() => onLoad()} />
+                    }
+                />
+
+                {loading && <ImagePostLoading />}
+            </View>
 
             <View style={styles.bottomContainer}>
                 <View style={styles.inputContainer}>
@@ -157,6 +208,15 @@ export default function Post() {
                     </View>
                 </View>
             </SharingModal>
+
+            <FriendModal
+                visible={showFriendModal}
+                onClose={() => setShowFriendModal(false)}
+                friends={friends}
+                userInfo={userInfo}
+                selectedFriend={selectedFriend}
+                onSelect={onSelectFriend}
+            />
         </View>
     );
 }

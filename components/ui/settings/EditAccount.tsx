@@ -95,7 +95,7 @@ const EditAccount: React.FC<EditAccountProps> = ({ ...props }) => {
         <View style={{ paddingHorizontal: 15, marginTop: 20, borderRadius: 10, zIndex: 1, gap: 20 }}>
             <View style={[styles.optionContainer, { paddingHorizontal: 15, paddingBlock: 15, gap: 25 }]}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' }}>
-                    <Text style={styles.buttonText}>Tên</Text>
+                    <Text style={styles.buttonText}>Name</Text>
                     {
                         isEditing ?
                             <Controller
@@ -141,7 +141,7 @@ const EditAccount: React.FC<EditAccountProps> = ({ ...props }) => {
                     }
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' }}>
-                    <Text style={styles.buttonText}>Ngày sinh</Text>
+                    <Text style={styles.buttonText}>Birthdate</Text>
                     {
                         isEditing ?
                             <Pressable onPress={() => setIsChoosingDate(true)}>
@@ -172,17 +172,17 @@ const EditAccount: React.FC<EditAccountProps> = ({ ...props }) => {
                     }
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' }}>
-                    <Text style={styles.buttonText}>Bạn bè</Text>
+                    <Text style={styles.buttonText}>Friend</Text>
                     <Text style={styles.secondText}>{userInfo?.friendsCount ?? 0}</Text>
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' }}>
-                    <Text style={styles.buttonText}>Người dùng bị chặn</Text>
+                    <Text style={styles.buttonText}>Block</Text>
                     <Text style={styles.secondText}>0</Text>
                 </View>
             </View>
 
             <OrbitButton
-                text={isEditing ? "Xong" : "Chỉnh sửa"}
+                text={isEditing ? "Done" : "Edit"}
                 textStyle={{ fontSize: 20 }}
                 loading={loading}
                 onPress={isEditing ? handleSubmit(onFinish) : () => setIsEditing(true)}

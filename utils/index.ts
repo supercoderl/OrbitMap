@@ -6,3 +6,4 @@ export * from './message';
 export * from './logout';
 export * from './debounce';
 export * from './distance';
+export * from './permission';

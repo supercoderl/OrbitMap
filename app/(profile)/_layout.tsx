@@ -11,6 +11,8 @@ export default function ProfileStack() {
             <Stack.Screen name="friend" options={{ animation: 'slide_from_right' }} />
             <Stack.Screen name="closed-friend" options={{ animation: 'slide_from_right' }} />
             <Stack.Screen name="storage" options={{ animation: 'slide_from_right' }} />
+            <Stack.Screen name="detail" options={{ animation: 'slide_from_right' }} />
+            <Stack.Screen name="place-detail" options={{ animation: 'slide_from_right' }} />
         </Stack>
     );
 }

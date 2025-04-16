@@ -60,7 +60,7 @@ export default function ForumScreen() {
                 style={{ gap: 20, paddingHorizontal: 20, position: 'relative', top: 0 }}
             >
                 <Search
-                    placeholder="Tìm kiếm" 
+                    placeholder="Search" 
                     items={[]} value={""} 
                     onChangeText={() => {}}                
                 />

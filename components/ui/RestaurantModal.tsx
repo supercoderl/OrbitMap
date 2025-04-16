@@ -19,6 +19,7 @@ interface RestaurantModalProps {
 const RestaurantModal: React.FC<RestaurantModalProps> = ({ ...props }) => {
     const { onClose, latitude, longitude } = props;
     const [loading, setLoading] = useState<boolean>(false);
+    const [text, setText] = useState<string>("");
     const [restaurants, setRestaurants] = useState<Place[]>([]);
 
     const onLoad = async (text: string = "") => {
@@ -43,6 +44,7 @@ const RestaurantModal: React.FC<RestaurantModalProps> = ({ ...props }) => {
 
     const onSearch = (text: string) => {
         debouncedOnLoad(text);
+        setText(text);
     }
 
     useEffect(() => {
@@ -53,8 +55,10 @@ const RestaurantModal: React.FC<RestaurantModalProps> = ({ ...props }) => {
         <View style={{ flex: 1 }}>
             <View style={[styles.row, { width: '100%', gap: 10, paddingHorizontal: 20, paddingBottom: 17 }]}>
                 <Search
-                    placeholder="Tìm kiếm địa điểm"
+                    placeholder="Search for location"
                     onChangeText={onSearch}
+                    items={[]}
+                    value={text}
                 />
                 <CircleButton
                     icon={assets.icon.close}

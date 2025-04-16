@@ -15,7 +15,7 @@ import { useSelector } from "react-redux"
 
 export default function MessageScreen() {
     const { userInfo } = store.getState()?.user;
-    const { friendMessages, friends, signal } = useSelector((state: RootState) => state.chat);;
+    const { friendMessages, friends, signal } = useSelector((state: RootState) => state.chat);
     const [showModal, setShowModal] = useState(false);
 
     return (
@@ -60,7 +60,7 @@ export default function MessageScreen() {
                     }
                     style={{ position: 'relative', top: 0 }}
                 >
-                    <Text style={styles.message}>Tin nhắn</Text>
+                    <Text style={styles.message}>Message</Text>
                 </NavBar>
 
                 <Friend 

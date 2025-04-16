@@ -20,4 +20,5 @@ export interface User {
     postReactions: { postId: string, reactionType: ReactionType }[];
     savePosts: { postId: string }[];
     userLevel?: { levelType: LevelType, zeafloPoint: number };
+    userSubscription?: { planName: string, startDate: Date, endDate?: Date | null }
 }

@@ -100,6 +100,11 @@ export namespace User {
 		birthdate: Date;
 		gender: Gender;
 	}
+
+	export interface UpdateUserAvatarForm {
+		userId: string;
+		avatarBase64String: string;
+	}
 }
 
 // * Friend Ship

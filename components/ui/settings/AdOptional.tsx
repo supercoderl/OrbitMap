@@ -8,7 +8,7 @@ const AdOptional = () => {
         <View style={{ paddingHorizontal: 15, marginTop: 20, borderRadius: 10, zIndex: 1 }}>
             <View style={styles.optionContainer}>
                 <View style={styles.buttonContainer}>
-                    <Text style={styles.buttonText}>Quảng cáo đã lưu</Text>
+                    <Text style={styles.buttonText}>Saved Ads</Text>
                     <TouchableOpacity style={styles.chevron_right_container}>
                         <Image source={assets.image.chevron_right} style={styles.icon} />
                     </TouchableOpacity>
@@ -17,7 +17,7 @@ const AdOptional = () => {
                 <Horizontal height={1} color="#D8DADC" />
 
                 <View style={styles.buttonContainer}>
-                    <Text style={styles.buttonText}>Quảng cáo đã từng xem</Text>
+                    <Text style={styles.buttonText}>Viewed Ads</Text>
                     <TouchableOpacity style={styles.chevron_right_container}>
                         <Image source={assets.image.chevron_right} style={styles.icon} />
                     </TouchableOpacity>
@@ -26,7 +26,7 @@ const AdOptional = () => {
                 <Horizontal height={1} color="#D8DADC" />
 
                 <View style={styles.buttonContainer}>
-                    <Text style={styles.buttonText}>Chủ đề quảng cáo</Text>
+                    <Text style={styles.buttonText}>Topic Ads</Text>
                     <TouchableOpacity style={styles.chevron_right_container}>
                         <Image source={assets.image.chevron_right} style={styles.icon} />
                     </TouchableOpacity>

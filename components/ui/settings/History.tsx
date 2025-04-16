@@ -12,13 +12,13 @@ const History = () => {
     return (
         <>
             <View style={{ paddingHorizontal: 15, borderRadius: 10, zIndex: 1, alignItems: 'center' }}>
-                <Text style={styles.description}>Xem lại và quản lý lích sử tìm kiếm của bạn trên Orbit. Chỉ bạn mới nhìn thấy nội dung mình đã tìm kiếm.</Text>
+                <Text style={styles.description}>Review and manage your search history on Orbit. Only you can see what you've searched for.</Text>
 
                 <View style={{ marginTop: 12, marginBottom: 8, width: '100%' }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Text style={{ fontFamily: 'LexendMedium', fontSize: 16 }}>Mới nhất đến cũ nhất</Text>
+                        <Text style={{ fontFamily: 'LexendMedium', fontSize: 16 }}>Newest to oldest</Text>
                         <TouchableOpacity>
-                            <Text style={{ fontFamily: 'LexendMedium', fontSize: 16, color: colors.primary }}>Sắp xếp</Text>
+                            <Text style={{ fontFamily: 'LexendMedium', fontSize: 16, color: colors.primary }}>Arrange</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -114,7 +114,7 @@ const History = () => {
                 </View>
 
                 <OrbitButton
-                    text="Xoá tất cả lịch sử tìm kiếm"
+                    text="Clear all search history"
                     onPress={() => setShowModal(true)}
                     buttonStyle={{ marginTop: 15 }}
                     textStyle={{ fontSize: 20 }}

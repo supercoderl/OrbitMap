@@ -1,90 +1,17 @@
 import assets from "@/assets"
 import BackButton from "@/components/Buttons/back"
-import OrbitModal from "@/components/Modals/default"
 import Horizontal from "@/components/ui/Horizontal"
-import AdOptional from "@/components/ui/settings/AdOptional"
-import EditAccount from "@/components/ui/settings/EditAccount"
-import Help from "@/components/ui/settings/Help"
-import History from "@/components/ui/settings/History"
-import Security from "@/components/ui/settings/Security"
 import { colors } from "@/constants/Colors"
+import { LevelType } from "@/enums"
 import { store } from "@/redux"
 import { formatDate, getZodiacSign } from "@/utils"
 import screen from "@/utils/screen"
-import { router, useFocusEffect } from "expo-router"
-import React, { useCallback, useState } from "react"
+import { router } from "expo-router"
+import React from "react"
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native"
 
-const OPTIONS: { id: number, name: string, type: "account" | "security" | "history" | "ad" | "help", icon: any }[] = [
-    {
-        id: 1,
-        name: "Tài khoản",
-        type: "account",
-        icon: assets.icon.profile_circle
-    },
-    {
-        id: 2,
-        name: "Mật khẩu & bảo mật",
-        type: "security",
-        icon: assets.icon.shield_security
-    },
-    {
-        id: 3,
-        name: "Lịch sử tìm kiếm",
-        type: "history",
-        icon: assets.icon.search_status
-    },
-    {
-        id: 4,
-        name: "Tùy chọn quảng cáo",
-        type: "ad",
-        icon: assets.icon.ad
-    },
-    {
-        id: 5,
-        name: "Trợ giúp và hỗ trợ",
-        type: "help",
-        icon: assets.icon.question
-    },
-]
-
 export default () => {
-    const [showModal, setShowModal] = useState(false);
-    const [modalType, setModalType] = useState<"account" | "ad" | "help" | "security" | "history" | null>(null);
     const { userInfo } = store.getState().user;
-
-    const openModal = (type: "account" | "ad" | "help" | "security" | "history") => {
-        setModalType(type);
-        setShowModal(true);
-    }
-
-    const closeModal = () => {
-        setModalType(null);
-        setShowModal(false);
-    }
-
-    const render = () => {
-        switch (modalType) {
-            case "account":
-                return <EditAccount userInfo={userInfo} />
-            case "ad":
-                return <AdOptional />
-            case "help":
-                return <Help />
-            case "history":
-                return <History />
-            case "security":
-                return <Security />
-        }
-    }
-
-    useFocusEffect(
-        useCallback(() => {
-            return () => {
-                setShowModal(false); // Reset modal khi rời khỏi màn hình
-            };
-        }, [])
-    );
 
     return (
         <>
@@ -94,7 +21,7 @@ export default () => {
                         onPress={() => router.back()}
                         buttonStyle={{ width: 30, height: 30, justifyContent: 'center', alignItems: 'center' }}
                     />
-                    <Text style={styles.title}>Tôi</Text>
+                    <Text style={styles.title}>Me</Text>
                     <View style={{ width: 30 }} />
                 </View>
 
@@ -115,7 +42,7 @@ export default () => {
                                     source={userInfo ? { uri: userInfo.avatarUrl } : assets.avatar.maithy}
                                     style={styles.avatar}
                                 />
-                                <View style={{ flex: 1 }}>
+                                <TouchableOpacity style={{ flex: 1 }} onPress={() => router.push("/(profile)/detail")}>
                                     <Text style={{ fontFamily: 'LexendBold', fontSize: 20, color: colors.primary }}>
                                         {userInfo?.fullname ?? "Nomads"}
                                     </Text>
@@ -126,7 +53,7 @@ export default () => {
                                     >
                                         {userInfo?.email ?? 'nomadsdabezt@gmail.com'}
                                     </Text>
-                                </View>
+                                </TouchableOpacity>
                                 <TouchableOpacity>
                                     <Image source={assets.icon.scan_barcode} style={{ width: 32, height: 32 }} />
                                 </TouchableOpacity>
@@ -195,15 +122,20 @@ export default () => {
                         <TouchableOpacity style={styles.optionContainer} onPress={() => router.push('/(profile)/account-rank')}>
                             <View style={styles.buttonContainer}>
                                 <Image source={assets.icon.award} style={{ width: 32, height: 32 }} />
-                                <Text style={styles.buttonText}>Hạng Tài khoản</Text>
-                                <Text style={{ fontFamily: 'LexendRegular', color: colors.primary }}>Bạc</Text>
+                                <Text style={styles.buttonText}>Account Rank</Text>
+                                <Text style={{ fontFamily: 'LexendRegular', color: colors.primary }}>
+                                    {LevelType[userInfo?.userLevel?.levelType ?? LevelType.Silver]}
+                                </Text>
                             </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.optionContainer} onPress={() => router.push('/(profile)/passport')}>
+                        <TouchableOpacity
+                            style={styles.optionContainer}
+                            onPress={() => router.push(userInfo?.userSubscription ? '/(profile)/passport' : '/(general)/premium')}
+                        >
                             <View style={styles.buttonContainer}>
                                 <Image source={assets.icon.personal_card} style={{ width: 32, height: 32 }} />
-                                <Text style={styles.buttonText}>Passport chứng nhận</Text>
+                                <Text style={styles.buttonText}>Certificated Passport</Text>
                                 <Image source={assets.icon.vip} style={{ width: 27.06, height: 26.95 }} />
                             </View>
                         </TouchableOpacity>
@@ -211,7 +143,7 @@ export default () => {
                         <TouchableOpacity style={styles.optionContainer} onPress={() => router.push('/(profile)/friend')}>
                             <View style={styles.buttonContainer}>
                                 <Image source={assets.icon.people} style={{ width: 32, height: 32 }} />
-                                <Text style={styles.buttonText}>Bạn bè</Text>
+                                <Text style={styles.buttonText}>Friends</Text>
                                 <Text style={{ fontFamily: 'LexendRegular', color: '#A9AAAB' }}>{userInfo?.friendsCount ?? 0}</Text>
                             </View>
                         </TouchableOpacity>
@@ -219,7 +151,7 @@ export default () => {
                         <TouchableOpacity style={styles.optionContainer} onPress={() => router.push('/(profile)/closed-friend')}>
                             <View style={styles.buttonContainer}>
                                 <Image source={assets.icon.two_user} style={{ width: 32, height: 32 }} />
-                                <Text style={styles.buttonText}>Bạn thân</Text>
+                                <Text style={styles.buttonText}>Closed Friends</Text>
                                 <Text style={{ fontFamily: 'LexendRegular', color: '#A9AAAB' }}>9</Text>
                             </View>
                         </TouchableOpacity>
@@ -227,7 +159,7 @@ export default () => {
                         <TouchableOpacity style={styles.optionContainer} onPress={() => router.push('/(profile)/storage')}>
                             <View style={styles.buttonContainer}>
                                 <Image source={assets.icon.gift} style={{ width: 32, height: 32 }} />
-                                <Text style={styles.buttonText}>Lưu trữ</Text>
+                                <Text style={styles.buttonText}>Storage</Text>
                                 <TouchableOpacity style={styles.chevron_right_container} onPress={() => { }}>
                                     <Image source={assets.image.chevron_right} style={styles.icon} />
                                 </TouchableOpacity>
@@ -236,25 +168,6 @@ export default () => {
                     </View>
                 </View>
             </View>
-            <OrbitModal
-                isOpen={showModal}
-                showOverlay
-                style={{ top: 0, paddingTop: 32 }}
-                onClose={() => setShowModal(false)}
-            >
-                <View style={styles.headerContainer}>
-                    <BackButton
-                        onPress={closeModal}
-                        buttonStyle={{ width: 30, height: 30, justifyContent: 'center', alignItems: 'center' }}
-                    />
-                    <Text style={styles.title}>{OPTIONS.find(x => x.type === modalType)?.name}</Text>
-                    <TouchableOpacity onPress={closeModal}>
-                        <Text style={{ fontFamily: 'LexendSemiBold', fontSize: 16, color: colors.primary }}>Xong</Text>
-                    </TouchableOpacity>
-                </View>
-
-                {render()}
-            </OrbitModal>
         </>
     )
 }

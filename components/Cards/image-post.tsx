@@ -1,24 +1,29 @@
+import assets from "@/assets";
+import { store } from "@/redux";
+import { PhotoPost } from "@/types";
+import { convertTime } from "@/utils";
 import screen from "@/utils/screen";
 import { View, Text, Image, StyleSheet } from "react-native"
 
 interface ImagePostProps {
-    item: any
+    item: PhotoPost
 }
 
 const ImagePost: React.FC<ImagePostProps> = ({ ...props }) => {
     const { item } = props;
+    const { userInfo } = store.getState().user;
 
     return (
         <View style={styles.container}>
-            <Text style={styles.date}>Bây giờ</Text>
+            <Text style={styles.date}>{convertTime(item.sentAt)}</Text>
             <View style={styles.imageContainer}>
-                <Image source={item.image} style={styles.image} />
-                {item.text && <View style={styles.textContainer}><Text style={styles.text}>{item.text}</Text></View>}
+                <Image source={{ uri: item.imageUrl }} style={styles.image} />
+                {item.annotationValue && <View style={styles.textContainer}><Text style={styles.text}>{item.annotationValue}</Text></View>}
             </View>
 
             <View style={styles.row}>
-                <Image source={item.avatar} style={styles.avatar} />
-                <Text style={styles.text}>{item.username}</Text>
+                <Image source={item.userInfo.avatar !== "" ? { uri: item.userInfo.avatar } : assets.avatar.maithy} style={styles.avatar} />
+                <Text style={styles.text}>{userInfo?.userId === item.userInfo.userId ? 'You' : item.userInfo.fullname}</Text>
             </View>
         </View>
     )

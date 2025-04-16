@@ -126,18 +126,21 @@ const Invitation: React.FC<InvitationProps> = ({ ...props }) => {
                 }
                 rightNode={
                     <TouchableOpacity onPress={onClose}>
-                        <Text style={styles.finishText}>Xong</Text>
+                        <Text style={styles.finishText}>Done</Text>
                     </TouchableOpacity>
                 }
                 style={{ position: 'relative', top: 0 }}
             >
-                <Text style={styles.title}>Thêm bạn bè</Text>
+                <Text style={styles.title}>Add friend</Text>
             </NavBar>
 
             <View style={styles.contentContainer}>
                 <Search
-                    placeholder="Tìm kiếm bạn bè..."
+                    placeholder="Search friend..."
                     style={{ width: '100%', flex: 0 }}
+                    items={[]} 
+                    value={""} 
+                    onChangeText={() => {}}                    
                 />
 
                 <View style={[styles.row, { gap: 12 }]}>
@@ -145,7 +148,7 @@ const Invitation: React.FC<InvitationProps> = ({ ...props }) => {
                         <Image source={assets.icon.contact} style={{ width: 24, height: 24 }} />
                     </View>
 
-                    <Text style={[styles.finishText, { color: 'rgba(41, 45, 50, 1)', flex: 1 }]}>Hãy mời bạn bè!</Text>
+                    <Text style={[styles.finishText, { color: 'rgba(41, 45, 50, 1)', flex: 1 }]}>Invite your friend!</Text>
 
                     <TouchableOpacity>
                         <Image source={assets.image.chevron_right} style={{ width: 6.92307710647583, height: 11.538461685180664 }} />
@@ -154,9 +157,9 @@ const Invitation: React.FC<InvitationProps> = ({ ...props }) => {
 
                 <View>
                     <View style={[styles.row, { justifyContent: 'space-between' }]}>
-                        <Text style={[styles.finishText, { color: 'rgba(41, 45, 50, 1)' }]}>Lời mời kết bạn</Text>
+                        <Text style={[styles.finishText, { color: 'rgba(41, 45, 50, 1)' }]}>Friend invitation</Text>
                         <TouchableOpacity>
-                            <Text style={[styles.finishText, { color: 'rgba(151, 151, 151, 1)' }]}>Xem tất cả</Text>
+                            <Text style={[styles.finishText, { color: 'rgba(151, 151, 151, 1)' }]}>View all</Text>
                         </TouchableOpacity>
                     </View>
 

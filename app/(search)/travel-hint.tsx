@@ -30,7 +30,7 @@ export default function TravelHint() {
     const [tripHint, setTripHint] = useState<Trip | null>(null);
     const [durations, setDurations] = useState<{ label: string, value: string, index: number }[]>([]);
     const [locations, setLocations] = useState<{ label: string, value: string }[]>([]);
-    const [loading, setLoading] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
     const [durationLoading, setDurationLoading] = useState<boolean>(false);
     const [todalPage, setTotalPage] = useState<number>(0);
 

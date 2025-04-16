@@ -16,7 +16,7 @@ const AppStack: React.FC = () => {
             <Tabs.Screen
                 name="forum"
                 options={{
-                    title: 'Diễn đàn',
+                    title: 'Forum',
                     tabBarIcon: ({ focused }) => (
                         <Image
                             source={
@@ -33,7 +33,7 @@ const AppStack: React.FC = () => {
             <Tabs.Screen
                 name="index"
                 options={{
-                    title: 'Bản đồ',
+                    title: 'Map',
                     tabBarIcon: ({ focused }) => (
                         <Image
                             source={
@@ -50,7 +50,7 @@ const AppStack: React.FC = () => {
             <Tabs.Screen
                 name="message"
                 options={{
-                    title: 'Tin nhắn',
+                    title: 'Message',
                     tabBarIcon: ({ focused }) => (
                         <Image
                             source={

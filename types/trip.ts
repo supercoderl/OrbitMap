@@ -19,6 +19,7 @@ interface SchedulePlace {
 }
 
 export interface PlaceInfo {
+    placeId: string;
     name: string;
     address: string;
     imageUrl?: string | null;

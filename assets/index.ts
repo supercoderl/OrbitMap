@@ -105,6 +105,22 @@ import reload from './images/icons/reload.png';
 import contact from './images/icons/contact.png';
 import back_square from './images/icons/back-square.png';
 import send_message from './images/icons/send-message.png';
+import website from './images/icons/global.png';
+import headphone from './images/icons/headphone.png';
+import unstar from './images/icons/unstar.png';
+import fullstar from './images/icons/fullstar.png';
+import location from './images/icons/location.png';
+import checked from './images/icons/checked.png';
+import unchecked from './images/icons/unchecked.png';
+import message_heart from './images/icons/message-heart.png';
+import grid_unselected from './images/icons/grid-unselected.png';
+import grid_selected from './images/icons/grid-selected.png';
+import play_circle_unselected from './images/icons/play-circle-unselected.png';
+import play_circle_selected from './images/icons/play-circle-selected.png';
+import people_unselected from './images/icons/people-unselected.png';
+import people_selected from './images/icons/people-selected.png';
+import document_unselected from './images/icons/document-unselected.png';
+import document_selected from './images/icons/document-selected.png';
 
 import fourp from './images/restaurants/4p.png';
 import bamos from './images/restaurants/bamos.png';
@@ -154,6 +170,10 @@ import instagram from './images/socials/instagram.png';
 import message from './images/socials/message.png';
 import snapchat from './images/socials/snapchat.png';
 import threads from './images/socials/threads.png';
+import facebook_original from './images/socials/facebook-original.png';
+import instagram_original from './images/socials/instagram-original.png';
+import twitter_original from './images/socials/twitter-original.png';
+import whatsapp_original from './images/socials/whatsapp-original.png';
 
 import dalat from './images/locations/dalat.png';
 import danang from './images/locations/danang.png';
@@ -164,6 +184,7 @@ import vungtau from './images/locations/vungtau.png';
 
 import empty from './animations/empty.json';
 import loading from './animations/loading.json';
+import premium from './animations/premium.json';
 
 export default {
     image: {
@@ -275,7 +296,23 @@ export default {
         back_square,
         picture,
         camera,
-        send_message
+        send_message,
+        website,
+        headphone,
+        unstar,
+        fullstar,
+        location,
+        checked,
+        unchecked,
+        message_heart,
+        grid_unselected,
+        grid_selected,
+        people_unselected,
+        people_selected,
+        document_unselected,
+        document_selected,
+        play_circle_unselected,
+        play_circle_selected
     },
 
     restaurant: {
@@ -342,7 +379,11 @@ export default {
         instagram,
         message,
         snapchat,
-        threads
+        threads,
+        facebook_original,
+        instagram_original,
+        twitter_original,
+        whatsapp_original
     },
 
     location: {
@@ -356,6 +397,7 @@ export default {
 
     animation: {
         empty,
-        loading
+        loading,
+        premium
     }
 }

@@ -41,7 +41,7 @@ export default function PersonalizeMap() {
                     onPress={() => router.back()}
                     buttonStyle={{ width: 30, height: 30, justifyContent: 'center', alignItems: 'center' }}
                 />
-                <Text style={styles.title}>Bản đồ cá nhân hóa</Text>
+                <Text style={styles.title}>Personalized map</Text>
                 <Image source={assets.icon.vip} style={styles.vip} />
             </View>
 

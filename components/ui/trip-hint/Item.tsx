@@ -2,8 +2,9 @@ import assets from "@/assets";
 import { PlaceInfo } from "@/types";
 import { formatTime } from "@/utils";
 import screen from "@/utils/screen";
+import { router } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
-import { View, Image, Text, StyleSheet } from "react-native"
+import { View, Image, Text, StyleSheet, Pressable, TouchableOpacity } from "react-native"
 
 interface TripItemProps {
     position: "left" | "right";
@@ -36,11 +37,19 @@ const TripItem: React.FC<TripItemProps> = ({ ...props }) => {
 
     return (
         <View style={styles.wrapperContainer}>
-            <View style={[
-                styles.row,
-                { position: 'relative' },
-                position === "right" && { flexDirection: 'row-reverse' }
-            ]}>
+            <TouchableOpacity
+                activeOpacity={0.3}
+                style={[
+                    styles.row,
+                    { position: 'relative' },
+                    position === "right" && { flexDirection: 'row-reverse' }
+                ]}
+                onPress={() => placeInfo.placeId !== "" && router.push({
+                    pathname: "/(profile)/place-detail", params: {
+                        place: JSON.stringify(placeInfo)
+                    }
+                })}
+            >
                 <Image
                     ref={imageRef}
                     source={placeInfo.imageUrl ? { uri: placeInfo.imageUrl } : assets.post.muahoa}
@@ -69,7 +78,7 @@ const TripItem: React.FC<TripItemProps> = ({ ...props }) => {
                         {placeInfo.address}
                     </Text>
                 </View>
-            </View>
+            </TouchableOpacity>
         </View>
     )
 }

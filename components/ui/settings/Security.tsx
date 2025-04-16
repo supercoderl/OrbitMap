@@ -31,7 +31,7 @@ const Security = () => {
                 <View style={styles.page}>
                     <View key="0" style={styles.optionContainer}>
                         <View style={styles.buttonContainer}>
-                            <Text style={styles.buttonText}>Đổi mật khẩu</Text>
+                            <Text style={styles.buttonText}>Change Password</Text>
                             <TouchableOpacity style={styles.chevron_right_container} onPress={() => handleTabChange(1)}>
                                 <Image source={assets.image.chevron_right} style={styles.icon} />
                             </TouchableOpacity>
@@ -40,7 +40,7 @@ const Security = () => {
                         <Horizontal height={1} color="#D8DADC" />
 
                         <View style={styles.buttonContainer}>
-                            <Text style={styles.buttonText}>Cảnh báo đăng nhập</Text>
+                            <Text style={styles.buttonText}>Login Warning</Text>
                             <TouchableOpacity style={styles.chevron_right_container} onPress={() => handleTabChange(2)}>
                                 <Image source={assets.image.chevron_right} style={styles.icon} />
                             </TouchableOpacity>
@@ -49,7 +49,7 @@ const Security = () => {
                         <Horizontal height={1} color="#D8DADC" />
 
                         <View style={styles.buttonContainer}>
-                            <Text style={styles.buttonText}>Kiểm tra bảo mật</Text>
+                            <Text style={styles.buttonText}>Security Check</Text>
                             <TouchableOpacity style={styles.chevron_right_container} onPress={() => handleTabChange(3)}>
                                 <Image source={assets.image.chevron_right} style={styles.icon} />
                             </TouchableOpacity>

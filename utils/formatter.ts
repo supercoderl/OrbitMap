@@ -38,18 +38,18 @@ export const getZodiacSign = (date: Date): string => {
     const day = date.getDate();
     const month = date.getMonth() + 1; // Because `getMonth()` return from 0-11
 
-    if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) return "Bạch Dương";
-    if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) return "Kim Ngưu";
-    if ((month === 5 && day >= 21) || (month === 6 && day <= 20)) return "Song Tử";
-    if ((month === 6 && day >= 21) || (month === 7 && day <= 22)) return "Cự Giải";
-    if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) return "Sư Tử";
-    if ((month === 8 && day >= 23) || (month === 9 && day <= 22)) return "Xử Nữ";
-    if ((month === 9 && day >= 23) || (month === 10 && day <= 22)) return "Thiên Bình";
-    if ((month === 10 && day >= 23) || (month === 11 && day <= 21)) return "Bọ Cạp";
-    if ((month === 11 && day >= 22) || (month === 12 && day <= 21)) return "Nhân Mã";
-    if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) return "Ma Kết";
-    if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) return "Bảo Bình";
-    if ((month === 2 && day >= 19) || (month === 3 && day <= 20)) return "Song Ngư";
+    if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) return "Aries";
+    if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) return "Taurus";
+    if ((month === 5 && day >= 21) || (month === 6 && day <= 20)) return "Gemini";
+    if ((month === 6 && day >= 21) || (month === 7 && day <= 22)) return "Cancer";
+    if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) return "Leo";
+    if ((month === 8 && day >= 23) || (month === 9 && day <= 22)) return "Virgo";
+    if ((month === 9 && day >= 23) || (month === 10 && day <= 22)) return "Libra";
+    if ((month === 10 && day >= 23) || (month === 11 && day <= 21)) return "Scorpio";
+    if ((month === 11 && day >= 22) || (month === 12 && day <= 21)) return "Sagittarius";
+    if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) return "Capricorn";
+    if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) return "Aquarius";
+    if ((month === 2 && day >= 19) || (month === 3 && day <= 20)) return "Pisces";
 
     return "unknown";
 };
@@ -75,6 +75,7 @@ export function formatDailyItineraries(dailyItineraries: DaiLyItinerary[]) {
 
             scheduledPlaces.push({
                 place: {
+                    placeId: "",
                     name: "Đi về",
                     address: "",
                     imageUrl: "https://res.cloudinary.com/do02vtlo0/image/upload/v1743922670/places/xpbzxa2iwkdxrieqbvkw.webp",
@@ -94,6 +95,7 @@ export function formatDailyItineraries(dailyItineraries: DaiLyItinerary[]) {
 
             scheduledPlaces.push({
                 place: {
+                    placeId: "",
                     name: "Nghỉ ngơi",
                     address: "Nghỉ ngơi tại khách sạn",
                     imageUrl: "https://res.cloudinary.com/do02vtlo0/image/upload/v1743922671/places/ojdzjbuzwelyvoojbxsu.jpg",
@@ -113,6 +115,7 @@ export function formatDailyItineraries(dailyItineraries: DaiLyItinerary[]) {
 
             scheduledPlaces.push({
                 place: {
+                    placeId: "",
                     name: "Đi về",
                     address: "",
                     imageUrl: "https://res.cloudinary.com/do02vtlo0/image/upload/v1743922670/places/xpbzxa2iwkdxrieqbvkw.webp",
@@ -128,4 +131,28 @@ export function formatDailyItineraries(dailyItineraries: DaiLyItinerary[]) {
             scheduledPlaces,
         };
     });
+}
+
+export function convertTime(time: string | Date): string {
+    const inputDate = new Date(time);
+    const now = new Date();
+    const diffMs = now.getTime() - inputDate.getTime();
+
+    const diffSeconds = Math.floor(diffMs / 1000);
+    const diffMinutes = Math.floor(diffSeconds / 60);
+    const diffHours = Math.floor(diffMinutes / 60);
+    const diffDays = Math.floor(diffHours / 24);
+
+    if (diffHours < 1) {
+        return "now";
+    } else if (diffDays === 0) {
+        return diffHours === 1 ? "1 hour ago" : `${diffHours} hours ago`;
+    } else if (diffDays <= 7) {
+        return diffDays === 1 ? "1 day ago" : `${diffDays} days ago`;
+    } else {
+        const day = inputDate.getDate().toString().padStart(2, '0');
+        const month = (inputDate.getMonth() + 1).toString().padStart(2, '0');
+        const year = inputDate.getFullYear();
+        return `${day}/${month}/${year}`;
+    }
 }

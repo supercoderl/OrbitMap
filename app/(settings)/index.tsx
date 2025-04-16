@@ -14,37 +14,39 @@ import { onAfterLogout, toast } from "@/utils"
 import screen from "@/utils/screen"
 import { router, useFocusEffect } from "expo-router"
 import React, { useCallback, useState } from "react"
-import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native"
+import { View, Text, Image, TouchableOpacity, StyleSheet, ActivityIndicator } from "react-native"
 import * as ImagePicker from 'expo-image-picker';
+import { updateUserAvatar } from "@/api/modules/user"
+import { setUserInfo } from "@/redux/modules/user/action"
 
 const OPTIONS: { id: number, name: string, type: "account" | "security" | "history" | "ad" | "help", icon: any }[] = [
     {
         id: 1,
-        name: "Tài khoản",
+        name: "Account",
         type: "account",
         icon: assets.icon.profile_circle
     },
     {
         id: 2,
-        name: "Mật khẩu & bảo mật",
+        name: "Password & security",
         type: "security",
         icon: assets.icon.shield_security
     },
     {
         id: 3,
-        name: "Lịch sử tìm kiếm",
+        name: "Search history",
         type: "history",
         icon: assets.icon.search_status
     },
     {
         id: 4,
-        name: "Tùy chọn quảng cáo",
+        name: "Advertising options",
         type: "ad",
         icon: assets.icon.ad
     },
     {
         id: 5,
-        name: "Trợ giúp và hỗ trợ",
+        name: "Help & support",
         type: "help",
         icon: assets.icon.question
     },
@@ -55,6 +57,7 @@ export default () => {
     const [modalType, setModalType] = useState<"account" | "ad" | "help" | "security" | "history" | null>(null);
     const { userInfo } = store.getState().user;
     const [avatar, setAvatar] = useState(userInfo ? userInfo.avatarUrl : assets.avatar.maithy);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const pickImage = async () => {
         // No permissions request is necessary for launching the image library
@@ -69,7 +72,23 @@ export default () => {
         if (result && result.assets && result.assets.length > 0) {
             let base64Img = `data:image/jpeg;base64,${result.assets[0]?.base64}`;
 
-            setAvatar(base64Img);
+            try {
+                setLoading(true);
+                const { data } = await updateUserAvatar({
+                    userId: userInfo?.userId,
+                    avatarBase64String: base64Img
+                });
+
+                if (data && data !== "") {
+                    setAvatar(data);
+                    store.dispatch(setUserInfo({ ...userInfo, avatarUrl: data }));
+                }
+                else
+                    toast.error("An error occured!", "Update avatar failed!");
+            }
+            finally {
+                setTimeout(() => setLoading(false), 1000);
+            }
         }
 
         if (!result.canceled) {
@@ -124,9 +143,9 @@ export default () => {
                         onPress={() => router.back()}
                         buttonStyle={{ width: 30, height: 30, justifyContent: 'center', alignItems: 'center' }}
                     />
-                    <Text style={styles.title}>Cài đặt</Text>
+                    <Text style={styles.title}>Settings</Text>
                     <TouchableOpacity onPress={() => router.back()}>
-                        <Text style={{ fontFamily: 'LexendSemiBold', fontSize: 16, color: colors.primary }}>Xong</Text>
+                        <Text style={{ fontFamily: 'LexendSemiBold', fontSize: 16, color: colors.primary }}>Done</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -135,13 +154,20 @@ export default () => {
                 <View style={{ flex: 1, paddingBlock: 32 }}>
                     <View style={{ gap: 10, width: '100%', alignItems: 'center' }}>
                         <View style={{ position: 'relative', justifyContent: 'center' }}>
-                            <Image
-                                source={
-                                    typeof avatar === 'string' &&
-                                        (avatar.includes('data:image/jpeg;base64') || avatar.includes('http')) ?
-                                        { uri: avatar } : avatar}
-                                style={styles.avatar} resizeMode="cover"
-                            />
+                            {
+                                loading ?
+                                    <View style={[styles.avatar, { borderWidth: 2, borderColor: colors.primary, justifyContent: 'center', alignItems: 'center' }]}>
+                                        <ActivityIndicator size="large" color={colors.primary} />
+                                    </View>
+                                    :
+                                    <Image
+                                        source={
+                                            typeof avatar === 'string' &&
+                                                (avatar.includes('data:image/jpeg;base64') || avatar.includes('http')) ?
+                                                { uri: avatar } : avatar}
+                                        style={styles.avatar} resizeMode="cover"
+                                    />
+                            }
                             <TouchableOpacity style={{
                                 position: 'absolute',
                                 width: 31,
@@ -157,6 +183,7 @@ export default () => {
                                 alignItems: 'center'
                             }}
                                 onPress={pickImage}
+                                disabled={loading}
                             >
                                 <Image source={assets.icon.camera_white} style={{ width: 22, height: 22 }} />
                             </TouchableOpacity>
@@ -191,7 +218,7 @@ export default () => {
                         <View style={styles.optionContainer}>
                             <TouchableOpacity style={styles.buttonContainer} onPress={logout}>
                                 <Image source={assets.icon.logout} style={{ width: 32, height: 32 }} />
-                                <Text style={styles.buttonText}>Đăng xuất</Text>
+                                <Text style={styles.buttonText}>Logout</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -210,7 +237,7 @@ export default () => {
                     />
                     <Text style={styles.title}>{OPTIONS.find(x => x.type === modalType)?.name}</Text>
                     <TouchableOpacity onPress={closeModal}>
-                        <Text style={{ fontFamily: 'LexendSemiBold', fontSize: 16, color: colors.primary }}>Xong</Text>
+                        <Text style={{ fontFamily: 'LexendSemiBold', fontSize: 16, color: colors.primary }}>Done</Text>
                     </TouchableOpacity>
                 </View>
 

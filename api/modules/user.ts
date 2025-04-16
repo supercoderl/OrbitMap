@@ -26,3 +26,11 @@ export const getProfile = () => {
 export const updateUser = (params: User.UpdateUserForm) => {
     return http.put<UserInfo>('User', params);
 };
+
+/**
+ * @name UpdateUserAvatar module
+ */
+// * User update interface
+export const updateUserAvatar = (params: User.UpdateUserAvatarForm) => {
+    return http.put<string>('User/change-avatar', params);
+};

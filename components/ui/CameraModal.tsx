@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { View, StyleSheet, Text, Image, TouchableOpacity, FlatList } from 'react-native';
+import { View, StyleSheet, Text, Image, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
 import { CameraView } from 'expo-camera';
 import screen from '@/utils/screen';
 import NavBar from './NavBar';
@@ -16,6 +16,7 @@ import { colors } from '@/constants/Colors';
 import { createPhotoPost } from '@/api/modules/photoPost';
 import { toast } from '@/utils';
 import { AnnotationType } from '@/enums';
+import Invitation from './message/Invitation';
 
 const FRIENDS_TO_SEND = [
     {
@@ -94,6 +95,7 @@ const CameraModal: React.FC<CameraModalProps> = ({ ...props }) => {
     const cameraRef = useRef<CameraView | null>(null);
     const [selectedUser, setSelectedUser] = useState<number>(FRIENDS_TO_SEND[0].id);
     const [showModal, setShowModal] = useState(false);
+    const [showInvitationModal, setShowInvitationModal] = useState(false);
     const [selectedOperation, setSelectedOperation] = useState<string | null>(null);
     const [annotationValue, setAnnotationValue] = useState<string | null>(null);
     const { userInfo } = store.getState().user;
@@ -118,7 +120,7 @@ const CameraModal: React.FC<CameraModalProps> = ({ ...props }) => {
     };
 
     const createPost = async () => {
-        if(!image) {
+        if (!image) {
             toast.error("Please take a picture first!");
             return;
         }
@@ -131,8 +133,7 @@ const CameraModal: React.FC<CameraModalProps> = ({ ...props }) => {
                 annotationValue
             });
 
-            if(data && data !== "")
-            {
+            if (data && data !== "") {
                 router.push('/(general)/post');
             }
         } finally {
@@ -174,6 +175,7 @@ const CameraModal: React.FC<CameraModalProps> = ({ ...props }) => {
                                 icon={assets.icon.user_add_white}
                                 size={25}
                                 style={{ backgroundColor: 'transparent' }}
+                                onPress={() => setShowInvitationModal(true)}
                             />
                             <View style={{ position: 'absolute', top: -2, right: -2, borderRadius: 50, paddingHorizontal: 4, zIndex: 2, backgroundColor: '#F0541C' }}>
                                 <Text style={{ color: "white", fontSize: 10, fontFamily: "LexendSemiBold" }}>40</Text>
@@ -191,7 +193,7 @@ const CameraModal: React.FC<CameraModalProps> = ({ ...props }) => {
             >
                 <View style={{ borderWidth: 2, borderColor: 'white', borderRadius: 50, paddingHorizontal: 40, paddingBlock: 5 }}>
                     <Text style={styles.text}>
-                        {image ? 'Gửi đến' : 'Bạn bè'}
+                        {image ? 'Send to' : 'Friends'}
                     </Text>
                 </View>
             </NavBar>
@@ -255,11 +257,29 @@ const CameraModal: React.FC<CameraModalProps> = ({ ...props }) => {
                     <Image source={assets.icon.close_white} style={styles.close} />
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => {
-                    image ? createPost() : takePicture();
-                }}>
-                    <Image source={image ? assets.icon.send : assets.icon.screenshot} style={styles.screenshot} />
-                </TouchableOpacity>
+                {
+                    loading ?
+                        <View style={[styles.screenshot, {
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderWidth: 6,
+                            borderColor: colors.primary,
+                            borderRadius: screen.width
+                        }]}
+                        >
+                            <ActivityIndicator
+                                color={colors.white}
+                                size={60}
+                            />
+                        </View>
+                        :
+                        <TouchableOpacity onPress={() => {
+                            image ? createPost() : takePicture();
+                        }}>
+
+                            <Image source={image ? assets.icon.send : assets.icon.screenshot} style={styles.screenshot} />
+                        </TouchableOpacity>
+                }
 
                 {
                     image ?
@@ -299,6 +319,19 @@ const CameraModal: React.FC<CameraModalProps> = ({ ...props }) => {
                         </TouchableOpacity>
                     ))}
                 </View>
+            </OrbitModal>
+
+            <OrbitModal
+                isOpen={showInvitationModal}
+                showOverlay
+                style={{ top: 0 }}
+                innerStyle={{ marginTop: 32 }}
+                onClose={() => setShowInvitationModal(false)}
+            >
+                <Invitation
+                    onClose={() => setShowInvitationModal(false)}
+                    userId={userInfo?.userId}
+                />
             </OrbitModal>
         </View>
     );

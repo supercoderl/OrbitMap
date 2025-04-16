@@ -8,6 +8,7 @@ export enum ReactionType {
 }
 
 export enum LevelType {
+    Member,
     Silver,
     Gold,
     Diamond,

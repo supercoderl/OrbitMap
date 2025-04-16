@@ -18,7 +18,7 @@ export default function PassportScreen() {
                     onPress={() => router.back()}
                     buttonStyle={{ width: 30, height: 30, justifyContent: 'center', alignItems: 'center' }}
                 />
-                <Text style={styles.title}>Passport chứng nhận</Text>
+                <Text style={styles.title}>Certificated Passport</Text>
                 <Image source={assets.icon.vip} style={{ width: 27.06, height: 26.95 }} />
             </View>
 
@@ -31,11 +31,11 @@ export default function PassportScreen() {
                     <View style={[styles.row, { gap: 15 }]}>
                         <TouchableOpacity style={[styles.row, { backgroundColor: colors.primary, flex: 1, paddingBlock: 8, justifyContent: 'center', borderRadius: 40 }]}>
                             <Image source={assets.icon.edit_white} style={{ width: 32, height: 32 }} />
-                            <Text style={styles.text}>Chỉnh sửa</Text>
+                            <Text style={styles.text}>Edit</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={[styles.row, { backgroundColor: colors.primary, flex: 1, paddingBlock: 8, justifyContent: 'center', borderRadius: 40 }]}>
                             <Image source={assets.icon.import_white} style={{ width: 32, height: 32 }} />
-                            <Text style={styles.text}>Lưu</Text>
+                            <Text style={styles.text}>Save</Text>
                         </TouchableOpacity>
                     </View>
 
@@ -44,7 +44,7 @@ export default function PassportScreen() {
                         onPress={() => setShowModal(true)}
                     >
                         <Image source={assets.icon.export_white} style={{ width: 32, height: 32 }} />
-                        <Text style={styles.text}>Chia sẻ</Text>
+                        <Text style={styles.text}>Share</Text>
                     </TouchableOpacity>
                 </View>
             </View>

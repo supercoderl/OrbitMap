@@ -10,6 +10,7 @@ export default function GeneralStack() {
             <Stack.Screen name="post" />
             <Stack.Screen name="time-travel" />
             <Stack.Screen name="message" />
+            <Stack.Screen name="premium" />
         </Stack>
     );
 }

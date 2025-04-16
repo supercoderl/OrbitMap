@@ -43,7 +43,7 @@ export default function AccountRankScreen() {
                         onPress={() => router.back()}
                         buttonStyle={{ width: 30, height: 30, justifyContent: 'center', alignItems: 'center' }}
                     />
-                    <Text style={styles.title}>Hạng tài khoản</Text>
+                    <Text style={styles.title}>Account Rank</Text>
                     <View style={{ width: 30 }} />
                 </View>
 
@@ -60,7 +60,7 @@ export default function AccountRankScreen() {
                             <Text style={styles.point}>{userLevel?.zeafloPoint ?? 0}</Text>
                         </View>
 
-                        <Text style={{ fontFamily: 'LexendBold', fontSize: 20, }}>Điểm Orbit của bạn</Text>
+                        <Text style={{ fontFamily: 'LexendBold', fontSize: 20, }}>Your Zeaflo Point</Text>
 
                         <ImageBackground
                             source={assets.background.orbit_point}
@@ -74,18 +74,18 @@ export default function AccountRankScreen() {
                             }}
                         >
                             <Image source={assets.icon.award_2} style={{ width: 52, height: 67 }} />
-                            <Text style={{ fontFamily: 'LexendSemiBold', fontSize: 24, color: 'white', maxWidth: '52%', textAlign: 'center' }}>
-                                Orbit chúc mừng bạn đạt Tài khoản {LevelType[userLevel?.type ?? LevelType.Silver]}
+                            <Text style={{ fontFamily: 'LexendSemiBold', fontSize: 24, color: 'white', maxWidth: '55%', textAlign: 'center' }}>
+                                Zeaflo congratulates you on reaching Account {LevelType[userLevel?.type ?? LevelType.Silver]}
                             </Text>
                         </ImageBackground>
 
                         <Text
                             style={{ fontFamily: 'LexendRegular', fontSize: 16, color: '#A9AAAB', textAlign: 'center' }}
                         >
-                            Điểm Orbit tăng khi bạn bè xem story của bạn, khi bạn xem story của họ hoặc khi bạn đăng story.
+                            Zeaflo points increase when friends view your story, when you view their story, or when you post a story.
                         </Text>
 
-                        <Text style={{ fontFamily: 'LexendSemiBold', fontSize: 20, marginTop: 15 }}>Hoạt động tháng này</Text>
+                        <Text style={{ fontFamily: 'LexendSemiBold', fontSize: 20, marginTop: 15 }}>Activities this month</Text>
 
                         <View style={{
                             paddingHorizontal: 15,
@@ -104,7 +104,7 @@ export default function AccountRankScreen() {
                         }}>
                             <View style={styles.optionContainer}>
                                 <View style={styles.buttonContainer}>
-                                    <Text style={styles.buttonText}>Story được gửi hoặc xem</Text>
+                                    <Text style={styles.buttonText}>Story sent or viewed</Text>
                                     <Text style={{ fontFamily: 'LexendRegular', color: colors.primary, marginRight: 15 }}>38</Text>
                                 </View>
                             </View>
@@ -112,7 +112,7 @@ export default function AccountRankScreen() {
 
                             <View style={styles.optionContainer}>
                                 <View style={styles.buttonContainer}>
-                                    <Text style={styles.buttonText}>Story bạn nhận được</Text>
+                                    <Text style={styles.buttonText}>Story you received</Text>
                                     <Text style={{ fontFamily: 'LexendRegular', color: colors.primary, marginRight: 15 }}>22</Text>
                                 </View>
                             </View>
@@ -120,19 +120,19 @@ export default function AccountRankScreen() {
 
                             <View style={styles.optionContainer}>
                                 <View style={styles.buttonContainer}>
-                                    <Text style={styles.buttonText}>Lượt đăng story</Text>
+                                    <Text style={styles.buttonText}>Number of story posts</Text>
                                     <Text style={{ fontFamily: 'LexendRegular', color: colors.primary, marginRight: 15 }}>38</Text>
                                 </View>
                             </View>
                         </View>
 
-                        <Text style={{ fontFamily: 'LexendSemiBold', fontSize: 20, marginTop: 15 }}>Thông tin thành viên</Text>
+                        <Text style={{ fontFamily: 'LexendSemiBold', fontSize: 20, marginTop: 15 }}>Member information</Text>
 
                         <Text
                             style={{ fontFamily: 'LexendRegular', fontSize: 16, color: '#A9AAAB', textAlign: 'center' }}
                         >
-                            Số điểm yêu cầu để đạt được các hạng
-                            Tài khoản. Đối với hạng Vàng, người dùng cần nâng cấp Tài khoản.
+                            Number of points required to achieve Account levels. 
+                            For Gold level, users need to upgrade their Account.
                         </Text>
 
                         <View style={{
@@ -152,7 +152,7 @@ export default function AccountRankScreen() {
                         }}>
                             <View style={styles.optionContainer}>
                                 <View style={styles.buttonContainer}>
-                                    <Text style={styles.buttonText}>Thành viên</Text>
+                                    <Text style={styles.buttonText}>Member</Text>
                                     <Text style={{ fontFamily: 'LexendRegular', color: '#D8DADC', marginRight: 15 }}>0</Text>
                                 </View>
                             </View>
@@ -160,7 +160,7 @@ export default function AccountRankScreen() {
 
                             <View style={styles.optionContainer}>
                                 <View style={styles.buttonContainer}>
-                                    <Text style={[styles.buttonText, { color: colors.primary }]}>Bạc</Text>
+                                    <Text style={[styles.buttonText, { color: colors.primary }]}>Silver</Text>
                                     <Text style={{ fontFamily: 'LexendRegular', color: colors.primary, marginRight: 15 }}>90</Text>
                                 </View>
                             </View>
@@ -168,7 +168,15 @@ export default function AccountRankScreen() {
 
                             <View style={styles.optionContainer}>
                                 <View style={styles.buttonContainer}>
-                                    <Text style={[styles.buttonText, { color: '#F0541C' }]}>Vàng</Text>
+                                    <Text style={[styles.buttonText, { color: '#F0541C' }]}>Gold</Text>
+                                    <Image source={assets.icon.vip} style={{ width: 24, height: 24, marginRight: 15 }} />
+                                </View>
+                            </View>
+                            <Horizontal height={1} color="#D8DADC" />
+
+                            <View style={styles.optionContainer}>
+                                <View style={styles.buttonContainer}>
+                                    <Text style={[styles.buttonText, { color: '#F0541C' }]}>Diamond</Text>
                                     <Image source={assets.icon.vip} style={{ width: 24, height: 24, marginRight: 15 }} />
                                 </View>
                             </View>

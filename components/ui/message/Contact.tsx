@@ -139,7 +139,7 @@ const Contact: React.FC<ContactProps> = ({ ...props }) => {
 
     return (
         <>
-            <Text style={styles.addText}>Thêm liên hệ</Text>
+            <Text style={styles.addText}>Add contact</Text>
 
             <FlatList
                 data={contacts}

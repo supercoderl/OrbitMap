@@ -14,7 +14,7 @@ interface SharingModalProps {
 const OPTIONS = [
     {
         id: 1,
-        name: "Tin nhắn",
+        name: "Message",
         icon: assets.social.message,
         type: "message"
     },

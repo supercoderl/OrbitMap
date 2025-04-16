@@ -2,6 +2,7 @@ import assets from "@/assets"
 import Search from "@/components/Inputs/search"
 import Horizontal from "@/components/ui/Horizontal"
 import { colors } from "@/constants/Colors"
+import { store } from "@/redux"
 import screen from "@/utils/screen"
 import { router } from "expo-router"
 import React from "react"
@@ -70,13 +71,16 @@ const FRIENDS = [
 ]
 
 export default () => {
+    const { userInfo } = store.getState().user;
+
     return (
         <View style={{ flex: 1, backgroundColor: 'white', paddingTop: 32 }}>
             <View style={styles.headerContainer}>
                 <Search
-                    placeholder="Tìm kiếm"
+                    placeholder="Search"
                     items={[]}
-                    onSelectItem={() => { }}
+                    value={""}
+                    onChangeText={() => { }}
                 />
                 <TouchableOpacity onPress={() => router.back()}>
                     <Text style={{ fontFamily: 'LexendSemiBold', fontSize: 16, color: '#F0541C' }}>Hủy</Text>
@@ -84,16 +88,16 @@ export default () => {
             </View>
 
             <View style={{ flex: 1, paddingHorizontal: 15, zIndex: 0 }}>
-                <TouchableOpacity style={styles.button} onPress={() => router.push('/(search)/travel-hint')}>
+                <TouchableOpacity style={styles.button} onPress={() => router.push(userInfo?.userSubscription ? '/(search)/travel-hint' : '/(general)/premium')}>
                     <Image source={assets.icon.calendar} style={{ width: 42, height: 42 }} />
                     <View style={{ flex: 1, gap: 5 }}>
-                        <Text style={{ fontFamily: 'LexendMedium', fontSize: 16 }}>Gợi ý kế hoạch du lịch</Text>
-                        <Text style={{ fontFamily: 'LexendRegular', fontSize: 12, color: '#A9AAAB' }}>Tối ưu hoá thời gian lịch trình du lịch</Text>
+                        <Text style={{ fontFamily: 'LexendMedium', fontSize: 16 }}>Travel planning suggestions</Text>
+                        <Text style={{ fontFamily: 'LexendRegular', fontSize: 12, color: '#A9AAAB' }}>Optimize travel schedule time</Text>
                     </View>
                     <Image source={assets.icon.vip} style={{ width: 27.06, height: 26.95 }} />
                 </TouchableOpacity>
 
-                <Text style={[styles.text, { marginBlock: 15 }]}>Thêm một người bạn</Text>
+                <Text style={[styles.text, { marginBlock: 15 }]}>Add new friend</Text>
 
                 <View style={{ borderRadius: 10, zIndex: 1 }}>
                     <View style={styles.optionContainer}>
@@ -106,7 +110,7 @@ export default () => {
                                         <View style={{ flexDirection: 'row', gap: 20, alignItems: 'center' }}>
                                             <TouchableOpacity style={{ flexDirection: 'row', gap: 5, borderRadius: 50, backgroundColor: colors.primary, paddingBlock: 3, paddingHorizontal: 10 }}>
                                                 <Image source={assets.icon.user_add_white} style={{ width: 16, height: 16 }} />
-                                                <Text style={{ fontFamily: 'LexendMedium', fontSize: 12, color: colors.white }}>Thêm</Text>
+                                                <Text style={{ fontFamily: 'LexendMedium', fontSize: 12, color: colors.white }}>Add</Text>
                                             </TouchableOpacity>
                                             <TouchableOpacity>
                                                 <Image source={assets.icon.close_2} style={{ width: 12, height: 12 }} />
@@ -119,12 +123,12 @@ export default () => {
                         }
 
                         <TouchableOpacity style={{ width: '100%', alignItems: 'center', paddingBlock: 10 }}>
-                            <Text style={[styles.text, { fontSize: 12 }]}>Xem thêm</Text>
+                            <Text style={[styles.text, { fontSize: 12 }]}>See more</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
 
-                <Text style={[styles.text, { marginBlock: 15 }]}>Khám phá một địa điểm</Text>
+                <Text style={[styles.text, { marginBlock: 15 }]}>Explore a location</Text>
 
                 <FlatList
                     data={LOCATIONS}
